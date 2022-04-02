@@ -11,12 +11,13 @@
 
 			.bullet {color:#1da1de; font-size: medium;}
 			.copyright {padding-top: 30; font-size: small;}
-			.description {color:#1da1de; display: inline; position: relative; left: 10px; top: 10px; padding-bottom: 5px;}
-			.error::after {color: #4d0d12; content: ' **'; font-size: 30px; vertical-align: middle;}
-			.error::before {color: #4d0d12; content: '** '; font-size: 30px; vertical-align: middle;}
+			p.description { display: inline; position: relative; left: 10px; top: 10px; padding-bottom: 5px;}
+			blockquote.description, p.description {color:#1da1de; }
+			.error::after {color: red; content: ' **'; font-size: 30px; vertical-align: middle;}
+			.error::before {color: red; content: '** '; font-size: 30px; vertical-align: middle;}
 			.example h3 {display: inline;}
-			.inner blockquote { background-color: #919a9e;}
 			.intro h1 {margin-bottom: 0;}
+			.outer { background-color: #4d524e; padding: 10px;}
 			.outputs::after {content: "results in"; color: #12b086;}
 			.slim {color: #b0123c; display: inline;}			
 		</style>
@@ -31,8 +32,10 @@
 		<h1 class="intro">Welcome to <div class="slim">Slim.View</div></h1>
 		<div class="intro" id="by_line">A Typescript HTML rendering engine</div>
 		<div class="intro">
-			<p>The file you are now reading was compiled using Slim.View and multiple include files.
-				Which can be found <a href="https://github.com/greergan/slim.view/tree/dev/examples" target="new">here</a>.
+			<p>Inspired by Deno remote imports; there is now a rendering engine that supports remote view inclusion.</p>
+			<p>With Slim.View it is possible to import HTML assets from either remote locations on the Web or from the local file system.</p>
+			<p>The file you are now reading was compiled using Slim.View and multiple include files,
+				which can be found <a href="https://github.com/greergan/slim.view/tree/dev/examples" target="new">here</a>.
 			</p>
 			<p>All examples use <a href="https://raw.githubusercontent.com/greergan/slim.view/dev/examples/model.json" target="new">this</a> JSON file.</p>
 			<p class="description">You can run this example remotely using Deno and the following command</p>
@@ -47,22 +50,22 @@
 	<p class="description">Prevent statement and substitution processing</p>
 	<blockquote class="outer">
 		<p>Comment out a variable substitution</p>
-		<blockquote class="inner"><code>&#123;# &#123;&#123;property&#125;&#125; #&#125;</code></blockquote>
+		<blockquote><code>&#123;# &#123;&#123;property&#125;&#125; #&#125;</code></blockquote>
 		<p class="outputs"></p>
-		<blockquote><code>&lt;!-- &#123;# &#123;#property#&#125; #&#125; --&gt;</code></blockquote>
+		<blockquote>&lt;!-- &#123;# &#123;#property#&#125; #&#125; --&gt;</blockquote>
 		<!-- {# {#property#} #} -->
 		<p>Comment out a complex statement</p>
 		<blockquote><code>&#123;# &#123;% for model="users-0" view="partials/user" %&#125; #&#125;</code></blockquote>
 		<p class="outputs"></p>
-		<blockquote><code>&lt;!-- &#123;# &#123;# for model="users-0" view="partials/user" #&#125; #&#125; --&gt;</code></blockquote>
+		<blockquote>&lt;!-- &#123;# &#123;# for model="users-0" view="partials/user" #&#125; #&#125; --&gt;</blockquote>
 		<!-- {# {# for model="users-0" view="partials/user" #} #} -->
-		<blockquote class="slim">View page source in your browser to see how these comments look</blockquote>
+		<blockquote class="description">View page source in your browser to see how these comments look</blockquote>
 	</blockquote>
 </div></details>
 	<details class="example"><summary><h3>Variable substitution</h3></summary>
 <div class="example">
 	<p class="description">Substitute tokens for values found in a JSON model</p>
-	<blockquote>
+	<blockquote class="outer">
 		<blockquote><code>Hello &#123;&#123;n1me&#125;&#125; I am &#123;&#123;program.name&#125;&#125;</code></blockquote>
 		<p class="outputs"></p>
 		<blockquote>Hello Spiffy Slim.view user I am Slim.View</blockquote>
