@@ -16,11 +16,11 @@
 			h1.intro { display: inline; position: relative; z-index: 999; }
 			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 140%; margin: auto; width: 95%; position: relative; z-index: 900;}
 			menu {text-align: center; position: sticky; top: 0; background-color: #303031; z-index: 901;}
-			menu a {font-size: 140%;}
-			menu li {display: inline;}
+			menu a {font-size: 140%; position: relative; z-index: 901;}
+			menu li {display: inline; position: relative; z-index: 901;}
 			menu li::after {content: " || ";}
 			menu li:last-child::after {content: "";}
-			.logo {display: inline-block; position: fixed; top: 0; left: 1%; z-index: 950;}
+			.logo {display: inline-block; position: fixed; top: 40px; left: 1%; z-index: 950;}
 			.outer { background-color: #4d524e; padding: 10px; font-size: 130%; color: #a5b012; border-radius: 25px; }
 			.outputs {color:#1da1de; }
 			.outputs::before {content: "results in"; color: #12b086; }
@@ -29,6 +29,9 @@
 			.slim-details h3 {display: inline; font-size: 100%; }
 			details.slim-details {margin-bottom: 10px;}
 			details.slim-details:last-child {margin-bottom: 0px;}
+			@media screen and (max-width: 700px) {
+				menu a {font-size: 175%;}
+			}
 		</style>
 	</head>
 	<body>
