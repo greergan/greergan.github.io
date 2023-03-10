@@ -7,20 +7,21 @@
 			html { color: #D4D4D4; background-color: #303031; padding: 15px; }
 			a {color: #a14318; text-decoration: none;}
 			code { font-size: 130%;}
-			div.content { margin: auto; width:75%; background-color: #232324; border-radius: 25px; padding: 2%;}
+			div.content { margin: auto; width:75%; background-color: #232324; border-radius: 25px; padding: 2%; }
 			.copyright {padding-top: 30; font-size: small; text-align: center; padding-top: 4%;}
 			div.catch_line {color: orange; position: relative; left: 95px; top: -5px;}	
-			p.description { position: relative; padding-bottom: 5px;}
+			p {position: relative; z-index: 900;}
+			p.description {  padding-bottom: 5px; }
 			blockquote.description, p.description {color:#1da1de; }
-			h1.intro { display: inline; position: relative; z-index: 999; }
-			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 140%; margin: auto; width: 95%; }
-			menu {text-align: center; position: relative; z-index: 999;}
+			h1.intro { display: inline; position: relative; z-index: 900; }
+			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 140%; margin: auto; width: 95%; position: relative; z-index: 900;}
+			menu {text-align: center; position: sticky; top: 0; background-color: #303031; z-index: 999;}
 			menu a {font-size: larger;}
-			menu li {display: inline; }
+			menu li {display: inline;}
 			menu li::after {content: " || ";}
 			menu li:last-child::after {content: "";}
 			.logo {display: inline-block; position: fixed; top: 0; left: 1%; z-index: 1;}
-			.outer { background-color: #4d524e; padding: 10px; font-size: 130%; color: #a5b012; border-radius: 25px;}
+			.outer { background-color: #4d524e; padding: 10px; font-size: 130%; color: #a5b012; border-radius: 25px; }
 			.outputs {color:#1da1de; }
 			.outputs::before {content: "results in"; color: #12b086; }
 			hr.section-seperator {margin: auto; width: 95%; margin-bottom: 30px; color: #12b086; }
@@ -139,7 +140,7 @@
 </details>
 <details class="slim-details"><summary><h3>Filters</h3></summary>
 <div>
-	<p class="description">Filter result sets using <a href="https://en.wikipedia.org/wiki/Polish_notation" target=_new_window>Polish Notation</a> style functions</p>
+	<p class="description">Filter result sets using <a href="https://en.wikipedia.org/wiki/Polish_notation" target=_new_window>Polish Notation</a> style functions.</p>
     <p>Comparative functions</p>
 	<blockquote class="outer">
 		<p>equal(model:object, )</p>
@@ -187,28 +188,6 @@
 	</div>
 	<div>View page source in your browser to see results</div>
 </blockquote></details>
-<details class="slim-details"><summary><h3>Examples</h3></summary>
-<div class="example">
-	<p class="description">Typescript code using remote assets</p>
-	<blockquote class="outer">
-		<p class="description">Save the following code to a file called test.ts</p>
-		<blockquote><code>import { debug, error, trace, todo, SlimView } from "https://raw.githubusercontent.com/greergan/slim.view//mod.ts";</code></blockquote>
-		<blockquote><code>const view:SlimView = new SlimView("https://raw.githubusercontent.com/greergan/slim//website/");</code></blockquote>
-		<blockquote><code>const model_string:string = await (await  fetch('https://raw.githubusercontent.com/greergan/slim.view/dev/examples/model.json')).text();</code></blockquote>
-		<blockquote><code>const html_results = await view.render(JSON.parse(model_string), "https://raw.githubusercontent.com/greergan/slim//website/slim_views");</code></blockquote>
-		<blockquote><code>new debug({message:"html_results", value:html_results});</code></blockquote>
-		<blockquote><code>const message:string = "One of several forms of communication";</code></blockquote>
-		<blockquote><code>new trace({message:"this is a trace message"}, message);</code></blockquote>
-		<blockquote><code>new error({message:"this is an error with a value", value:message});</code></blockquote>
-		<blockquote><code>new todo({message: "master Slim"});</code></blockquote>
-		<blockquote><code>new debug({message: "these methods create messages with corresponding file locations in the form of line numbers"});</code></blockquote>
-		<blockquote><code>new trace({message: "all of these methods write to Deno.stderr"});</code></blockquote>
-		<blockquote><code>new error({message: "you can therefor capture the results of a render into a file"})</code></blockquote>
-		<blockquote><code>console.log(html_results);</code></blockquote>
-		<blockquote><code>new todo({message:"under Mac and Linux", value:"deno run --allow-net --allow-read test.ts > output.html"});</code></blockquote>
-		<p class="description">deno run --allow-net --allow-read test.ts > output.html</p>
-	</blockquote>
-</div></details>
 			<footer class="copyright">
 				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
 			</footer>
