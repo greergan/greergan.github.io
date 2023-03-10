@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<title>Slim.Generator</title>
+		<link rel="icon" type="image/png" href="/assets/images/favicon.ico">
+		<meta charset="utf-8">
+		<style type="text/css">
+			html { color: #D4D4D4; background-color: #303031; padding: 15px; }
+			a {color: #a14318; text-decoration: none;}
+			code { font-size: 130%;}
+			div.content { margin: auto; width:75%; background-color: #232324; border-radius: 25px; padding: 2%;}
+			.copyright {padding-top: 30; font-size: small; text-align: center; padding-top: 4%;}
+			div.catch_line {color: orange; position: relative; left: 95px; top: -5px;}	
+			p.description { position: relative; padding-bottom: 5px;}
+			blockquote.description, p.description {color:#1da1de; }
+			h1.intro { display: inline; position: relative; z-index: 999; }
+			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 140%; margin: auto; width: 95%; }
+			menu {text-align: center; position: relative; z-index: 999;}
+			menu a {font-size: larger;}
+			menu li {display: inline; }
+			menu li::after {content: " || ";}
+			menu li:last-child::after {content: "";}
+			.logo {display: inline-block; position: fixed; top: 0; left: 1%; z-index: 1;}
+			.outer { background-color: #4d524e; padding: 10px; font-size: 130%; color: #a5b012; border-radius: 25px;}
+			.outputs {color:#1da1de; }
+			.outputs::before {content: "results in"; color: #12b086; }
+			hr.section-seperator {margin: auto; width: 95%; margin-bottom: 30px; color: #12b086; }
+			.slim {color: #b0123c; display: inline;}
+			.slim-details h3 {display: inline; font-size: 100%; }
+			details.slim-details {margin-bottom: 10px;}
+			details.slim-details:last-child {margin-bottom: 0px;}
+			@media (max-width: 800px) {
+				h1.intro { font-size: 100%;}
+				div.catch_line { font-size: 85%;}
+				div.intro { font-size: 100%;}
+			}
+		</style>
+	</head>
+	<body>
+		<menu>
+    <li><a href="/">Slim</a></li>
+    <li><a href="/slim.view/">Slim.View</a></li>
+    <li><a href="/slim.generator/">Slim.Generator</a></li>
+</menu>
+
+		<div class="content">
+<h1 class="intro">Welcome to <div class="slim">Slim.Generator</div></h1>
+<div class="catch_line">A Typescript static website generator</div>
+<div class="intro">
+    <p></p>
+</div>
+<hr class="section-seperator"/>
+<!-- <details class="example"><iinclude view="partials/slim.view/comments.html"></details> -->
+			<footer class="copyright">
+				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
+			</footer>
+		</div>
+		</div> <!-- class="content" is now closed -->
+	</body>
+	<img class="logo" src="/assets/images/logo.png"/>
+</html>

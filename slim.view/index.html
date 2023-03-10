@@ -1,127 +1,206 @@
 <html>
 	<head>
 		<title>Slim.View</title>
+		<link rel="icon" type="image/png" href="/assets/images/favicon.ico">
 		<meta charset="utf-8">
 		<style type="text/css">
-			html { color: #D4D4D4; background-image: linear-gradient(to left, #2c2f33, #232324); padding: 15px; }
-			a {color: #a14318; font-size: larger;}
-			code {color: #a5b012; font-size: large;}
-
-			#by_line {color: orange; position: relative; left: 95px; top: -24px;}
-
-			.bullet {color:#1da1de; font-size: medium;}
-			.copyright {padding-top: 30; font-size: small;}
-			p.description { position: relative; left: 10px; padding-bottom: 5px;}
+			html { color: #D4D4D4; background-color: #303031; padding: 15px; }
+			a {color: #a14318; text-decoration: none;}
+			code { font-size: 130%;}
+			div.content { margin: auto; width:75%; background-color: #232324; border-radius: 25px; padding: 2%;}
+			.copyright {padding-top: 30; font-size: small; text-align: center; padding-top: 4%;}
+			div.catch_line {color: orange; position: relative; left: 95px; top: -5px;}	
+			p.description { position: relative; padding-bottom: 5px;}
 			blockquote.description, p.description {color:#1da1de; }
-			.error::after {color: red; content: ' **'; font-size: 30px; vertical-align: middle;}
-			.error::before {color: red; content: '** '; font-size: 30px; vertical-align: middle;}
-			.example h3 {display: inline;}
-			.intro { font-family: 'Times New Roman', Times, serif; font-size: larger;}
-			.outer { background-color: #4d524e; padding: 10px;}
-			.outputs::after {content: "results in"; color: #12b086;}
-			.slim {color: #b0123c; display: inline;}			
+			h1.intro { display: inline; position: relative; z-index: 999; }
+			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 140%; margin: auto; width: 95%; }
+			menu {text-align: center; position: relative; z-index: 999;}
+			menu a {font-size: larger;}
+			menu li {display: inline; }
+			menu li::after {content: " || ";}
+			menu li:last-child::after {content: "";}
+			.logo {display: inline-block; position: fixed; top: 0; left: 1%; z-index: 1;}
+			.outer { background-color: #4d524e; padding: 10px; font-size: 130%; color: #a5b012; border-radius: 25px;}
+			.outputs {color:#1da1de; }
+			.outputs::before {content: "results in"; color: #12b086; }
+			hr.section-seperator {margin: auto; width: 95%; margin-bottom: 30px; color: #12b086; }
+			.slim {color: #b0123c; display: inline;}
+			.slim-details h3 {display: inline; font-size: 100%; }
+			details.slim-details {margin-bottom: 10px;}
+			details.slim-details:last-child {margin-bottom: 0px;}
+			@media (max-width: 800px) {
+				h1.intro { font-size: 100%;}
+				div.catch_line { font-size: 85%;}
+				div.intro { font-size: 100%;}
+			}
 		</style>
 	</head>
+	<body>
+		<menu>
+    <li><a href="/">Slim</a></li>
+    <li><a href="/slim.view/">Slim.View</a></li>
+    <li><a href="/slim.generator/">Slim.Generator</a></li>
+</menu>
 
-<body>
-	<div class="example">
-		<blockquote>
-			<code><pre>&lt;h1 class="slim"&gt;Welcome to &#123;&#123;program.name&#125;&#125;&lt;h1&gt;</pre></code>
-			<p class="outputs"></p>
-		</blockquote>
-		<h1 class="intro">Welcome to <div class="slim">Slim.View</div></h1>
-		<div class="intro" id="by_line">A Typescript HTML rendering engine</div>
-		<div class="intro">
-			<p>Inspired by Deno remote imports; there is now a rendering engine that supports remote view inclusion.</p>
-			<p>With Slim.View it is possible to import HTML assets from either remote locations on the Web or from the local file system.</p>
-			<p>The file you are now reading was compiled using Slim.View and multiple include files,
-				which can be found <a href="https://github.com/greergan/slim.view/tree/dev/examples" target="new">here</a>.
-			</p>
-			<p>All examples use <a href="https://raw.githubusercontent.com/greergan/slim.view/dev/examples/model.json" target="new">this</a> JSON file.</p>
-			<p class="description">You can run this example remotely using Deno and the following command</p>
+		<div class="content">
+<h1 class="intro">Welcome to <div class="slim">Slim.View</div></h1>
+<div class="catch_line">A Typescript HTML rendering engine</div>
+<div class="intro">
+	<p>Inspired by Deno remote imports; there is now a rendering engine that supports remote view inclusion.
+		With Slim.View it is possible to import HTML assets from either remote locations on the Web or from the local file system.
+	</p>
+	<p>Use Slim.View as part of a Typescript web server stack or as part of a static website stack.
+		<a href="/slim.generator">Slim.Generator</a> is an example of a static site generator.</p>
+</div>
+<hr class="section-seperator"/>
+<details class="slim-details"><summary><h3>Variable substitution</h3></summary>
+<p class="description">Substitute tokens for values found in a JSON model.</p>
 <blockquote class="outer">
-	<blockquote><code>deno run --allow-net --allow-read https://raw.githubusercontent.com/greergan/slim.view/dev/examples/remote_welcome.ts</code></blockquote>
-	<blockquote>This is a dev version</blockquote>
-</blockquote>
-		</div>
+	<blockquote><code>Hello I am &#123;&#123;page.title&#125;&#125;</code></blockquote>
+	<div class="outputs">
+		<blockquote>Hello I am Slim.View</blockquote>
 	</div>
-	<details class="example"><summary><h3>Comments</h3></summary>
-<div>
-	<p class="description">Prevent statement and substitution processing</p>
-	<blockquote class="outer">
-		<p>Comment out a variable substitution</p>
-		<blockquote><code>&#123;# &#123;&#123;property&#125;&#125; #&#125;</code></blockquote>
-		<p class="outputs"></p>
-		<blockquote>&lt;!-- &#123;# &#123;#property#&#125; #&#125; --&gt;</blockquote>
-		<!-- {# {#property#} #} -->
-		<p>Comment out a complex statement</p>
-		<blockquote><code>&#123;# &#123;% for model="users-0" view="partials/user" %&#125; #&#125;</code></blockquote>
-		<p class="outputs"></p>
-		<blockquote>&lt;!-- &#123;# &#123;# for model="users-0" view="partials/user" #&#125; #&#125; --&gt;</blockquote>
-		<!-- {# {# for model="users-0" view="partials/user" #} #} -->
-		<blockquote class="description">View page source in your browser to see how these comments look</blockquote>
+</blockquote>
+</details>
+<details class="slim-details"><summary><h3>Namespace</h3></summary>
+<p class="description">A variable supplied when a new view is created. This variable is prepended to all relative paths found inside of include statements.</p>
+<p>The "file" protocol.</p>
+<blockquote class="outer">
+	<blockquote><code>file:///path/to/website/root</code></blockquote>
+</blockquote>
+<p>The "http" protocol.</p>
+<blockquote class="outer">
+	<blockquote><code>http://greergan.github.io</code></blockquote>
+</blockquote>
+<p>The "https" protocol.</p>
+<blockquote class="outer">
+	<blockquote><code>https://greergan.github.io</code></blockquote>
+</blockquote></details>
+<details class="slim-details"><summary><h3>Includes</h3></summary>
+<p class="description">Include view templates whithin any HTML document. The "view" tag can contain either relative or absolute URLs.
+	The view namespace is prepended to each relative path.
+</p>
+<p>Include reusable &lt;head&gt; template which may also contain it's own include files or other reusable site definitions.
+	This type of template inclusion can be used in each top level page of a website.</p>
+<blockquote class="outer">
+	<blockquote><code>&lt;include view="includes/head.html"&gt;</code></blockquote>
+</blockquote>
+<p>Include partial view templates. This is an arbitray concent. The following examples includes small,
+	specific, html code based on the idea that a top level file will benefit from including smaller chunks of HTML code.
+	The following "partials" are used to build the current page you are viewing.
+</p>
+<blockquote class="outer">
+	<blockquote>
+		<code>&lt;include view="partials/slim.view/variable_substitution.html"&gt;</code><br>
+		<code>&lt;include view="partials/slim.view/view_includes.html"&gt;</code>
 	</blockquote>
-</div></details>
-	<details class="example"><summary><h3>Variable substitution</h3></summary>
-<div class="example">
-	<p class="description">Substitute tokens for values found in a JSON model</p>
-	<blockquote class="outer">
-		<blockquote><code>Hello &#123;&#123;n1me&#125;&#125; I am &#123;&#123;program.name&#125;&#125;</code></blockquote>
-		<p class="outputs"></p>
-		<blockquote>Hello Spiffy Slim.view user I am Slim.View</blockquote>
+</blockquote>
+<p>Include standard document &lt;footer&gt;, bottom of page templates and closing of site level HTML objects.</p>
+<blockquote class="outer">
+	<blockquote><code>&lt;include view="includes/foot.html"&gt;</code></blockquote>
+</blockquote>
+</details>
+<details class="slim-details"><summary><h3>Statements</h3></summary>
+<p class="description">Render views or html fragments using "with" or "foreach" statements.
+	Statements are called using positional arguments and can span multiple lines.</p>
+<blockquote class="outer">
+	<blockquote><code>[with|foreach] model="model" view="path/to/view" | html_fragment</code></blockquote>
+</blockquote>
+<p>with statement - model and view</p>
+<blockquote class="outer">
+	<blockquote><code>&#123;% with model="users[1]" view="partials/slim.view/user.html" %&#125;</code></blockquote>
+	<div class="outputs"><blockquote><p>Carrie Fisher is an actor</p></blockquote></div>
+</blockquote>
+<p>with statement - model and html fragment</p>
+<blockquote class="outer">
+	<blockquote>
+
+<code><pre>&#123;%
+    with model="users[2]"
+        &lt;p&gt; &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;/p&gt;
+%&#125;</pre></code>
 	</blockquote>
-</div></details>
-	<details class="example"><summary><h3>View includes</h3></summary>
-<div class="example">
-	<p class="description">Include views at view compile time, prior to rendering</p>
-	<blockquote class="outer">
-		<p>Include standard document head information</p>
-		<blockquote><code>&lt;include view="includes/header"&gt;</code></blockquote>
-		<p>Include partial views</p>
+	<div class="outputs"><blockquote> <p>Harry Harrison is an author</p></blockquote></div>
+</blockquote>
+<p>foreach statement - model and view</p>
+<blockquote class="outer">
+	<blockquote><code>&#123;% foreach model="users" view="partials/slim.view/user.html" %&#125;</code></blockquote>
+	<div class="outputs"><blockquote><p>Harrison Ford is an actor</p><p>Carrie Fisher is an actor</p><p>Harry Harrison is an author</p><p>Robert Asprin is an author</p></blockquote></div>
+</blockquote>
+<p>foreach statement - model and html fragment</p>
+<blockquote class="outer">
+	<blockquote>
+<code><pre>&#123;%
+    foreach model="users"
+        &lt;p&gt; &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;/p&gt;
+%&#125;</pre></code>
+	</blockquote>
+	<div class="outputs">
 		<blockquote>
-			<code>&lt;include view="partials/simple_variables"&gt;</code><br>
-			<code>&lt;include view="partials/template_includes"&gt;</code>
+			<p>Harrison Ford is an actor</p><p>Carrie Fisher is an actor</p><p>Harry Harrison is an author</p><p>Robert Asprin is an author</p>
 		</blockquote>
-		<p>Include standard document foot information</p>
-		<blockquote><code>&lt;include view="includes/foot"&gt;</code></blockquote>
-	</blockquote>
-	<ul class="bullet">
-		<li>Only .html files are supported</li>
-		<li>You get to decide directory names</li>
-		<li>Each included view can also include one or more additional views</li>
-		<li class="error">No need for you to include the file extension in the statement. Things will fail if you do. </li>
-	</ul>
-</div></details>
-	<details class="example"><summary><h3>For statements</h3></summary>
-<div class="example">
-	<p class="description">Render views or html fragments using a for loop</p>
+	</div>
+</blockquote>
+</details>
+<details class="slim-details"><summary><h3>Filters</h3></summary>
+<div>
+	<p class="description">Filter result sets using <a href="https://en.wikipedia.org/wiki/Polish_notation" target=_new_window>Polish Notation</a> style functions</p>
+    <p>Comparative functions</p>
 	<blockquote class="outer">
-		<p>for statement with model</p>
-		<code><pre>
-    &#123;%
-        for model="users-0"
-            &lt;p&gt;User name is: &#123;&#123;name&#125;&#125;&lt;/p&gt;
-    %&#125;</pre></code>
+		<p>equal(model:object, )</p>
+		<blockquote><code></code></blockquote>
+        <blockquote><code>&#123;%include%&#125;</code></blockquote>
 		<p class="outputs"></p>
-		<blockquote>
-			{% for model="users-0"
-					<p>User name is: </p>
-			%}</blockquote>
-		<p>for statement with model and view</p>
-		<blockquote><code>&#123;% for model="users-0" view="partials/user" %&#125;</code></blockquote>
+        <blockquote><code></code></blockquote>
+    </blockquote>
+    <p>Inclusion/Exclusion functions</p>
+	<blockquote class="outer">
+		<p>and()</p>
+		<blockquote><code></code></blockquote>
+        <blockquote><code>&#123;%include%&#125;</code></blockquote>
 		<p class="outputs"></p>
-		<blockquote>{% for model="users-0" view="partials/user" %}</blockquote>
+        <blockquote><code></code></blockquote>
+
+		<p>or()</p>
+		<blockquote><code></code></blockquote>
+		<p class="outputs"></p>
+		<p>not()</p>
+		<blockquote><code></code></blockquote>
+		<p class="outputs"></p>
+		<p>contains()</p>
+		<blockquote><code></code></blockquote>
+		<p class="outputs"></p>
 	</blockquote>
 </div></details>
-	<details class="example"><summary><h3>Examples</h3></summary>
+<details class="slim-details"><summary><h3>Comments</h3></summary>
+<p class="description">Prevent statement and substitution processing.</p>
+<p>Comment with out variable substitution.</p>
+<blockquote class="outer">
+	<blockquote><code>&#123;#  &#123;&#123;page.title&#125;&#125; #&#125;</code></blockquote>
+	<div class="outputs">
+		<blockquote>&lt;!-- page.title --&gt;</blockquote>
+		<!--  page.title  -->
+	</div>
+	<div>View page source in your browser to see results</div>
+</blockquote>
+<p>Comment a complex statement.</p>
+<blockquote class="outer">
+	<blockquote><code>&#123;# &#123;% foreach model="users" view="partials/slim.view/user.html" %&#125; #&#125;</code></blockquote>
+	<div class="outputs">
+		<blockquote>&lt;!-- foreach model="users" view="partials/slim.view/user.html" --&gt;</blockquote>
+		<!--   foreach model="users-0" view="partials/slim.view/user.html"   -->
+	</div>
+	<div>View page source in your browser to see results</div>
+</blockquote></details>
+<details class="slim-details"><summary><h3>Examples</h3></summary>
 <div class="example">
 	<p class="description">Typescript code using remote assets</p>
 	<blockquote class="outer">
 		<p class="description">Save the following code to a file called test.ts</p>
-		<blockquote><code>import { debug, error, trace, todo, SlimView } from "https://raw.githubusercontent.com/greergan/slim.view/dev/src/mod.ts";</code></blockquote>
-		<blockquote><code>const view:SlimView = new SlimView("https://raw.githubusercontent.com/greergan/slim.view/dev/examples/");</code></blockquote>
+		<blockquote><code>import { debug, error, trace, todo, SlimView } from "https://raw.githubusercontent.com/greergan/slim.view//mod.ts";</code></blockquote>
+		<blockquote><code>const view:SlimView = new SlimView("https://raw.githubusercontent.com/greergan/slim//website/");</code></blockquote>
 		<blockquote><code>const model_string:string = await (await  fetch('https://raw.githubusercontent.com/greergan/slim.view/dev/examples/model.json')).text();</code></blockquote>
-		<blockquote><code>const html_results = await view.render(JSON.parse(model_string), "https://raw.githubusercontent.com/greergan/slim.view/dev/examples/welcome");</code></blockquote>
+		<blockquote><code>const html_results = await view.render(JSON.parse(model_string), "https://raw.githubusercontent.com/greergan/slim//website/slim_views");</code></blockquote>
 		<blockquote><code>new debug({message:"html_results", value:html_results});</code></blockquote>
 		<blockquote><code>const message:string = "One of several forms of communication";</code></blockquote>
 		<blockquote><code>new trace({message:"this is a trace message"}, message);</code></blockquote>
@@ -134,15 +213,12 @@
 		<blockquote><code>new todo({message:"under Mac and Linux", value:"deno run --allow-net --allow-read test.ts > output.html"});</code></blockquote>
 		<p class="description">deno run --allow-net --allow-read test.ts > output.html</p>
 	</blockquote>
-	<ul class="bullet">
-		<li>Only .html files are supported</li>
-		<li>You get to decide directory names</li>
-		<li>Each included view can also include one or more additional views</li>
-		<li class="error">No need for you to include the file extension in the statement. Things will fail if you do. </li>
-	</ul>
 </div></details>
-</body>
-	<footer class="copyright">
-		Copyright &copy; 2022 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
-	</footer>
+			<footer class="copyright">
+				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
+			</footer>
+		</div>
+		</div> <!-- class="content" is now closed -->
+	</body>
+	<img class="logo" src="/assets/images/logo.png"/>
 </html>
