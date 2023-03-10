@@ -40,6 +40,8 @@
     <li><a href="/slim.view/">Slim.View</a></li>
     <li><a href="/slim.utilities/">Slim.Utilities</a></li>
     <li><a href="/slim.generator/">Slim.Generator</a></li>
+    <li><a href="/slim.objects/">Slim.Objects</a></li>
+    <li><a href="/slim.editor/">Slim.Editor</a></li>
 </menu>
 
 		<div class="content">
@@ -69,6 +71,32 @@
 </div>
 <hr class="section-seperator"/>
 <details class="slim-details">
+    <summary><h3>Slim</h3></summary>
+    <p class="description"><a href="/">Slim</a> is a Typescript platform written in C++. It uses the Google V8 engine as its only 3rd party dependancy.
+        Both Typescript and Javascript are treated as first class languages. Slim only supports the "import" statement for module inclusion.
+        Slim deliberately ignores the "require" statement.
+    </p>
+    <div>
+        <p>Slim ships with a collection of Typescript modules builtin.</p>
+        <ul>
+            <li>slim.view</li>
+            <li>slim.objects</li>
+            <li>slim.utilities</li>
+        </ul>
+    </div>
+    <div>
+        <p>Slim ships with a collection of features implemented in the Slim server.</p>
+        <ul>
+            <li>A colorized, highly configurable console impementation.</li>
+            <li>A logging system which uses the server rsyslog system which is also configurable at the server level.</li>
+            <li>A shared cache system.</li>
+            <li>A http router implemention.</li>
+            <li>A http session implemention.</li>
+            <li>A http server implemention.</li>
+        </ul>
+    </div>
+</details>
+<details class="slim-details">
     <summary><h3>Slim.View</h3></summary>
     <p class="description"><a href="/slim.view/">Slim.View</a> is a Typescript HTML rendering engine.</p>
 </details>
@@ -78,8 +106,18 @@
 </details>
 <details class="slim-details">
     <summary><h3>Slim.Generator</h3></summary>
-    <p class="description"><a href="/slim.generator/">Slim.Generator</a> is a Typescript static website generator
+    <p class="description"><a href="/slim.generator/">Slim.Generator</a> is a Typescript static website generator.
         that uses <a href="/slim.view/">Slim.View</a> as its rendering engine.
+    </p>
+</details>
+<details class="slim-details">
+    <summary><h3>Slim.Objects</h3></summary>
+    <p class="description"><a href="/slim.objects/">Slim.Objects</a> is a set of currated reusable class objects.
+    </p>
+</details>
+<details class="slim-details">
+    <summary><h3>Slim.Editor</h3></summary>
+    <p class="description"><a href="/slim.editor/">Slim.Editor</a> is a <a href="/slim.objects/">Slim.Objects</a> editor.
     </p>
 </details>
 			<footer class="copyright">
