@@ -1,0 +1,33 @@
+<summary><h3>Git command line flag --git</h3></summary>
+<p class="description">The --git command line flag is optional and specifies the path to a locally stored git configuration file.
+    This configuration cannot be part of the website configuration file if it is stored in a GitHub repository. GitHub has a process that
+    scans repositories looking for GitHub access keys.
+</p>
+
+<blockquote class="outer">
+    <blockquote><code>
+<pre>{
+    "access_keys": {
+        "github": {
+            "repositories": {
+                "input": {
+                    "user": string,
+                    "repository": string,
+                    "access_key": hash
+                }
+                "output": {
+                    "user": string,
+                    "repository": string,
+                    "access_key": hash
+                }
+            }
+        }
+    }
+}</pre>
+    </code></blockquote>
+</blockquote>
+Slim example with --git.
+<blockquote class="outer">
+    <blockquote><code><div>slim https://greergan.github.io/slim.generator/generator.ts --git git_configuration.json \</div>
+         https://greergan.github.io/models/website.json</code></blockquote>
+</blockquote>

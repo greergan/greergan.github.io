@@ -1,0 +1,15 @@
+<include view="includes/head.html">
+<h1 class="intro">Welcome to <div class="slim">{{page.title}}</div></h1>
+<div class="catch_line">A Typescript static website generator</div>
+<div class="intro">
+    <p>
+        Slim.Generator is a highly configurable static website generator written in 100% pure Typescript. It uses <a href ="/slim.view">Slim.View</a>
+        as its HTML rendering engine and supports both <a href="https://deno.land" target="deno">Deno</a> and <a href="/">Slim</a> Typescript platforms.
+    </p>
+</div>
+<hr class="section-seperator"/>
+<details class="slim-details"><include view="partials/slim.generator/command_line_options.html"></details>
+<details class="slim-details"><include view="partials/slim.generator/git_command_line_flag.html"></details>
+<details class="slim-details"><include view="partials/slim.generator/configuration_options.html"></details>
+<details class="slim-details"><include view="partials/slim.generator/configuration_example.html"></details>
+<include view="includes/foot.html">

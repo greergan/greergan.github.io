@@ -1,0 +1,44 @@
+<summary><h3>Command line arguments</h3></summary>
+<p class="description">The generate script accepts multiple command line argument. The first argument must be the path to a JSON configuration file
+    which must be in one of the below forms.
+</p>
+<p class="description">--git path/to/gitaccount.json command line flag is optional.</p>
+<p class="description">All addition command line arguments must represent file names which will be matched to specific configuration page objects.</p>
+
+A relative path.
+<blockquote class="outer">
+    <blockquote><code>path/to/json_file.json</code></blockquote>
+    <blockquote><code>./path/to/json_file.json</code></blockquote>
+    <blockquote><code>./path/to/json_file.json index.html</code></blockquote>
+    <blockquote><code>./path/to/json_file.json index.html slim.view.html</code></blockquote>
+</blockquote>
+An absolute path.
+<blockquote class="outer">
+    <blockquote><code>/path/to/json_file.json</code></blockquote>
+</blockquote>
+The "file" protocol.
+<blockquote class="outer">
+    <blockquote><code>file:///path/to/json_file.json</code></blockquote>
+</blockquote>
+The "http" protocol.
+<blockquote class="outer">
+    <blockquote><code>http://path/to/json_file.json</code></blockquote>
+</blockquote>
+The "https" protocol.
+<blockquote class="outer">
+    <blockquote><code>https://path/to/json_file.json</code></blockquote>
+</blockquote>
+Slim example.
+<blockquote class="outer">
+    <blockquote><code>slim https://greergan.github.io/slim.generator/generator https://greergan.github.io/models/website.json</code></blockquote>
+</blockquote>
+Slim example with --git.
+<blockquote class="outer">
+    <blockquote><code><div>slim https://greergan.github.io/slim.generator/generator.ts --git git_configuration.json \</div>
+         https://greergan.github.io/models/website.json</code></blockquote>
+</blockquote>
+Deno example.
+<blockquote class="outer">
+    <blockquote><code><div>deno --allow-net --allow-read --allow-write run \</div>
+        https://greergan.github.io/slim.generator/generator.ts https://greergan.github.io/models/website.json</code></blockquote>
+</blockquote>

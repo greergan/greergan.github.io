@@ -1,0 +1,19 @@
+{
+	"page": {
+		"title": "Slim.View"
+	},
+	"examples": {
+		"name": "Spiffy Slim.View user",
+		"one": 1,
+		"friends": {
+			"you": "you"
+		},
+		"users-1": [
+			{"name": "Harry Harrison", "index":0},
+			{"name": "George Floyd", "index":1},
+			{"name": "Micheal Scott Key", "index":2},
+			{"name": "Harrison Ford", "index":3},
+			{"name": "Harry Harrison", "index":4}
+		]
+	}
+}

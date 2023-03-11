@@ -1,0 +1,20 @@
+<summary><h3>Comments</h3></summary>
+<p class="description">Prevent statement and substitution processing.</p>
+<p>Comment with out variable substitution.</p>
+<blockquote class="outer">
+	<blockquote><code>&#123;#  &#123;&#123;page.title&#125;&#125; #&#125;</code></blockquote>
+	<div class="outputs">
+		<blockquote>&lt;!-- page.title --&gt;</blockquote>
+		{# {{page.title}} #}
+	</div>
+	<div>View page source in your browser to see results</div>
+</blockquote>
+<p>Comment a complex statement.</p>
+<blockquote class="outer">
+	<blockquote><code>&#123;# &#123;% foreach model="users" view="partials/slim.view/user.html" %&#125; #&#125;</code></blockquote>
+	<div class="outputs">
+		<blockquote>&lt;!-- foreach model="users" view="partials/slim.view/user.html" --&gt;</blockquote>
+		{# {% foreach model="users-0" view="partials/slim.view/user.html" %} #}
+	</div>
+	<div>View page source in your browser to see results</div>
+</blockquote>

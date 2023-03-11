@@ -1,0 +1,43 @@
+<summary><h3>Statements</h3></summary>
+<p class="description">Render views or html fragments using "with" or "foreach" statements.
+	Statements are called using positional arguments and can span multiple lines.</p>
+<blockquote class="outer">
+	<blockquote><code>[with|foreach] model="model" view="path/to/view" | html_fragment</code></blockquote>
+</blockquote>
+<p>with statement - model and view</p>
+<blockquote class="outer">
+	<blockquote><code>&#123;% with model="users[1]" view="partials/slim.view/user.html" %&#125;</code></blockquote>
+	<div class="outputs"><blockquote>{% with model="users[1]" view="partials/slim.view/user.html" %}</blockquote></div>
+</blockquote>
+<p>with statement - model and html fragment</p>
+<blockquote class="outer">
+	<blockquote>
+
+<code><pre>&#123;%
+    with model="users[2]"
+        &lt;p&gt; &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;/p&gt;
+%&#125;</pre></code>
+	</blockquote>
+	<div class="outputs"><blockquote>{% with model="users[2]" <p>{{first_name}} {{last_name}} is an {{profession}}</p> %}</blockquote></div>
+</blockquote>
+<p>foreach statement - model and view</p>
+<blockquote class="outer">
+	<blockquote><code>&#123;% foreach model="users" view="partials/slim.view/user.html" %&#125;</code></blockquote>
+	<div class="outputs"><blockquote>{% foreach model="users" view="partials/slim.view/user.html" %}</blockquote></div>
+</blockquote>
+<p>foreach statement - model and html fragment</p>
+<blockquote class="outer">
+	<blockquote>
+<code><pre>&#123;%
+    foreach model="users"
+        &lt;p&gt; &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;/p&gt;
+%&#125;</pre></code>
+	</blockquote>
+	<div class="outputs">
+		<blockquote>
+			{% foreach model="users"
+				<p>{{first_name}} {{last_name}} is an {{profession}}</p>
+			%}
+		</blockquote>
+	</div>
+</blockquote>

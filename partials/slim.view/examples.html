@@ -1,0 +1,22 @@
+<summary><h3>Examples</h3></summary>
+<div class="example">
+	<p class="description">Typescript code using remote assets</p>
+	<blockquote class="outer">
+		<p class="description">Save the following code to a file called test.ts</p>
+		<blockquote><code>import { debug, error, trace, todo, SlimView } from "https://raw.githubusercontent.com/greergan/slim.view/{{tag-branch}}/mod.ts";</code></blockquote>
+		<blockquote><code>const view:SlimView = new SlimView("https://raw.githubusercontent.com/greergan/slim/{{tag-branch}}/website/");</code></blockquote>
+		<blockquote><code>const model_string:string = await (await  fetch('https://raw.githubusercontent.com/greergan/slim.view/dev/examples/model.json')).text();</code></blockquote>
+		<blockquote><code>const html_results = await view.render(JSON.parse(model_string), "https://raw.githubusercontent.com/greergan/slim/{{tag-branch}}/website/slim_views");</code></blockquote>
+		<blockquote><code>new debug({message:"html_results", value:html_results});</code></blockquote>
+		<blockquote><code>const message:string = "One of several forms of communication";</code></blockquote>
+		<blockquote><code>new trace({message:"this is a trace message"}, message);</code></blockquote>
+		<blockquote><code>new error({message:"this is an error with a value", value:message});</code></blockquote>
+		<blockquote><code>new todo({message: "master Slim"});</code></blockquote>
+		<blockquote><code>new debug({message: "these methods create messages with corresponding file locations in the form of line numbers"});</code></blockquote>
+		<blockquote><code>new trace({message: "all of these methods write to Deno.stderr"});</code></blockquote>
+		<blockquote><code>new error({message: "you can therefor capture the results of a render into a file"})</code></blockquote>
+		<blockquote><code>console.log(html_results);</code></blockquote>
+		<blockquote><code>new todo({message:"under Mac and Linux", value:"deno run --allow-net --allow-read test.ts > output.html"});</code></blockquote>
+		<p class="description">deno run --allow-net --allow-read test.ts > output.html</p>
+	</blockquote>
+</div>

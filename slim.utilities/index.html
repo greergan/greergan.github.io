@@ -4,7 +4,7 @@
 		<link rel="icon" type="image/png" href="/assets/images/favicon.ico">
 		<meta charset="utf-8">
 		<style type="text/css">
-			html { color: #D4D4D4; background-color: #303031; padding: 15px; }
+			html { color: #D4D4D4; background-color: #303031; padding: 15px; font-size: 15px;}
 			a {color: #a14318; text-decoration: none;}
 			code { font-size: 130%;}
 			div.content { margin: auto; width:75%; background-color: #232324; border-radius: 25px; padding: 2%; }
@@ -21,7 +21,7 @@
 			menu li::after {content: " || ";}
 			menu li:last-child::after {content: "";}
 			.logo {display: inline-block; position: fixed; top: 40px; left: 1%; z-index: 950;}
-			.outer { background-color: #4d524e; padding: 10px; font-size: 130%; color: #a5b012; border-radius: 25px; }
+			.outer { background-color: #4d524e; padding: 10px; color: #a5b012; border-radius: 25px; }
 			.outputs {color:#1da1de; }
 			.outputs::before {content: "results in"; color: #12b086; }
 			hr.section-seperator {margin: auto; width: 95%; margin-bottom: 30px; color: #12b086; }
@@ -29,8 +29,9 @@
 			.slim-details h3 {display: inline; font-size: 100%; }
 			details.slim-details {margin-bottom: 10px;}
 			details.slim-details:last-child {margin-bottom: 0px;}
+			div.status{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: #303031; z-index: 901;}
 			@media screen and (max-width: 1000px) {
-				menu a {font-size: 175%;}
+				menu a {font-size: 15px;}
 			}
 		</style>
 	</head>
@@ -44,6 +45,7 @@
     <li><a href="/slim.editor/">Slim.Editor</a></li>
 </menu>
 
+		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
 		<div class="content">
 <h1 class="intro">Welcome to <div class="slim">Slim.Utilities</div></h1>
 <div class="catch_line">A set of reusable Typescript functions</div>

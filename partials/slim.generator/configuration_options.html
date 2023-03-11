@@ -1,0 +1,56 @@
+<summary><h3>Configuration options</h3></summary>
+<p class="description">The website_configuration.json file can contian the following options. Some options are required while others are optional.
+</p>
+Top level configuration properties
+<blockquote class="outer">
+    <blockquote><code>
+<pre>{
+    "output_to": path,
+    "namespace": path,
+    "site": object,
+    "copy_to_output": object array,
+    "pages": object array
+}</pre>
+    </code></blockquote>
+</blockquote>
+Site level configuration properties
+<blockquote class="outer">
+    <blockquote><code>
+<pre>"site": {
+    "meta_tags": property array,
+    developer_named_property: any
+}</pre>
+    </code></blockquote>
+</blockquote>
+copy_to_output level configuration properties
+<blockquote class="outer">
+    <blockquote><code>
+<pre>"copy_to_output": [
+    {"path": string},
+    {"path": string, "output": string}
+],</pre>
+    </code></blockquote>
+</blockquote>
+Page level configuration properties
+<blockquote class="outer">
+    <blockquote><code>
+<pre>"pages": [
+    {
+        "input_file": path,
+        "output_file": path,
+        "title": string,
+        "meta_tags": property array,
+        "external_models": object array
+    }
+]</pre>
+    </code></blockquote>
+</blockquote>
+External_models level configuration properties
+<blockquote class="outer">
+    <blockquote><code>
+<pre>"external_models": [
+    {"path": path },
+    {"path": path }
+]</pre>
+    </code></blockquote>
+</blockquote>

@@ -1,0 +1,30 @@
+{
+    "output_to": "./dist",
+    "namespace": "./",
+    "site": {
+        "copyright": {
+            "by": "<a href=\"https://github.com/greergan\" target=_new_window>Jeff Greer</a>",
+            "started_date": "2023"
+        }
+    },
+    "pages": [
+        {
+            "input_file": "pages/index.html",
+            "output_file": "index.html",
+            "title": "Slim"
+        },
+        {
+            "input_file": "pages/slim.view.html",
+            "output_file": "slim.view/index.html",
+            "title": "Slim.View",
+            "external_models": [
+                {"path": "models/users.json"}
+            ]
+        },
+        {
+            "input_file": "pages/slim.generator.html",
+            "output_file": "slim.generator/index.html",
+            "title": "Slim.Generator"
+        }
+    ]
+}

@@ -1,0 +1,68 @@
+<summary><h3>Configuration example</h3></summary>
+<p class="description">The following configuration example is used to generate the Slim website.</p>
+<a href="https://greergan.github.io/models/website.json">https://greergan.github.io/models/website.json</a>
+<blockquote class="outer">
+    <blockquote><code>
+<pre>{
+    "output_to": "./dist",
+    "namespace": "https://greergan.github.io",
+    "copy_to_output": [
+        {"path": "assets"},
+        {"path": "models"},
+        {"path": "pages"},
+        {"path": "partials"},
+        {"path": "includes"},
+        {"path": "../slim.generator/generator.ts", "output": "./"}
+    ],
+    "site": {
+        "meta_tags": [],
+        "copyright": {
+            "by": "<a href=\"https://github.com/greergan\" target=_new_window>Jeff Greer</a>",
+            "started_date": "2023"
+        }
+    },
+    "pages": [
+        {
+            "input_file": "pages/index.html",
+            "output_file": "index.html",
+            "title": "Slim",
+            "meta_tags": []
+        },
+        {
+            "input_file": "pages/slim.view.html",
+            "output_file": "slim.view/index.html",
+            "title": "Slim.View",
+            "external_models": [
+                {"path": "models/actors.json"},
+                {"path": "models/authors.json"}
+            ]
+        },
+        {
+            "input_file": "pages/slim.generator.html",
+            "output_file": "slim.generator/index.html",
+            "title": "Slim.Generator"
+        },
+        {
+            "input_file": "pages/slim.utilities.html",
+            "output_file": "slim.utilities/index.html",
+            "title": "Slim.Utilities"
+        },
+        {
+            "input_file": "pages/slim.objects.html",
+            "output_file": "slim.objects/index.html",
+            "title": "Slim.Objects"
+        },
+        {
+            "input_file": "pages/slim.editor.html",
+            "output_file": "slim.editor/index.html",
+            "title": "Slim.Editor"
+        }
+    ]
+}</pre>
+    </code></blockquote>
+</blockquote>
+Create an output directory and then run this working configuration from that directory.
+<blockquote class="outer">
+    <blockquote><code><div>slim https://greergan.github.io/slim.generator/generator.ts  \</div>
+         https://greergan.github.io/models/website.json</code></blockquote>
+</blockquote>
