@@ -45,6 +45,12 @@ window.SlimConsole = new slim.colorconsole.SlimColorConsole({propogate: true, su
         messageValue:{suppress:false, textColor:"cyan"},
         objectString:{suppress:false}
     },
+    todo:{ suppress:true,
+        level:{suppress:false},
+        lineNumber:{suppress:false,bold:true},
+        fileName:{suppress:false,bold:true},
+        objectString:{suppress:false}
+    },
     error:{stackTrace:{textColor: "red"}}
 });
 SlimConsole.trace({message:"this is a message", value:"this is a value"}, "a string", true, 900, {trace:"object"});
@@ -57,6 +63,6 @@ SlimConsole.info({message: "message", value:"testing from main file"}, "info tes
 SlimConsole.trace("string only trace test", "using multiple strings");
 const regex_test_instance = new regex_test();
 regex_test_instance.debug();
-
+SlimConsole.todo("showing levelString, fileName and lineNumber");
 
 //printf '\e]11;%s\a' '#ff0000'

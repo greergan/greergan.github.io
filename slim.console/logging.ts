@@ -31,14 +31,13 @@ export class LogInformation extends Error implements logging.iLogInformation {
             let break_while: boolean = false;
             while(!break_while) {
                 stack_end_file = stack_array.shift()?.trim();
-                if(stack_end_file?.startsWith("at file:///") || stack_end_file?.startsWith("at http://") || stack_end_file?.startsWith("at https://")) {
-console.log("here ", stack_end_file)
+                if(stack_end_file?.startsWith("at file:") || stack_end_file?.startsWith("at https:") || stack_end_file?.startsWith("at http:")) {
                     break_while = true;
                     this.properties.path = stack_end_file.replace(/^at\s/, '');
                 }
                 else if(!stack_end_file?.startsWith("at Console")) {
                     break_while = true;
-                    const file_info_regex:RegExp = /^at\s(new)*\s*([\w\d_\$\.]+)+\s\((file|https|http:.+)\)/;
+                    const file_info_regex:RegExp = /^at\s(new)*\s*([\w\d_\$\.]+)+\s\((file|https*:.+)\)/;
                     const string_matches = stack_end_file?.match(file_info_regex) || [];
                     if(string_matches && string_matches.length == 4) {
                         if(string_matches[1] == "new") {
@@ -61,7 +60,7 @@ console.log("here ", stack_end_file)
                 }
             }
             const path_string:string = this.properties.path as string || "";
-            const path_elements:Array<string> = path_string.match(/(file:|http:|https:.+):(\d+):\d+/) || [];
+            const path_elements:Array<string> = path_string.match(/(file|https*:.+):(\d+):\d+/) || [];
             if(path_elements.length == 3) {
                 this.properties.fileName = path_elements[1];
                 this.properties.lineNumber = Number(path_elements[2]).toString();
