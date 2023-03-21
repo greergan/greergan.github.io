@@ -1,0 +1,26 @@
+{
+  "name": "slim.comingle",
+  "version": "0.1.0",
+  "description": "Combine multiple json files using last in value assignment.",
+  "main": "comingleSync.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greergan/slim.utilities.git"
+  },
+  "keywords": [
+    "JSON",
+    "merging",
+    "comingle",
+    "Slim"
+  ],
+  "author": "Jeff Greer <greergan@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/greergan/slim.utilities/issues"
+  },
+  "homepage": "https://github.com/greergan/slim.utilities#readme"
+}
