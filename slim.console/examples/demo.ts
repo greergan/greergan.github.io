@@ -43,7 +43,8 @@ window.SlimConsole = new slim.colorconsole.SlimColorConsole({propogate: true, su
         methodName:{suppress:false,bold:true},
         messageText:{suppress:false, textColor:"blue",delimiter:"|"},
         messageValue:{suppress:false, textColor:"cyan"},
-        objectString:{suppress:false}
+        objectString:{suppress:false},
+        stackTrace:{suppress:false, textColor: "red"}
     },
     error:{stackTrace:{textColor: "red"}}
 });
