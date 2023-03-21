@@ -31,6 +31,7 @@ export class LogInformation extends Error implements logging.iLogInformation {
             let break_while: boolean = false;
             while(!break_while) {
                 stack_end_file = stack_array.shift()?.trim();
+console.log(stack_end_file)
                 if(stack_end_file?.startsWith("at file:///") || stack_end_file?.startsWith("at http://") || stack_end_file?.startsWith("at https://")) {
                     break_while = true;
                     this.properties.path = stack_end_file.replace(/^at\s/, '');
