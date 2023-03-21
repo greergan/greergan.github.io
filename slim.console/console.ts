@@ -120,7 +120,7 @@ export class SlimColorConsole implements colorconsole.iConsole {
         printable_string += this.colorize(event.properties.className, configuration.className);
         printable_string += this.colorize(event.properties.methodName, configuration.methodName);
         printable_string += this.colorize(event.properties.fileName, configuration.fileName);
-        printable_string += this.colorize(event.properties.lineNumber.toString() as string, configuration.lineNumber);
+        printable_string += this.colorize(event.properties.lineNumber, configuration.lineNumber);
         printable_string += this.colorize(event.properties.messageText, configuration.messageText);
         printable_string += this.colorize(event.properties.messageValue, configuration.messageValue);
         printable_string += this.colorize(event.properties.objectString, configuration.objectString);
