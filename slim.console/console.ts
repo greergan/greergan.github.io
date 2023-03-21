@@ -113,6 +113,14 @@ export class SlimColorConsole implements colorconsole.iConsole {
         return colored_string;
     }
     print (event:LogInformation, configuration:configuration.iConfiguration): void {
+
+if('SLIMOVERRIDES' in event.overrides) {
+    if('stackTrace' in event.overrides.SLIMOVERRIDES) {
+        configuration.stackTrace_original = slim.utilities.comingleSync([{},configuration.stackTrace]);
+        configuration.stackTrace = slim.utilities.comingleSync([configuration.stackTrace, event.overrides.SLIMOVERRIDES.stackTrace]);
+    }
+}
+
         let printable_string:string = "";
         const levelName:string = configuration!.level!['levelName'] as string;
         printable_string += this.colorize(levelName, configuration.level);
@@ -127,6 +135,11 @@ export class SlimColorConsole implements colorconsole.iConsole {
         printable_string += this.colorize(event.properties.stackTrace, configuration.stackTrace);
         if(Deno !== undefined && printable_string.length > 0) {
             Deno.stderr.writeSync(new TextEncoder().encode(`${printable_string}\n`));
+        }
+        if('SLIMOVERRIDES' in event.overrides) {
+            if('stackTrace' in event.overrides.SLIMOVERRIDES) {
+                configuration.stackTrace = slim.utilities.comingleSync([configuration.stackTrace, configuration.stackTrace_original]);
+            }
         }
     }
 }

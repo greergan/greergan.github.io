@@ -1,7 +1,9 @@
 import { logging } from "./logging.d.ts";
+import * as slim from "./slim_modules.ts";
 export class LogInformation extends Error implements logging.iLogInformation {
     name:string = "";
     message:string = "";
+    overrides:slim.types.iKeyValueAny = {};
     properties:logging.iPrintValues = {} as logging.iPrintValues;
     constructor(args:Array<any>) {
         super();
@@ -11,6 +13,9 @@ export class LogInformation extends Error implements logging.iLogInformation {
             if(typeof arg == 'object' && index == 0 && 'message' in arg) {
                 this.properties.messageText = arg.message;
                 this.properties.messageValue = arg.value;
+            }
+            else if(typeof arg == 'object' && 'SLIMOVERRIDES' in arg) {
+                this.overrides = arg;
             }
             else {
                 this.properties.objectString += JSON.stringify(arg) + ", ";
@@ -35,9 +40,9 @@ export class LogInformation extends Error implements logging.iLogInformation {
                     break_while = true;
                     this.properties.path = stack_end_file.replace(/^at\s/, '');
                 }
-                else if(!stack_end_file?.startsWith("at Console")) {
+                else {
                     break_while = true;
-                    const file_info_regex:RegExp = /^at\s(new)*\s*([\w\d_\$\.]+)+\s\((file|https*:.+)\)/;
+                    const file_info_regex:RegExp = /^at\s(new)*\s*([\w\d_\$\.]+)\s\((.+)\)/;
                     const string_matches = stack_end_file?.match(file_info_regex) || [];
                     if(string_matches && string_matches.length == 4) {
                         if(string_matches[1] == "new") {

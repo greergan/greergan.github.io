@@ -1,3 +1,4 @@
+import * as slim from "./slim_modules.ts";
 export module logging {
     export interface iPrintValues {
         levelName?:string;
@@ -14,6 +15,7 @@ export module logging {
     export interface iLogInformation extends Error {
         name:string;
         message:string;
+        overrides:slim.types.iKeyValueAny;
         properties:logging.iPrintValues;
     }
     export interface iLogInformationClass {
