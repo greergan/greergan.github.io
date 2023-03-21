@@ -1,7 +1,7 @@
 {
   "name": "slim.comingle",
-  "version": "0.1.0",
-  "description": "Combine multiple json files using last in value assignment.",
+  "version": "0.1.2",
+  "description": "Combine multiple json files using last in value assignment with deep copy.",
   "main": "comingleSync.js",
   "type": "module",
   "scripts": {
@@ -13,8 +13,9 @@
   },
   "keywords": [
     "JSON",
-    "merging",
+    "object merging",
     "comingle",
+    "deep copy",
     "Slim"
   ],
   "author": "Jeff Greer <greergan@gmail.com>",
