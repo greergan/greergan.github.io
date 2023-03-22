@@ -22,18 +22,18 @@ export async function is_file(url:string): Promise<boolean> {
     return isFile;
 }
 export function is_file_url(url:string): boolean {
-    SlimConsole.trace();
+    SlimConsole.trace(url);
     return (url.startsWith("file:///")) ? true: false;
 }
 export function is_http_url(url:string): boolean {
-    SlimConsole.trace();
+    SlimConsole.trace(url);
     return (url.startsWith("http://")) ? true: false;
 }
 export function is_https_url(url:string): boolean {
-    SlimConsole.trace();
+    SlimConsole.trace(url);
     return (url.startsWith("https://")) ? true: false;
 }
 export function is_valid_url(url:string): boolean {
-    SlimConsole.trace();
+    SlimConsole.trace(url);
     return (is_file_url(url) || is_http_url(url) || is_https_url(url)) ? true: false;
 }
