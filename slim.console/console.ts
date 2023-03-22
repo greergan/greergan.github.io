@@ -113,6 +113,13 @@ export class SlimColorConsole implements colorconsole.iConsole {
         return colored_string;
     }
     print (event:LogInformation, configuration:configuration.iConfiguration): void {
+        if('SlimConsoleSuppression' in window) {
+            if('todo' in SlimConsoleSuppression && configuration.level.levelName.toLowerCase() == 'todo') {
+                if(SlimConsoleSuppression.todo) {
+                    return;
+                }
+            }
+        }
 
 if('SLIMOVERRIDES' in event.overrides) {
     if('stackTrace' in event.overrides.SLIMOVERRIDES) {
