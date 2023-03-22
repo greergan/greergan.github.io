@@ -1,6 +1,6 @@
 {
-    "output_to": "./dist",
-    "namespace": "./",
+    "output_to": "file:///home/greergan/mnt/host/src/greergan.github.io",
+    "namespace": "http://192.168.122.59",
     "copy_to_output": [
         {"path": "assets"},
         {"path": "models"},
