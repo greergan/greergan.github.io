@@ -2,7 +2,7 @@
 import * as slim from "./slim_modules.ts";
 import { colorconsole } from "./console.d.ts";
 import { configuration } from "./configuration.d.ts";
-import { configure, configurationLevels } from "./configuration.ts";
+import { configure, configurationLevels, configurationSubLevels } from "./configuration.ts";
 import * as colors from "./color.ts";
 import { LogInformation } from "./logging.ts";
 export class SlimColorConsole implements colorconsole.iConsole {
@@ -112,21 +112,23 @@ export class SlimColorConsole implements colorconsole.iConsole {
         }
         return colored_string;
     }
-    print (event:LogInformation, configuration:configuration.iConfiguration): void {
+    print(event:LogInformation, configuration:configuration.iConfiguration): void {
+        const saved_configuration:configuration.iConfiguration = {};
         if('SlimConsoleSuppression' in window) {
-            if('todo' in SlimConsoleSuppression && configuration.level.levelName.toLowerCase() == 'todo') {
-                if(SlimConsoleSuppression.todo) {
+            if(configuration.level.levelName.toLowerCase() in SlimConsoleSuppression) {
+                if(SlimConsoleSuppression[configuration.level.levelName.toLowerCase()]) {
                     return;
                 }
             }
         }
-
-if('SLIMOVERRIDES' in event.overrides) {
-    if('stackTrace' in event.overrides.SLIMOVERRIDES) {
-        configuration.stackTrace_original = slim.utilities.comingleSync([{},configuration.stackTrace]);
-        configuration.stackTrace = slim.utilities.comingleSync([configuration.stackTrace, event.overrides.SLIMOVERRIDES.stackTrace]);
-    }
-}
+        if('SLIMOVERRIDES' in event.overrides) {
+            for(const subLevel of configurationSubLevels) {
+                if(subLevel in event.overrides.SLIMOVERRIDES) {
+                    saved_configuration[subLevel] = slim.utilities.comingleSync([{},configuration[subLevel]]);
+                    configuration[subLevel] = slim.utilities.comingleSync([configuration[subLevel], event.overrides.SLIMOVERRIDES[subLevel]]);
+                }
+            }
+        }
 
         let printable_string:string = "";
         const levelName:string = configuration!.level!['levelName'] as string;
@@ -146,6 +148,14 @@ if('SLIMOVERRIDES' in event.overrides) {
         if('SLIMOVERRIDES' in event.overrides) {
             if('stackTrace' in event.overrides.SLIMOVERRIDES) {
                 configuration.stackTrace = slim.utilities.comingleSync([configuration.stackTrace, configuration.stackTrace_original]);
+            }
+        }
+        if('SLIMOVERRIDES' in event.overrides) {
+            for(const subLevel of configurationSubLevels) {
+                if(subLevel in saved_configuration) {
+                    configuration[subLevel] = slim.utilities.comingleSync([configuration[subLevel], saved_configuration[subLevel]]);
+                    delete saved_configuration[subLevel];
+                }
             }
         }
     }
