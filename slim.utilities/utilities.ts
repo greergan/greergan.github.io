@@ -8,7 +8,7 @@ export async function get_file_contents(file:string): Promise<slim.types.iKeyVal
     try {
         const json:slim.types.iKeyValueAny = JSON.parse(await(await fetch(file)).text());
         if('SlimConsole' in window) {
-            SlimConsole.trace({message:"succeeded"});
+            SlimConsole.trace({message:"succeeded"}, file);
         }
         return json;
     }
