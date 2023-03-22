@@ -1,0 +1,50 @@
+{"propogate": true, "suppress":true, "delimiter":" => ",
+    "level":{"suppress":false,"bold": true},
+    "messageText":{"suppress":false, "textColor":"green","bold": true},
+    "messageValue":{"suppress":false, "textColor":"cyan", "bold": true},
+    "objectString":{"suppress":false, "textColor":"yellow","delimiter":""},
+    "path":{"textColor":"white","dim":true,"suppress":false},
+    "abort":{
+        "propogate": true,
+        "textColor": "bright_white",
+        "bold": true,
+        "suppress": true
+    },
+    "debug":{
+        "className":{"suppress":false,"bold":true},
+        "methodName":{"suppress":false,"bold":true}
+    },
+    "info":{
+        "path":{"suppress":false},
+        "messageText":{"textColor":"bright_red"},
+        "messageValue":{"textColor":"bright_red"}
+    },
+    "trace":{"propogate":true,
+        "className":{"suppress":false},
+        "methodName":{"suppress":false},
+        "stackTrace":{"delimiter": ""}
+    },
+    "log":{
+    },
+    "warn":{
+        "className":{"suppress":false,"bold":true},
+        "methodName":{"suppress":false,"bold":true}
+    },
+    "todo":{
+    },
+    "error":{"stackTrace":{"textColor": "red"}},
+    "levelSuppressions": {
+        "debug":false,
+        "todo":true,
+        "trace":false,
+        "slim.generator": {
+            "debug":true,
+            "trace":true
+        },
+        "slim.utilities": {
+            "debug":true,
+            "todo":true,
+            "trace":true
+        }
+    }
+}
