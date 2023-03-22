@@ -1,9 +1,26 @@
 import { is_file_url, is_valid_url } from "./validations.ts";
+import * as slim from "./slim_modules.ts";
 
 export function get_absolute_file_path(url:string): string|undefined {
     return (is_file_url(url)) ? url.substring(7): undefined;
 }
-
+export async function get_file_contents(file:string): Promise<slim.types.iKeyValueAny|undefined> {
+    try {
+        const json:slim.types.iKeyValueAny = JSON.parse(await(await fetch(file)).text());
+        if('SlimConsole' in window) {
+            SlimConsole.trace({message:"succeeded"});
+        }
+        return json;
+    }
+    catch(e) {
+        if('SlimConsole' in window) {
+            SlimConsole.trace({message:"failed"});
+        }
+        else {
+            new Error("fetch or JSON.parse failed");
+        }
+    }
+}
 export async function get_normalized_url(property:string): Promise<string|undefined> {
     const cwd = await Deno.cwd();
     let normalized_url:string = "";
