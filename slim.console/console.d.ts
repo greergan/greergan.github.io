@@ -4,6 +4,7 @@ import * as slim from "./slim_modules.ts";
 export module colorconsole {
     export interface iConsole {
         configurations:configuration.iConfigurations;
+        levelSuppressions:slim.types.iKeyValueAny;
         assert(): void;
         abort(...args:any): void;
         clear(): void;

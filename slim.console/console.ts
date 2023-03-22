@@ -5,8 +5,15 @@ import { configuration } from "./configuration.d.ts";
 import { configure, configurationLevels, configurationSubLevels } from "./configuration.ts";
 import * as colors from "./color.ts";
 import { LogInformation } from "./logging.ts";
+declare global {
+    var SlimConsole:colorconsole.SlimColorConsole;
+    interface Window {
+        SlimConsole:colorconsole.SlimColorConsole;
+    }
+}
 export class SlimColorConsole implements colorconsole.iConsole {
     configurations:configuration.iConfigurations = {};
+    levelSuppressions:slim.types.iKeyValueAny = {};
     master_configuration:slim.types.iKeyValueAny = {};
     constructor(configuration?:slim.types.iKeyValueAny) {
         const lower_case_levels = configurationLevels.map(element => element.toLowerCase());
@@ -15,6 +22,7 @@ export class SlimColorConsole implements colorconsole.iConsole {
         }
         else {
             this.master_configuration = slim.utilities.copy_ofSync(configuration, {skip:lower_case_levels});
+            this.levelSuppressions = slim.utilities.copy_ofSync(configuration['levelSuppressions']);
         }
         for(const level of configurationLevels) {
             const levelConfiguration = slim.utilities.comingleSync([this.master_configuration, configuration[level.toLowerCase()]], {}) as configuration.iPrintProperties;
@@ -114,10 +122,20 @@ export class SlimColorConsole implements colorconsole.iConsole {
     }
     print(event:LogInformation, configuration:configuration.iConfiguration): void {
         const saved_configuration:configuration.iConfiguration = {};
-        if('SlimConsoleSuppression' in window) {
-            if(configuration.level.levelName.toLowerCase() in SlimConsoleSuppression) {
-                if(SlimConsoleSuppression[configuration.level.levelName.toLowerCase()]) {
-                    return;
+        const levelName:string = configuration!.level!['levelName'];
+        if(levelName.toLowerCase() in this.levelSuppressions) {
+            if(this.levelSuppressions[levelName.toLowerCase()]) {
+                return;
+            }
+        }
+        for(const slim_module of ['slim.generator','slim.utilities','slim.view']) {
+            if(slim_module in this.levelSuppressions) {
+                if(levelName.toLowerCase() in this.levelSuppressions[slim_module]) {
+                    if(this.levelSuppressions[slim_module][levelName.toLowerCase()]) {
+                        if(event.properties.path.indexOf(`/${slim_module}/`) > 0) {
+                            return;
+                        }
+                    }
                 }
             }
         }
@@ -131,7 +149,6 @@ export class SlimColorConsole implements colorconsole.iConsole {
         }
 
         let printable_string:string = "";
-        const levelName:string = configuration!.level!['levelName'] as string;
         printable_string += this.colorize(levelName, configuration.level);
         printable_string += this.colorize(event.properties.path, configuration.path);
         printable_string += this.colorize(event.properties.className, configuration.className);
@@ -144,11 +161,6 @@ export class SlimColorConsole implements colorconsole.iConsole {
         printable_string += this.colorize(event.properties.stackTrace, configuration.stackTrace);
         if(Deno !== undefined && printable_string.length > 0) {
             Deno.stderr.writeSync(new TextEncoder().encode(`${printable_string}\n`));
-        }
-        if('SLIMOVERRIDES' in event.overrides) {
-            if('stackTrace' in event.overrides.SLIMOVERRIDES) {
-                configuration.stackTrace = slim.utilities.comingleSync([configuration.stackTrace, configuration.stackTrace_original]);
-            }
         }
         if('SLIMOVERRIDES' in event.overrides) {
             for(const subLevel of configurationSubLevels) {
