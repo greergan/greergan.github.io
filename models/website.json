@@ -1,6 +1,8 @@
 {
     "output_to": "file:///home/greergan/mnt/host/src/greergan.github.io",
     "namespace": "http://192.168.122.59",
+    "generate_ids": [5],
+    "meta_tags": [],
     "copy_to_output": [
         {"path": "assets"},
         {"path": "models"},
@@ -18,12 +20,43 @@
     },
     "pages": [
         {
+            "generate_id": 0,
+            "meta_tags": [],
             "input_file": "pages/index.html",
             "output_file": "index.html",
-            "title": "Slim",
-            "meta_tags": []
+            "title": "Slim"
         },
         {
+            "generate_id": 1,
+            "meta_tags": [],
+            "input_file": "pages/slim.editor.html",
+            "output_file": "slim.editor/index.html",
+            "title": "Slim.Editor"
+        },
+        {
+            "generate_id": 2,
+            "meta_tags": [],
+            "input_file": "pages/slim.generator.html",
+            "output_file": "slim.generator/index.html",
+            "title": "Slim.Generator"
+        },
+        {
+            "generate_id": 3,
+            "meta_tags": [],
+            "input_file": "pages/slim.objects.html",
+            "output_file": "slim.objects/index.html",
+            "title": "Slim.Objects"
+        },
+        {
+            "generate_id": 4,
+            "meta_tags": [],
+            "input_file": "pages/slim.utilities.html",
+            "output_file": "slim.utilities/index.html",
+            "title": "Slim.Utilities"
+        },
+        {
+            "generate_id": 5,
+            "meta_tags": [],
             "input_file": "pages/slim.view.html",
             "output_file": "slim.view/index.html",
             "title": "Slim.View",
@@ -31,26 +64,6 @@
                 {"path": "models/actors.json"},
                 {"path": "models/authors.json"}
             ]
-        },
-        {
-            "input_file": "pages/slim.generator.html",
-            "output_file": "slim.generator/index.html",
-            "title": "Slim.Generator"
-        },
-        {
-            "input_file": "pages/slim.utilities.html",
-            "output_file": "slim.utilities/index.html",
-            "title": "Slim.Utilities"
-        },
-        {
-            "input_file": "pages/slim.objects.html",
-            "output_file": "slim.objects/index.html",
-            "title": "Slim.Objects"
-        },
-        {
-            "input_file": "pages/slim.editor.html",
-            "output_file": "slim.editor/index.html",
-            "title": "Slim.Editor"
         }
     ]
 }

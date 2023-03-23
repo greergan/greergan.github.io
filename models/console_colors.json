@@ -1,50 +1,52 @@
 {"propogate": true, "suppress":true, "delimiter":" => ",
     "level":{"suppress":false,"bold": true},
-    "messageText":{"suppress":false, "textColor":"green","bold": true},
-    "messageValue":{"suppress":false, "textColor":"cyan", "bold": true},
+    "fileName":{"textColor":"magenta"},
+    "className":{"textColor":"green"},
+    "lineNumber":{"bold":true},
+    "messageText":{"suppress":false, "textColor":"bright_red","bold": false},
+    "messageValue":{"suppress":false, "textColor":"bright_green", "bold": true},
     "objectString":{"suppress":false, "textColor":"yellow","delimiter":""},
     "path":{"textColor":"white","dim":true,"suppress":false},
-    "abort":{
-        "propogate": true,
-        "textColor": "bright_white",
-        "bold": true,
-        "suppress": true
+    "abort":{"suppress":true},
+    "debug":{"suppress":false,
+        "className":{"bold":true},
+        "methodName":{"bold":true},
+        "stackTrace":{"suppress":true},
+        "fileName":{"suppress":true},
+        "lineNumber":{"suppress":true}
     },
-    "debug":{
-        "className":{"suppress":false,"bold":true},
-        "methodName":{"suppress":false,"bold":true}
+    "error":{"stackTrace":{"textColor": "red"}},
+    "info":{"suppress":false,
+        "path":{"suppress":true},
+        "stackTrace":{"suppress":true},
+        "fileName":{"suppress":false},
+        "lineNumber":{"suppress":false}
     },
-    "info":{
-        "path":{"suppress":false},
-        "messageText":{"textColor":"bright_red"},
-        "messageValue":{"textColor":"bright_red"}
+    "log":{
     },
     "trace":{"propogate":true,
         "className":{"suppress":false},
         "methodName":{"suppress":false},
         "stackTrace":{"delimiter": ""}
     },
-    "log":{
+    "todo":{
     },
-    "warn":{
+    "warn":{"suppress": true,
         "className":{"suppress":false,"bold":true},
         "methodName":{"suppress":false,"bold":true}
     },
-    "todo":{
-    },
-    "error":{"stackTrace":{"textColor": "red"}},
     "levelSuppressions": {
         "debug":false,
         "todo":true,
         "trace":false,
         "slim.generator": {
-            "debug":true,
+            "debug":false,
             "trace":true
         },
         "slim.utilities": {
-            "debug":true,
+            "debug":false,
             "todo":true,
-            "trace":true
+            "trace":false
         }
     }
 }
