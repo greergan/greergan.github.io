@@ -11,11 +11,13 @@ declare global {
         SlimConsole:colorconsole.SlimColorConsole;
     }
 }
+window.console
 export class SlimColorConsole implements colorconsole.iConsole {
     configurations:configuration.iConfigurations = {};
     levelSuppressions:slim.types.iKeyValueAny = {};
     master_configuration:slim.types.iKeyValueAny = {};
     constructor(configuration?:slim.types.iKeyValueAny) {
+        window.console = this;
         const lower_case_levels = configurationLevels.map(element => element.toLowerCase());
         if(typeof configuration !== 'object') {
             configuration = {};
@@ -36,36 +38,29 @@ export class SlimColorConsole implements colorconsole.iConsole {
             Deno.exit(1);
         }
     }
-    assert() {
-
-    }
-    clear() {
-
-    }
-    dir(...args:any) {
-
-    }
-    debug(...args:any): void {
-        this.print(new LogInformation(args), this.configurations.debug);
-    }
-    error(...args:any): void {
-        this.print(new LogInformation(args), this.configurations.error);
-    }
-    info(...args:any): void {
-        this.print(new LogInformation(args), this.configurations.info);
-    }
-    log(...args:any): void {
-        this.print(new LogInformation(args), this.configurations.log);
-    }
-    todo(...args:any): void {
-        this.print(new LogInformation(args), this.configurations.todo);
-    }
-    trace(...args:any): void {
-        this.print(new LogInformation(args), this.configurations.trace);
-    }
-    warn(...args:any): void {
-        this.print(new LogInformation(args), this.configurations.warn);
-    }
+    assert(...args:any):void {}
+    clear():void {}
+    count(...args:any):void {}
+    countReset(...args:any):void {}
+    dir(...args:any):void {}
+    dirxml(...args:any):void {}
+    debug(...args:any):void { this.print(new LogInformation(args), this.configurations.debug); }
+    error(...args:any):void { this.print(new LogInformation(args), this.configurations.error); }
+    group(...args:any):void {}
+    groupCollapsed(...args:any):void {}
+    groupEnd(...args:any):void {}
+    info(...args:any):void { this.print(new LogInformation(args), this.configurations.info); }
+    log(...args:any):void { this.print(new LogInformation(args), this.configurations.log); }
+    profile(...args:any):void {}
+    profileEnd(...args:any):void {}
+    table(...args:any):void {}
+    time(...args:any):void {}
+    timeEnd(...args:any):void {}
+    timeLog(...args:any):void {}
+    timeStamp(...args:any):void {}
+    todo(...args:any):void { this.print(new LogInformation(args), this.configurations.todo); }
+    trace(...args:any):void { this.print(new LogInformation(args), this.configurations.trace); }
+    warn(...args:any):void { this.print(new LogInformation(args), this.configurations.warn); }
     colorize(string_value:string, configuration:configuration.iPrintProperties): string {
         let colored_string = "";
         if(string_value !== undefined && !configuration.suppress) {
@@ -147,14 +142,13 @@ export class SlimColorConsole implements colorconsole.iConsole {
                 }
             }
         }
-
         let printable_string:string = "";
         printable_string += this.colorize(levelName, configuration.level);
         printable_string += this.colorize(event.properties.path, configuration.path);
-        printable_string += this.colorize(event.properties.className, configuration.className);
-        printable_string += this.colorize(event.properties.methodName, configuration.methodName);
         printable_string += this.colorize(event.properties.fileName, configuration.fileName);
         printable_string += this.colorize(event.properties.lineNumber, configuration.lineNumber);
+        printable_string += this.colorize(event.properties.className, configuration.className);
+        printable_string += this.colorize(event.properties.methodName, configuration.methodName);
         printable_string += this.colorize(event.properties.messageText, configuration.messageText);
         printable_string += this.colorize(event.properties.messageValue, configuration.messageValue);
         printable_string += this.colorize(event.properties.objectString, configuration.objectString);

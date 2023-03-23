@@ -65,10 +65,10 @@ export class LogInformation extends Error implements logging.iLogInformation {
                 }
             }
             const path_string:string = this.properties.path as string || "";
-            const path_elements:Array<string> = path_string.match(/(file|https*:.+):(\d+):\d+/) || [];
-            if(path_elements.length == 3) {
-                this.properties.fileName = path_elements[1];
-                this.properties.lineNumber = Number(path_elements[2]).toString();
+            const path_elements:Array<string> = path_string.match(/(file:\/*|https*:\/*)\/*(.+):(\d+):\d+/) || [];
+            if(path_elements.length == 4) {
+                this.properties.fileName = path_elements[1] + "..." + path_elements[2].substring(path_elements[2].lastIndexOf('/'));
+                this.properties.lineNumber = Number(path_elements[3]).toString();
             }
         }
     }
