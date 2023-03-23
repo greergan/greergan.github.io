@@ -2,28 +2,24 @@ import { is_file_url, is_valid_url } from "./validations.ts";
 import * as slim from "./slim_modules.ts";
 
 export function get_absolute_file_path(url:string): string|undefined {
-    return (is_file_url(url)) ? url.substring(7): undefined;
+    const file:string|undefined = (is_file_url(url)) ? url.substring(7): undefined;
+    console.trace(file);
+    return file;
 }
 export async function get_file_contents(file:string): Promise<slim.types.iKeyValueAny|undefined> {
     try {
         const json:slim.types.iKeyValueAny = JSON.parse(await(await fetch(file)).text());
-        if('SlimConsole' in window) {
-            SlimConsole.trace({message:"succeeded"}, file);
-        }
+        console.trace({message:"fetch",value:"succeeded"}, file);
         return json;
     }
     catch(e) {
-        if('SlimConsole' in window) {
-            SlimConsole.trace({message:"failed"});
-        }
-        else {
-            new Error("fetch or JSON.parse failed");
-        }
+        if('SlimConsole' in window) SlimConsole.abort({message:"fetch",value:"failed"}, file);
+        else throw new Error("fetch failed" + " " + file);
     }
 }
 export async function get_normalized_url(property:string): Promise<string|undefined> {
     const cwd = await Deno.cwd();
-    let normalized_url:string = "";
+    let normalized_url:string|undefined = undefined;
     if(property.startsWith("./")) {
         const new_value = property.replace("./", "");
         normalized_url = (new_value.length > 1) ? `file://${cwd}/${new_value}` : `file://${cwd}`;
@@ -54,5 +50,6 @@ export async function get_normalized_url(property:string): Promise<string|undefi
     if(normalized_url.endsWith("/")) {
         normalized_url = normalized_url.substring(0, normalized_url.lastIndexOf("/"));
     }
-    return (normalized_url.length > 0) ? normalized_url : undefined;
+    console.trace(normalized_url);
+    return normalized_url;
 }
