@@ -1,19 +1,18 @@
 import * as slim from "./slim_modules.ts";
 export async function explode_models(models_array:Array<slim.types.iKeyValueAny>, namespace:string): Promise<slim.types.iKeyValueAny[]> {
-    if(typeof models_array == 'undefined') {
-        SlimConsole.abort("page level property external_models is not found");
-    }
+    console.debug({message:"models_array"}, models_array);
     let exploded_models:slim.types.iKeyValueAny[] = [];
     for await(const model of models_array) {
         const input_file:string = (slim.utilities.is_valid_url(model.path)) ? model.path: `${namespace}/${model.path}`;
+        console.debug({message:"model path",value:"is_valid_url"}, slim.utilities.is_valid_url(input_file));
         try {
-            exploded_models = slim.utilities.comingleSync(exploded_models, JSON.parse(await (await fetch(input_file)).text())) as [];
+            exploded_models.push(await(await slim.utilities.get_file_contents(input_file)) || {});
         }
         catch(e) {
-            SlimConsole.abort({message:"aborting explode_models"}, e);
+            SlimConsole.abort({message:"aborting explode_models"}, e.message);
         }
     }
-    SlimConsole.trace({message: "exploded_models.length"}, exploded_models.length);
+    console.trace();
     return exploded_models;
 }
 export async function set_input_output(config:slim.types.iKeyValueAny, output_to:string, namespace:string): Promise<slim.types.iKeyValueAny> {
@@ -31,7 +30,7 @@ export async function set_input_output(config:slim.types.iKeyValueAny, output_to
     new todo({message:"documentation",value:"add copyright notice prior to release"});
     */
     SlimConsole.todo({message:"clean up"});
-    SlimConsole.trace(input_output);
+    console.trace(input_output);
     return input_output;
 }
 export async function write_output(output_file:string, content:string) {
@@ -48,5 +47,5 @@ export async function write_output(output_file:string, content:string) {
     else {
         SlimConsole.abort({message: "not a valid file url"}, output_file);
     }
-    SlimConsole.trace();
+    console.trace();
 }

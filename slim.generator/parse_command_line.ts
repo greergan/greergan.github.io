@@ -1,6 +1,6 @@
 import * as slim from "./slim_modules.ts";
 export async function parse_command_line(command_line:string[]): Promise<slim.types.iKeyValueAny> {
-    SlimConsole.debug({message:"commencing",value:"arguments"}, command_line);
+    console.debug({message:"commencing",value:"arguments"}, command_line);
     let parsed_command_line:slim.types.iKeyValueAny = {};
     const set_next = {
         "config": false,
@@ -44,6 +44,6 @@ export async function parse_command_line(command_line:string[]): Promise<slim.ty
         throw new Error("--config or -c command line option is required with valid configuration file path");
     }
     SlimConsole.todo("clean up");
-    SlimConsole.trace({message:"succeeded",value:"returning"}, parsed_command_line);
+    console.trace({message:"succeeded",value:"returning"}, parsed_command_line);
     return parsed_command_line;
 }
