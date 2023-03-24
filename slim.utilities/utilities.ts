@@ -13,8 +13,8 @@ export async function get_file_contents(file:string): Promise<slim.types.iKeyVal
         return json;
     }
     catch(e) {
-        if('SlimConsole' in window) SlimConsole.abort({message:"fetch",value:"failed"}, file);
-        else throw new Error("fetch failed" + " " + file);
+        if('SlimConsole' in window) SlimConsole.abort({message:"fetch",value:"failed"}, file, e.message);
+        else throw new Error("fetch failed" + " " + file + " " + e.message);
     }
 }
 export async function get_normalized_url(property:string): Promise<string|undefined> {
