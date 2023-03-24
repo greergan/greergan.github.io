@@ -128,6 +128,20 @@ export class SlimColorConsole implements colorconsole.iConsole {
             if(this.levelSuppressions[slim_module][levelName.toLowerCase()]) {
                 return;
             }
+            if(this.levelSuppressions[slim_module].hasOwnProperty('files')) {
+                const file:object = this.levelSuppressions[slim_module].files.find(
+                    file => file.name == event.properties.fileName.substring(event.properties.fileName.lastIndexOf('/') + 1)
+                );
+                if(file && file[levelName.toLowerCase()]) {
+                    return;
+                }
+            }
+            if(this.levelSuppressions[slim_module].hasOwnProperty('functions')) {
+                const funct:object = this.levelSuppressions[slim_module].functions.find(funct => funct.name == event.properties.methodName);
+                if(funct && funct[levelName.toLowerCase()]) {
+                    return;
+                }
+            }
         }
         if('SLIMOVERRIDES' in event.overrides) {
             for(const subLevel of configurationSubLevels) {
@@ -148,8 +162,8 @@ export class SlimColorConsole implements colorconsole.iConsole {
         printable_string += this.colorize(event.properties.messageValue, configuration.messageValue);
         printable_string += this.colorize(event.properties.objectString, configuration.objectString);
         printable_string += this.colorize(event.properties.stackTrace, configuration.stackTrace);
-        if(Deno !== undefined && printable_string.length > 0) {
-            Deno.stderr.writeSync(new TextEncoder().encode(`${printable_string}\n`));
+        if(printable_string.length > 0) {
+            this.write(printable_string);
         }
         if('SLIMOVERRIDES' in event.overrides) {
             for(const subLevel of configurationSubLevels) {
@@ -158,6 +172,11 @@ export class SlimColorConsole implements colorconsole.iConsole {
                     delete saved_configuration[subLevel];
                 }
             }
+        }
+    }
+    write(string_to_print:string):void {
+        if('Deno' in window) {
+            Deno.stderr.writeSync(new TextEncoder().encode(`${string_to_print}\n`));
         }
     }
 }

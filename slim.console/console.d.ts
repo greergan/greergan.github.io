@@ -31,6 +31,7 @@ export module colorconsole {
         todo(...args:any):void;
         trace(...args:any):void;
         warn(...args:any):void;
+        write(write_string:string):void;
     }
     export interface iConsoleClass {
         new(configuration?:slim.types.iKeyValueAny): iConsole;
