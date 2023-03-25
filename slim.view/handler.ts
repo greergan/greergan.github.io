@@ -126,6 +126,7 @@ new debug({message:"left and right arrays match"})
 		new error({message:"invalid handler", value:handler});
 	}
 //new debug({message:'exit value', value:node}, handler);
+	console.trace();
 	return node;
 }
 export function get_handler(handler_string:string):SlimViewHandler {
