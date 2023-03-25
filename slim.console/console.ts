@@ -11,7 +11,6 @@ declare global {
         SlimConsole:colorconsole.SlimColorConsole;
     }
 }
-window.console
 export class SlimColorConsole implements colorconsole.iConsole {
     configurations:configuration.iConfigurations = {};
     levelSuppressions:slim.types.iKeyValueAny = {};
@@ -118,36 +117,38 @@ export class SlimColorConsole implements colorconsole.iConsole {
     print(event:LogInformation, configuration:configuration.iConfiguration): void {
         const saved_configuration:configuration.iConfiguration = {};
         const levelName:string = configuration!.level!['levelName'];
-        if(levelName.toLowerCase() in this.levelSuppressions) {
-            if(this.levelSuppressions[levelName.toLowerCase()]) {
-                return;
-            }
-        }
-        const slim_module:string = event.properties.path.match(/slim.\w*/);
-        if(this.levelSuppressions.hasOwnProperty(slim_module)) {
-            if(this.levelSuppressions[slim_module][levelName.toLowerCase()]) {
-                return;
-            }
-            if(this.levelSuppressions[slim_module].hasOwnProperty('files')) {
-                const file:object = this.levelSuppressions[slim_module].files.find(
-                    file => file.name == event.properties.fileName.substring(event.properties.fileName.lastIndexOf('/') + 1)
-                );
-                if(file && file[levelName.toLowerCase()]) {
-                    return;
-                }
-            }
-            if(this.levelSuppressions[slim_module].hasOwnProperty('functions')) {
-                const funct:object = this.levelSuppressions[slim_module].functions.find(funct => funct.name == event.properties.methodName);
-                if(funct && funct[levelName.toLowerCase()]) {
-                    return;
-                }
-            }
-        }
-        if('SLIMOVERRIDES' in event.overrides) {
+        if(event.overrides.hasOwnProperty(levelName.toLowerCase())) {
             for(const subLevel of configurationSubLevels) {
-                if(subLevel in event.overrides.SLIMOVERRIDES) {
+                if(subLevel in event.overrides) {
                     saved_configuration[subLevel] = slim.utilities.comingleSync([{},configuration[subLevel]]);
-                    configuration[subLevel] = slim.utilities.comingleSync([configuration[subLevel], event.overrides.SLIMOVERRIDES[subLevel]]);
+                    configuration[subLevel] = slim.utilities.comingleSync([configuration[subLevel], event.overrides[subLevel]]);
+                }
+            }
+        }
+        else {
+            if(levelName.toLowerCase() in this.levelSuppressions) {
+                if(this.levelSuppressions[levelName.toLowerCase()]) {
+                    return;
+                }
+            }
+            const slim_module:string = event.properties.path.match(/slim.\w*/);
+            if(this.levelSuppressions.hasOwnProperty(slim_module)) {
+                if(this.levelSuppressions[slim_module][levelName.toLowerCase()]) {
+                    return;
+                }
+                if(this.levelSuppressions[slim_module].hasOwnProperty('files')) {
+                    const file:object = this.levelSuppressions[slim_module].files.find(
+                        file => file.name == event.properties.fileName.substring(event.properties.fileName.lastIndexOf('/') + 1)
+                    );
+                    if(file && file[levelName.toLowerCase()]) {
+                        return;
+                    }
+                }
+                if(this.levelSuppressions[slim_module].hasOwnProperty('functions')) {
+                    const funct:object = this.levelSuppressions[slim_module].functions.find(funct => funct.name == event.properties.methodName);
+                    if(funct && funct[levelName.toLowerCase()]) {
+                        return;
+                    }
                 }
             }
         }
@@ -165,7 +166,7 @@ export class SlimColorConsole implements colorconsole.iConsole {
         if(printable_string.length > 0) {
             this.write(printable_string);
         }
-        if('SLIMOVERRIDES' in event.overrides) {
+        if(event.overrides.hasOwnProperty(levelName.toLowerCase())) {
             for(const subLevel of configurationSubLevels) {
                 if(subLevel in saved_configuration) {
                     configuration[subLevel] = slim.utilities.comingleSync([configuration[subLevel], saved_configuration[subLevel]]);
