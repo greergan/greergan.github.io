@@ -1,6 +1,5 @@
 import { is_file_url, is_valid_url } from "./validations.ts";
 import * as slim from "./slim_modules.ts";
-
 export function get_absolute_file_path(url:string): string|undefined {
     const file:string|undefined = (is_file_url(url)) ? url.substring(7): undefined;
     console.trace(file);
@@ -8,7 +7,7 @@ export function get_absolute_file_path(url:string): string|undefined {
 }
 export async function get_file_contents(file:string): Promise<slim.types.iKeyValueAny|undefined> {
     try {
-        const json:slim.types.iKeyValueAny = JSON.parse(await(await fetch(file)).text());
+        const json:slim.types.iKeyValueAny = (await fetch(file)).text();
         console.trace({message:"fetch",value:"succeeded"}, file);
         return json;
     }
@@ -16,6 +15,11 @@ export async function get_file_contents(file:string): Promise<slim.types.iKeyVal
         if('SlimConsole' in window) SlimConsole.abort({message:"fetch",value:"failed"}, file, e.message);
         else throw new Error("fetch failed" + " " + file + " " + e.message);
     }
+}
+export async function get_json_contents(file:string): Promise<slim.types.iKeyValueAny|undefined> {
+    const json:slim.types.iKeyValueAny = JSON.parse(await get_file_contents(file));
+    console.trace({message:"fetch",value:"succeeded"}, file);
+    return json;
 }
 export async function get_normalized_url(property:string): Promise<string|undefined> {
     const cwd = await Deno.cwd();
