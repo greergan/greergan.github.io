@@ -5,7 +5,7 @@ declare interface comingle_options {
 	depth?:number
 }
 export function copy_ofSync(source:slim.types.iKeyValueAny, options?:comingle_options) : slim.types.iKeyValueAny {
-	console.trace();
+	if(window.hasOwnProperty('SlimConsole') && SlimConsole.hasOwnProperty('trace')) console.trace();
 	return comingleSync([{}, source], options);
 }
 declare interface localized_comingle_options {
@@ -14,11 +14,11 @@ declare interface localized_comingle_options {
 	depth:number
 }
 export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:comingle_options): slim.types.iKeyValueAny {
-	console.debug({message:"begining with",value:"options"}, options);
+	if(window.hasOwnProperty('SlimConsole')) console.debug({message:"begining with",value:"options"}, options);
 	const localized_options:localized_comingle_options = (options) ? JSON.parse(JSON.stringify(options)) : {depth:1};
 	if(!localized_options.hasOwnProperty('depth')) localized_options.depth = 1;
 	['skip','excludes'].map(element => { if(!localized_options[element]) localized_options[element] = []});
-	console.debug({message:"begining with",value:"localized_options"}, localized_options);
+	if(window.hasOwnProperty('SlimConsole')) console.debug({message:"begining with",value:"localized_options"}, localized_options);
 	if(input_sources.length < 2) {
 		if('SlimConsole' in window) SlimConsole.abort("comingle requires an array of 2 or more slim.types.iKeyValueAny objects");
 		else throw new Error("comingle requires an array of 2 or more slim.types.iKeyValueAny objects");
@@ -32,11 +32,11 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 			if(['string','number','boolean'].includes(key_type)) {
 				let continue_primitive_processing = true;
 				if(localized_options['skip'].includes(key)) {
-					console.debug({message:"options",value:"skip"}, key);
+					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"skip"}, key);
 					continue_primitive_processing = false;
 				}
 				if(localized_options['excludes'].includes(key_type)) {
-					console.debug({message:"options",value:"excludes"}, key);
+					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"excludes"}, key);
 					continue_primitive_processing = false;
 				}
 				if(continue_primitive_processing) {
@@ -45,13 +45,13 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 			}
 			else if(Array.isArray(source[key])) {
 				let continue_array_processing:boolean = true;
-				console.debug({message:"processing",value:"array"}, key);
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"processing",value:"array"}, key);
 				if(localized_options['skip'].includes(key)) {
-					console.debug({message:"options",value:"skip"}, key);
+					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"skip"}, key);
 					continue_array_processing = false;
 				}
 				if(localized_options['excludes']!.includes('array')) {
-					console.debug({message:"options",value:"excludes"}, key);
+					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"excludes"}, key);
 					continue_array_processing = false;
 				}
 				if(continue_array_processing) {
@@ -60,9 +60,9 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 					}
 				}
 				if(continue_array_processing) {
-					console.debug({message:"continue_array_processing",value:"key"}, key, Array.isArray(merged_objects[key]), merged_objects[key]);
+					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"continue_array_processing",value:"key"}, key, Array.isArray(merged_objects[key]), merged_objects[key]);
  					for(const member of source[key]) {
-						console.debug({message:"member of",value:"source[key]"}, member);
+						if(window.hasOwnProperty('SlimConsole')) console.debug({message:"member of",value:"source[key]"}, member);
 						let lvalue_exists:boolean = false;
 						for(const index in merged_objects[key]) {
 							if(merged_objects[key][index] == member) {
@@ -77,26 +77,26 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 			}
 			else if(key_type === 'object') {
 				let continue_object_processing = true;
-				console.debug({message:"processing",value:"object"}, key);
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"processing",value:"object"}, key);
 				if(localized_options['skip'].includes(key)) {
-					console.debug({message:"options",value:"skip"}, key);
+					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"skip"}, key);
 					continue_object_processing = false;
 				}
 				if(localized_options['excludes'].includes(key_type)) {
-					console.debug({message:"options",value:"excludes"}, key);
+					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"excludes"}, key);
 					continue_object_processing = false;
 				}
 				if(continue_object_processing) {
 					if(typeof merged_objects[key] == 'undefined') {
 						merged_objects[key] = {};
 					}
-					console.debug({message:"next level",value:"calling comingleSync"} );
+					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"next level",value:"calling comingleSync"} );
 					merged_objects[key] = comingleSync([merged_objects[key], source[key]], {depth: localized_options.depth++});
 				}
 			}
 		}
 	}
-	console.trace({message:"depth", value:localized_options.depth});
+	if(window.hasOwnProperty('SlimConsole')) console.trace({message:"depth", value:localized_options.depth});
 	return merged_objects;
 }
 export async function get_node_value(model:slim.types.iKeyValueAny, property:string): Promise<string | slim.types.iKeyValueAny | undefined> {

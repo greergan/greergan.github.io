@@ -8,7 +8,7 @@ export function get_absolute_file_path(url:string): string|undefined {
 export async function get_file_contents(file:string): Promise<slim.types.iKeyValueAny|undefined> {
     try {
         const json:slim.types.iKeyValueAny = (await fetch(file)).text();
-        console.trace({message:"fetch",value:"succeeded"}, file);
+        if(window.hasOwnProperty('SlimConsole')) console.trace({message:"fetch",value:"succeeded"}, file);
         return json;
     }
     catch(e) {
@@ -18,7 +18,7 @@ export async function get_file_contents(file:string): Promise<slim.types.iKeyVal
 }
 export async function get_json_contents(file:string): Promise<slim.types.iKeyValueAny|undefined> {
     const json:slim.types.iKeyValueAny = JSON.parse(await get_file_contents(file));
-    console.trace({message:"fetch",value:"succeeded"}, file);
+    if(window.hasOwnProperty('SlimConsole')) console.trace({message:"fetch",value:"succeeded"}, file);
     return json;
 }
 export async function get_normalized_url(property:string): Promise<string|undefined> {
