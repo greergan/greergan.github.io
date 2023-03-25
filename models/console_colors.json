@@ -15,7 +15,7 @@
         "fileName":{"suppress":true},
         "lineNumber":{"suppress":true}
     },
-    "error":{"stackTrace":{"textColor": "red"}},
+    "error":{"stackTrace":{"suppress":false,"textColor": "red","delimiter":""}},
     "info":{"suppress":false,
         "path":{"suppress":true},
         "stackTrace":{"suppress":true},
@@ -40,13 +40,34 @@
         "todo":true,
         "trace":false,
         "slim.generator": {
-            "debug":false,
-            "trace":true
+            "debug": false,
+            "trace": true,
+            "files":[
+                { "name": "config_functions.ts", "debug":true, "trace": true},
+                { "name": "parse_command_line.ts", "debug":true, "trace": true}
+            ],
+            "functions":[
+                { "name": "explode_models", "debug":true, "trace": true}
+            ]
         },
         "slim.utilities": {
-            "debug":false,
-            "todo":true,
-            "trace":false
+            "trace": false,
+            "debug": false,
+            "files": [
+                { "name": "json.ts", "debug":true, "trace":true },
+                { "name": "utilities.ts", "debug":true, "trace":true },
+                { "name": "validations.ts", "debug":true, "trace":true }
+            ],
+            "functions": [
+                { "name": "comingleSync", "debug":true},
+                { "name": "is_http_url", "trace": true},
+                { "name": "is_https_url", "trace": true},
+                { "name": "is_file_url", "trace": true},
+                { "name": "is_valid_url", "trace": false}
+            ]
+        },
+        "slim.view": {
+
         }
     }
 }
