@@ -6,7 +6,7 @@ export async function explode_models(models_array:Array<slim.types.iKeyValueAny>
         const input_file:string = (slim.utilities.is_valid_url(model.path)) ? model.path: `${namespace}/${model.path}`;
         console.debug({message:"model path",value:"is_valid_url"}, input_file, slim.utilities.is_valid_url(input_file));
         try {
-            exploded_models.push(await(await slim.utilities.get_file_contents(input_file)) ?? {});
+            exploded_models.push(await slim.utilities.get_json_contents(input_file) ?? {});
         }
         catch(e) {
             SlimConsole.abort({message:"aborting explode_models"}, e.message);
