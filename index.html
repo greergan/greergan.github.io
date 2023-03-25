@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Slim</title>
+		<title>[object Promise]</title>
 		<link rel="icon" type="image/png" href="/assets/images/favicon.ico">
 		<meta charset="utf-8">
 		<style type="text/css">
@@ -11,33 +11,25 @@
 			.copyright {padding-top: 30; font-size: 100%; text-align: center; padding-top: 4%;}
 			div.catch_line {color: orange; position: relative; left: 95px; top: -5px;}	
 			p {position: relative; z-index: 900;}
-			p.description { padding-bottom: 5px; }
-			div.description { display: inline;}
-			blockquote.description, p.description, div.description, .optional, table.description {color:#1da1de; }
+			p.description {  padding-bottom: 5px; }
+			blockquote.description, p.description {color:#1da1de; }
 			h1.intro { display: inline; position: relative; z-index: 999; }
 			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 140%; margin: auto; width: 95%; position: relative; z-index: 900;}
-			td.left_padding_15 { padding-left: 15px; }
 			menu {text-align: center; position: sticky; top: 0; background-color: #303031; z-index: 901;}
 			menu a {font-size: 140%; position: relative; z-index: 901;}
 			menu li {display: inline; position: relative; z-index: 901;}
 			menu li::after {content: " || ";}
 			menu li:last-child::after {content: "";}
-			.optional { display: inline;}
-			.optional::after {content: "optional"}
 			.logo {display: inline-block; position: fixed; top: 40px; left: 1%; z-index: 950;}
 			.outer { background-color: #4d524e; padding: 10px; color: #a5b012; border-radius: 25px; }
 			.outputs {color:#1da1de; }
 			.outputs::before {content: "results in"; color: #12b086; }
-			.required::after {content: "required"; color: #12b086;}
 			hr.section-seperator {margin: auto; width: 95%; margin-bottom: 30px; color: #12b086; }
 			.slim {color: #b0123c; display: inline;}
 			.slim-details h3 {display: inline; font-size: 100%; }
 			details.slim-details {margin-bottom: 10px;}
 			details.slim-details:last-child {margin-bottom: 0px;}
 			div.status{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: #303031; z-index: 901;}
-			div.usage {padding-bottom: 10px;}
-			.usage {color: gold;}
-			.deno-usage::before {content: "Usage: deno run generate.ts "; }
 			@media screen and (max-width: 1000px) {
 				menu a {font-size: 15px;}
 			}
@@ -47,6 +39,7 @@
 		<menu>
     <li><a href="/">Slim</a></li>
     <li><a href="/slim.view/">Slim.View</a></li>
+    <li><a href="/slim.filter/">Slim.Filter</a></li>
     <li><a href="/slim.utilities/">Slim.Utilities</a></li>
     <li><a href="/slim.generator/">Slim.Generator</a></li>
     <li><a href="/slim.objects/">Slim.Objects</a></li>
@@ -55,7 +48,7 @@
 
 		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
 		<div class="content">
-<h1 class="intro">Welcome to <div class="slim">Slim</div></h1>
+<h1 class="intro">Welcome to <div class="slim">[object Promise]</div></h1>
 <div class="catch_line">A Typescript platform</div>
 <div class="intro">
     <p>
@@ -98,6 +91,7 @@
         <p>Slim ships with a collection of Typescript modules builtin.</p>
         <ul>
             <li>slim.view</li>
+            <li>slim.filter</li>
             <li>slim.objects</li>
             <li>slim.utilities</li>
         </ul>
@@ -116,7 +110,11 @@
 </details>
 <details class="slim-details">
     <summary><h3>Slim.View</h3></summary>
-    <p class="description"><a href="/slim.view/">Slim.View</a> is a Typescript HTML rendering engine.</p>
+    <p class="description"><a href="/slim.view/">Slim.View</a> is a Typescript HTML rendering engine that uses the <a href="/slim.filter/">Slim.Filter</a> filtering engine.</p>
+</details>
+<details class="slim-details">
+    <summary><h3>Slim.Filter</h3></summary>
+    <p class="description"><a href="/slim.filter/">Slim.Filter</a> is a JSON filtering engine written in Typescript.</p>
 </details>
 <details class="slim-details">
     <summary><h3>Slim.Utilities</h3></summary>
@@ -133,13 +131,13 @@
     <p class="description"><a href="/slim.objects/">Slim.Objects</a> is a set of currated reusable class objects.
     </p>
 </details>
-<details class="slim-details">undefined
+<details class="slim-details">
     <summary><h3>Slim.Editor</h3></summary>
     <p class="description"><a href="/slim.editor/">Slim.Editor</a> is a <a href="/slim.objects/">Slim.Objects</a> editor.
     </p>
 </details>
 			<footer class="copyright">
-				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
+				Copyright &copy; [object Promise] [object Promise]
 			</footer>
 		</div>
 		</div> <!-- class="content" is now closed -->
