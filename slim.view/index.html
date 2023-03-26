@@ -6,7 +6,6 @@
 		<style type="text/css">
 			html { color: #D4D4D4; background-color: #303031; padding: 15px; font-size: 15px;}
 			a {color: #a14318; text-decoration: none;}
-			code { font-size: 130%;}
 			div.content { margin: auto; width:75%; background-color: #232324; border-radius: 25px; padding: 2%; }
 			.copyright {padding-top: 30; font-size: 100%; text-align: center; padding-top: 4%;}
 			div.catch_line {color: orange; position: relative; left: 95px; top: -5px;}	
@@ -14,7 +13,7 @@
 			p.description {  padding-bottom: 5px; }
 			blockquote.description, p.description {color:#1da1de; }
 			h1.intro { display: inline; position: relative; z-index: 999; }
-			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 140%; margin: auto; width: 95%; position: relative; z-index: 900;}
+			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 20px; margin: auto; width: 95%; position: relative; z-index: 900;}
 			menu {text-align: center; position: sticky; top: 0; background-color: #303031; z-index: 901;}
 			menu a {font-size: 140%; position: relative; z-index: 901;}
 			menu li {display: inline; position: relative; z-index: 901;}
@@ -23,15 +22,16 @@
 			.logo {display: inline-block; position: fixed; top: 40px; left: 1%; z-index: 950;}
 			.outer { background-color: #4d524e; padding: 10px; color: #a5b012; border-radius: 25px; }
 			.outputs {color:#1da1de; }
-			.outputs::before {content: "results in"; color: #12b086; }
+			.outputs::before {content: "results in"; color: #12b086; display: block; padding-bottom: 8px; }
 			hr.section-seperator {margin: auto; width: 95%; margin-bottom: 30px; color: #12b086; }
 			.slim {color: #b0123c; display: inline;}
 			.slim-details h3 {display: inline; font-size: 100%; }
 			details.slim-details {margin-bottom: 10px;}
 			details.slim-details:last-child {margin-bottom: 0px;}
 			div.status{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: #303031; z-index: 901;}
-			@media screen and (max-width: 1000px) {
-				menu a {font-size: 15px;}
+			.slim-code-span span{color:#1da1de;}
+			code.slim-code-span{ background-color: #4d524e; padding: 10px; padding-left: 25px; color: #a5b012; border-radius: 25px; display: block; margin: 12px;
+				margin-left: 30px; margin-right: 30px;
 			}
 		</style>
 	</head>
@@ -49,7 +49,7 @@
 		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
 		<div class="content">
 <h1 class="intro">Welcome to <div class="slim">Slim.View</div></h1>
-<div class="catch_line">A Typescript HTML rendering engine</div>
+<div class="catch_line">An HTML rendering engine</div>
 <div class="intro">
 	<p>Inspired by Deno remote imports; there is now a rendering engine that supports remote view inclusion.
 		With Slim.View it is possible to import HTML assets from either remote locations on the Web or from the local file system.
@@ -58,101 +58,116 @@
 		<a href="/slim.generator">Slim.Generator</a> is an example of a static site generator.</p>
 </div>
 <hr class="section-seperator"/>
+<details class="slim-details"><summary><h3>Namespace</h3></summary>
+<p class="description">A variable supplied when a new view is created. This variable is prepended to all relative paths found inside of include statements</p>
+<p>Used when creating a new SlimView object.</p>
+<code class="slim-code-span">
+import * as slim from "https://greergan.github.io"/slim.view/index.ts";<br>
+const view:slim.view.SlimView = new slim.view.SlimView(<span>namespace_string</span>);
+</code>
+
+<p>The "file" protocol.</p>
+<code class="slim-code-span">file:///path/to/website/root</code>
+
+<p>The "http" protocol.</p>
+<code class="slim-code-span">http://greergan.github.io</code>
+
+<p>The "https" protocol.</p>
+<code class="slim-code-span">https://greergan.github.io</code>
+</details>
+<details class="slim-details"><summary><h3>Methods</h3></summary>
+<div>
+	<p class="description">Slim.View methods</p>
+</div>
+<code class="slim-code-span">
+	<span>constructor</span>(namespace:string)
+</code>
+<code class="slim-code-span">
+	private async <span>coalesce</span>(model:slim.types.iKeyValueAny, compiled_view:string):<span>Promise&lt;string&gt;</span>
+</code>
+<code class="slim-code-span">
+	public async <span>compile</span>(url:string):<span>Promise&lt;string&gt;</span>
+</code>
+<code class="slim-code-span">
+	public async <span>recompile</span>(url:string):<span>Promise&lt;void&gt;</span>
+</code>
+<code class="slim-code-span">
+	public async <span>render</span>(model:slim.types.iKeyValueAny, url:string):<span>Promise&lt;string&gt;</span>
+</code>
+<code class="slim-code-span">
+	private async <span>parseStatement</span>(model:slim.types.iKeyValueAny, statement:string):<span>Promise&lt;string&gt;</span>
+</code>
+<code class="slim-code-span">
+	private async <span>processMatch</span>(model:slim.types.iKeyValueAny, statement_data:slim.types.iKeyValueAny):<span>Promise&lt;string&gt;</span>
+</code>
+</details>
 <details class="slim-details"><summary><h3>Variable substitution</h3></summary>
 <p class="description">Substitute tokens for values found in a JSON model.</p>
-<blockquote class="outer">
-	<blockquote><code>Hello I am &#123;&#123;page.title&#125;&#125;</code></blockquote>
-	<div class="outputs">
-		<blockquote>Hello I am Slim.View</blockquote>
-	</div>
-</blockquote>
+<code class="slim-code-span">
+	Hello I am &#123;&#123;page.title&#125;&#125;
+	<p class="outputs">
+		Hello I am Slim.View
+	</p>
+</code>
+
 </details>
-<details class="slim-details"><summary><h3>Namespace</h3></summary>
-<p class="description">A variable supplied when a new view is created. This variable is prepended to all relative paths found inside of include statements.</p>
-<p>Used when creating a new SlimView object.</p>
-<blockquote class="outer">
-	<blockquote><pre><code>
-import * as slim from "https://greergan.github.io"/slim.view/index.ts";
-const view:slim.view.SlimView = new slim.view.SlimView(namespace_string);
-	</code></pre></blockquote>
-</blockquote>
-<p>The "file" protocol.</p>
-<blockquote class="outer">
-	<blockquote><code>file:///path/to/website/root</code></blockquote>
-</blockquote>
-<p>The "http" protocol.</p>
-<blockquote class="outer">
-	<blockquote><code>http://greergan.github.io</code></blockquote>
-</blockquote>
-<p>The "https" protocol.</p>
-<blockquote class="outer">
-	<blockquote><code>https://greergan.github.io</code></blockquote>
-</blockquote></details>
 <details class="slim-details"><summary><h3>Includes</h3></summary>
 <p class="description">Include view templates whithin any HTML document. The "view" tag can contain either relative or absolute URLs.
 	The view namespace is prepended to each relative path.
 </p>
 <p>Include reusable &lt;head&gt; template which may also contain it's own include files or other reusable site definitions.
 	This type of template inclusion can be used in each top level page of a website.</p>
-<blockquote class="outer">
-	<blockquote><code>&lt;include view="includes/head.html"&gt;</code></blockquote>
-</blockquote>
+<code class="slim-code-span">
+	&lt;include view="includes/head.html"&gt;
+</code>
+
 <p>Include partial view templates. This is an arbitray concent. The following examples includes small,
 	specific, html code based on the idea that a top level file will benefit from including smaller chunks of HTML code.
 	The following "partials" are used to build the current page you are viewing.
 </p>
-<blockquote class="outer">
-	<blockquote>
-		<code>&lt;include view="partials/slim.view/variable_substitution.html"&gt;</code><br>
-		<code>&lt;include view="partials/slim.view/view_includes.html"&gt;</code>
-	</blockquote>
-</blockquote>
+<code class="slim-code-span">
+	&lt;include view="partials/slim.view/variable_substitution.html"&gt;<br>
+	&lt;include view="partials/slim.view/view_includes.html"&gt;
+</code>
 <p>Include standard document &lt;footer&gt;, bottom of page templates and closing of site level HTML objects.</p>
-<blockquote class="outer">
-	<blockquote><code>&lt;include view="includes/foot.html"&gt;</code></blockquote>
-</blockquote>
+<code class="slim-code-span">
+	&lt;include view="includes/foot.html"&gt;
+</code>
 </details>
 <details class="slim-details"><summary><h3>Statements</h3></summary>
 <p class="description">Render views or html fragments using "with" or "foreach" statements.
 	Statements are called using positional arguments and can span multiple lines.</p>
-<blockquote class="outer">
-	<blockquote><code>[with|foreach] model="model" view="path/to/view" | html_fragment</code></blockquote>
-</blockquote>
+<code class="slim-code-span">[with|foreach] model="model" view="path/to/view" | html_fragment</code>
 <p>with statement - model and view</p>
-<blockquote class="outer">
-	<blockquote><code>&#123;% with model="users[1]" view="partials/slim.view/user.html" %&#125;</code></blockquote>
-	<div class="outputs"><blockquote><p>Carrie Fisher is a(n) actor</p></blockquote></div>
-</blockquote>
+<code class="slim-code-span">
+	&#123;% with model="users[1]" view="partials/slim.view/user.html" %&#125;
+	<p class="outputs">
+		Carrie Fisher is a(n) actor<br>
+	</p>
+</code>
 <p>with statement - model and html fragment</p>
-<blockquote class="outer">
-	<blockquote>
-
-<code><pre>&#123;%
+<code class="slim-code-span">
+<pre>&#123;%
     with model="users[2]"
-        &lt;p&gt; &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;/p&gt;
-%&#125;</pre></code>
-	</blockquote>
-	<div class="outputs"><blockquote> <p>Harry Harrison is a(n) author</p> </blockquote></div>
-</blockquote>
+        &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is a(n) &#123;&#123;profession&#125;&#125; &lt;br&gt;
+%&#125;</pre>
+	 <p class="outputs">Harry Harrison is a(n) author</p> 
+</code>
 <p>foreach statement - model and view</p>
-<blockquote class="outer">
-	<blockquote><code>&#123;% foreach model="users" view="partials/slim.view/user.html" %&#125;</code></blockquote>
-	<div class="outputs"><blockquote><p>Harrison Ford is a(n) actor</p><p>Carrie Fisher is a(n) actor</p><p>Harry Harrison is a(n) author</p><p>Robert Asprin is a(n) author</p></blockquote></div>
-</blockquote>
+<code class="slim-code-span">
+	&#123;% foreach model="users" view="partials/slim.view/user.html" %&#125;
+	<p class="outputs">Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br></p>
+</code>
 <p>foreach statement - model and html fragment</p>
-<blockquote class="outer">
-	<blockquote>
-<code><pre>&#123;%
+<code class="slim-code-span">
+<pre>&#123;%
     foreach model="users"
-        &lt;p&gt; &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;/p&gt;
-%&#125;</pre></code>
-	</blockquote>
-	<div class="outputs">
-		<blockquote>
-			<p>Harrison Ford is a(n) actor</p><p>Carrie Fisher is a(n) actor</p><p>Harry Harrison is a(n) author</p><p>Robert Asprin is a(n) author</p>
-		</blockquote>
-	</div>
-</blockquote>
+        &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;br&gt;
+%&#125;</pre>
+	<p class="outputs">
+		Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br>
+	</p>
+</code>
 </details>
 <details class="slim-details"><summary><h3>Filters</h3></summary>
 <div>
@@ -161,41 +176,48 @@ const view:slim.view.SlimView = new slim.view.SlimView(namespace_string);
 <details class="slim-details"><summary><h3>Comments</h3></summary>
 <p class="description">Create HTML comments.</p>
 <p>Comment with variable substitution.</p>
-<blockquote class="outer">
-	<blockquote><code>&#123;#  &#123;&#123;page.title&#125;&#125; #&#125;</code></blockquote>
-	<div class="outputs">
-		<blockquote>&lt;!-- Slim.View --&gt;</blockquote>
+<code class="slim-code-span">
+	&#123;#  &#123;&#123;page.title&#125;&#125; #&#125;
+	<p class="outputs">
+		&lt;!-- Slim.View --&gt;
 		<!-- Slim.View -->
-	</div>
+	</p>
 	<div>View page source in your browser to see results</div>
-</blockquote>
+</code>
 <p>Comment without variable substitution.</p>
-<blockquote class="outer">
-	<blockquote><code>&#123;#&#123;page.title&#125;#&#125;</code></blockquote>
-	<div class="outputs">
-		<blockquote>&lt;!-- &#123;#&#123;page.title&#125;#&#125; --&gt;</blockquote>
+<code class="slim-code-span">
+	&#123;#&#123;page.title&#125;#&#125;
+	<p class="outputs">&lt;!-- &#123;#&#123;page.title&#125;#&#125; --&gt;
 		<!-- {#{page.title}#} -->
-	</div>
+	</p>
 	<div>View page source in your browser to see results</div>
-</blockquote>
+</code>
 <p>Comment a complex statement with variable substitution.</p>
-<blockquote class="outer">
-	<blockquote><code>&#123;# &#123;% foreach model="users" view="partials/slim.view/user.html" %&#125; #&#125;</code></blockquote>
-	<div class="outputs">
-		<blockquote>&lt;!-- <p>Harrison Ford is a(n) actor</p><p>Carrie Fisher is a(n) actor</p><p>Harry Harrison is a(n) author</p><p>Robert Asprin is a(n) author</p> --&gt;</blockquote>
-		<!-- <p>Harrison Ford is a(n) actor</p><p>Carrie Fisher is a(n) actor</p><p>Harry Harrison is a(n) author</p><p>Robert Asprin is a(n) author</p> -->
-	</div>
+<code class="slim-code-span">
+	&#123;# &#123;% foreach model="users" view="partials/slim.view/user.html" %&#125; #&#125;
+	<p class="outputs">&lt;!-- Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br> --&gt;
+		<!-- Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br> -->
+	</p>
 	<div>View page source in your browser to see results</div>
-</blockquote>
+</code>
 <p>Comment a complex statement without variable substitution.</p>
-<blockquote class="outer">
-	<blockquote><code>&#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125;</code></blockquote>
-	<div class="outputs">
-		<blockquote>&lt;!-- &#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125; --&gt;</blockquote>
+<code class="slim-code-span">
+	&#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125;
+	<p class="outputs">&lt;!-- &#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125; --&gt;
 		<!-- {#% foreach model="users" view="partials/slim.view/user.html" %#} -->
-	</div>
+	</p>
 	<div>View page source in your browser to see results</div>
-</blockquote></details>
+</code>
+</details>
+<details class="slim-details">
+	<summary><h3>Example</h3></summary>
+	<code class="slim-code-span">
+	</code>
+</details>
+
+
+
+
 			<footer class="copyright">
 				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
 			</footer>

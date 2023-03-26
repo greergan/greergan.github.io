@@ -1,14 +1,16 @@
 <summary><h3>Namespace</h3></summary>
-<p class="description">A variable supplied when a new view is created. This variable is prepended to all relative paths found inside of include statements.</p>
+<p class="description">A variable supplied when a new view is created. This variable is prepended to all relative paths found inside of include statements</p>
+<p>Used when creating a new SlimView object.</p>
+<code class="slim-code-span">
+import * as slim from "https://greergan.github.io"/slim.view/index.ts";<br>
+const view:slim.view.SlimView = new slim.view.SlimView(<span>namespace_string</span>);
+</code>
+
 <p>The "file" protocol.</p>
-<blockquote class="outer">
-	<blockquote><code>file:///path/to/website/root</code></blockquote>
-</blockquote>
+<code class="slim-code-span">file:///path/to/website/root</code>
+
 <p>The "http" protocol.</p>
-<blockquote class="outer">
-	<blockquote><code>http://greergan.github.io</code></blockquote>
-</blockquote>
+<code class="slim-code-span">http://greergan.github.io</code>
+
 <p>The "https" protocol.</p>
-<blockquote class="outer">
-	<blockquote><code>https://greergan.github.io</code></blockquote>
-</blockquote>
+<code class="slim-code-span">https://greergan.github.io</code>

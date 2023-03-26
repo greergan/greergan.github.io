@@ -36,11 +36,11 @@
         "methodName":{"suppress":false,"bold":true}
     },
     "levelSuppressions": {
-        "debug":false,
+        "debug":true,
         "todo":true,
-        "trace":false,
+        "trace":true,
         "slim.generator": {
-            "debug": false,
+            "debug": true,
             "trace": true,
             "files":[
                 { "name": "config_functions.ts", "debug":true, "trace": true},
@@ -51,8 +51,8 @@
             ]
         },
         "slim.utilities": {
-            "trace": false,
-            "debug": false,
+            "trace": true,
+            "debug": true,
             "files": [
                 { "name": "json.ts", "debug":true, "trace":true },
                 { "name": "utilities.ts", "debug":true, "trace":true },
@@ -67,7 +67,9 @@
             ]
         },
         "slim.view": {
-
+            "functions": [
+                { "name": "compile", "debug":false, "trace": true}
+            ]
         }
     }
 }

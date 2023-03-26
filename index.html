@@ -1,12 +1,11 @@
 <html>
 	<head>
-		<title>[object Promise]</title>
+		<title>Slim</title>
 		<link rel="icon" type="image/png" href="/assets/images/favicon.ico">
 		<meta charset="utf-8">
 		<style type="text/css">
 			html { color: #D4D4D4; background-color: #303031; padding: 15px; font-size: 15px;}
 			a {color: #a14318; text-decoration: none;}
-			code { font-size: 130%;}
 			div.content { margin: auto; width:75%; background-color: #232324; border-radius: 25px; padding: 2%; }
 			.copyright {padding-top: 30; font-size: 100%; text-align: center; padding-top: 4%;}
 			div.catch_line {color: orange; position: relative; left: 95px; top: -5px;}	
@@ -14,7 +13,7 @@
 			p.description {  padding-bottom: 5px; }
 			blockquote.description, p.description {color:#1da1de; }
 			h1.intro { display: inline; position: relative; z-index: 999; }
-			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 140%; margin: auto; width: 95%; position: relative; z-index: 900;}
+			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 20px; margin: auto; width: 95%; position: relative; z-index: 900;}
 			menu {text-align: center; position: sticky; top: 0; background-color: #303031; z-index: 901;}
 			menu a {font-size: 140%; position: relative; z-index: 901;}
 			menu li {display: inline; position: relative; z-index: 901;}
@@ -23,15 +22,16 @@
 			.logo {display: inline-block; position: fixed; top: 40px; left: 1%; z-index: 950;}
 			.outer { background-color: #4d524e; padding: 10px; color: #a5b012; border-radius: 25px; }
 			.outputs {color:#1da1de; }
-			.outputs::before {content: "results in"; color: #12b086; }
+			.outputs::before {content: "results in"; color: #12b086; display: block; padding-bottom: 8px; }
 			hr.section-seperator {margin: auto; width: 95%; margin-bottom: 30px; color: #12b086; }
 			.slim {color: #b0123c; display: inline;}
 			.slim-details h3 {display: inline; font-size: 100%; }
 			details.slim-details {margin-bottom: 10px;}
 			details.slim-details:last-child {margin-bottom: 0px;}
 			div.status{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: #303031; z-index: 901;}
-			@media screen and (max-width: 1000px) {
-				menu a {font-size: 15px;}
+			.slim-code-span span{color:#1da1de;}
+			code.slim-code-span{ background-color: #4d524e; padding: 10px; padding-left: 25px; color: #a5b012; border-radius: 25px; display: block; margin: 12px;
+				margin-left: 30px; margin-right: 30px;
 			}
 		</style>
 	</head>
@@ -48,7 +48,7 @@
 
 		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
 		<div class="content">
-<h1 class="intro">Welcome to <div class="slim">[object Promise]</div></h1>
+<h1 class="intro">Welcome to <div class="slim">Slim</div></h1>
 <div class="catch_line">A Typescript platform</div>
 <div class="intro">
     <p>
@@ -137,7 +137,7 @@
     </p>
 </details>
 			<footer class="copyright">
-				Copyright &copy; [object Promise] [object Promise]
+				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
 			</footer>
 		</div>
 		</div> <!-- class="content" is now closed -->

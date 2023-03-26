@@ -1,20 +1,35 @@
 <summary><h3>Comments</h3></summary>
-<p class="description">Prevent statement and substitution processing.</p>
-<p>Comment with out variable substitution.</p>
-<blockquote class="outer">
-	<blockquote><code>&#123;#  &#123;&#123;page.title&#125;&#125; #&#125;</code></blockquote>
-	<div class="outputs">
-		<blockquote>&lt;!-- page.title --&gt;</blockquote>
+<p class="description">Create HTML comments.</p>
+<p>Comment with variable substitution.</p>
+<code class="slim-code-span">
+	&#123;#  &#123;&#123;page.title&#125;&#125; #&#125;
+	<p class="outputs">
+		&lt;!-- Slim.View --&gt;
 		{# {{page.title}} #}
-	</div>
+	</p>
 	<div>View page source in your browser to see results</div>
-</blockquote>
-<p>Comment a complex statement.</p>
-<blockquote class="outer">
-	<blockquote><code>&#123;# &#123;% foreach model="users" view="partials/slim.view/user.html" %&#125; #&#125;</code></blockquote>
-	<div class="outputs">
-		<blockquote>&lt;!-- foreach model="users" view="partials/slim.view/user.html" --&gt;</blockquote>
-		{# {% foreach model="users-0" view="partials/slim.view/user.html" %} #}
-	</div>
+</code>
+<p>Comment without variable substitution.</p>
+<code class="slim-code-span">
+	&#123;#&#123;page.title&#125;#&#125;
+	<p class="outputs">&lt;!-- &#123;#&#123;page.title&#125;#&#125; --&gt;
+		{#{page.title}#}
+	</p>
 	<div>View page source in your browser to see results</div>
-</blockquote>
+</code>
+<p>Comment a complex statement with variable substitution.</p>
+<code class="slim-code-span">
+	&#123;# &#123;% foreach model="users" view="partials/slim.view/user.html" %&#125; #&#125;
+	<p class="outputs">&lt;!-- Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br> --&gt;
+		{# {% foreach model="users" view="partials/slim.view/user.html" %} #}
+	</p>
+	<div>View page source in your browser to see results</div>
+</code>
+<p>Comment a complex statement without variable substitution.</p>
+<code class="slim-code-span">
+	&#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125;
+	<p class="outputs">&lt;!-- &#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125; --&gt;
+		{#% foreach model="users" view="partials/slim.view/user.html" %#}
+	</p>
+	<div>View page source in your browser to see results</div>
+</code>

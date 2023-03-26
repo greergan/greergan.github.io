@@ -6,40 +6,32 @@
 		<style type="text/css">
 			html { color: #D4D4D4; background-color: #303031; padding: 15px; font-size: 15px;}
 			a {color: #a14318; text-decoration: none;}
-			code { font-size: 130%;}
 			div.content { margin: auto; width:75%; background-color: #232324; border-radius: 25px; padding: 2%; }
 			.copyright {padding-top: 30; font-size: 100%; text-align: center; padding-top: 4%;}
 			div.catch_line {color: orange; position: relative; left: 95px; top: -5px;}	
 			p {position: relative; z-index: 900;}
-			p.description { padding-bottom: 5px; }
-			div.description { display: inline;}
-			blockquote.description, p.description, div.description, .optional, table.description {color:#1da1de; }
+			p.description {  padding-bottom: 5px; }
+			blockquote.description, p.description {color:#1da1de; }
 			h1.intro { display: inline; position: relative; z-index: 999; }
-			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 140%; margin: auto; width: 95%; position: relative; z-index: 900;}
-			td.left_padding_15 { padding-left: 15px; }
+			div.intro { font-family: 'Times New Roman', Times, serif; font-size: 20px; margin: auto; width: 95%; position: relative; z-index: 900;}
 			menu {text-align: center; position: sticky; top: 0; background-color: #303031; z-index: 901;}
 			menu a {font-size: 140%; position: relative; z-index: 901;}
 			menu li {display: inline; position: relative; z-index: 901;}
 			menu li::after {content: " || ";}
 			menu li:last-child::after {content: "";}
-			.optional { display: inline;}
-			.optional::after {content: "optional"}
 			.logo {display: inline-block; position: fixed; top: 40px; left: 1%; z-index: 950;}
 			.outer { background-color: #4d524e; padding: 10px; color: #a5b012; border-radius: 25px; }
 			.outputs {color:#1da1de; }
-			.outputs::before {content: "results in"; color: #12b086; }
-			.required::after {content: "required"; color: #12b086;}
+			.outputs::before {content: "results in"; color: #12b086; display: block; padding-bottom: 8px; }
 			hr.section-seperator {margin: auto; width: 95%; margin-bottom: 30px; color: #12b086; }
 			.slim {color: #b0123c; display: inline;}
 			.slim-details h3 {display: inline; font-size: 100%; }
 			details.slim-details {margin-bottom: 10px;}
 			details.slim-details:last-child {margin-bottom: 0px;}
 			div.status{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: #303031; z-index: 901;}
-			div.usage {padding-bottom: 10px;}
-			.usage {color: gold;}
-			.deno-usage::before {content: "Usage: deno run generate.ts "; }
-			@media screen and (max-width: 1000px) {
-				menu a {font-size: 15px;}
+			.slim-code-span span{color:#1da1de;}
+			code.slim-code-span{ background-color: #4d524e; padding: 10px; padding-left: 25px; color: #a5b012; border-radius: 25px; display: block; margin: 12px;
+				margin-left: 30px; margin-right: 30px;
 			}
 		</style>
 	</head>
@@ -47,6 +39,7 @@
 		<menu>
     <li><a href="/">Slim</a></li>
     <li><a href="/slim.view/">Slim.View</a></li>
+    <li><a href="/slim.filter/">Slim.Filter</a></li>
     <li><a href="/slim.utilities/">Slim.Utilities</a></li>
     <li><a href="/slim.generator/">Slim.Generator</a></li>
     <li><a href="/slim.objects/">Slim.Objects</a></li>
@@ -65,94 +58,55 @@
 </div>
 <hr class="section-seperator"/>
 <details class="slim-details"><summary><h3>Command line arguments</h3></summary>
-<p class="description">The generate script accepts multiple command line argument.</p>
-<table class="description">
-    <tr>
-        <td class="left_padding_15">--config | -c</td>
-        <td class="left_padding_15"><a href="/path_descriptions.html" target="path_descriptions">path</a></td>
-        <td class="left_padding_15"><div class="required"/></td>
-        <td class="left_padding_15">Valid <a href="/path_descriptions.html" target="path_descriptions">path</a> to a Slim.Generator configuration file</td>
-    </tr>
-    <tr">
-        <td class="left_padding_15">--generate_id | -id</td>
-        <td class="left_padding_15">number</td>
-        <td class="left_padding_15"><div class="optional"/></td>
-        <td class="left_padding_15">
-            <div>A numeric id which specifies a Slim.Generator page filter when rendering</div>
-            <div>Can also be controlled inside the Slim.Generator configuration file</div>
-        </td>
-    </tr>
-    <tr>
-        <td class="left_padding_15">--help | -h</d></td>
-        <td class="left_padding_15"></td>
-        <td class="left_padding_15"><div class="optional"/></td>
-        <td class="left_padding_15">Displays help</td>
-    </tr>
-    <tr>
-        <td class="left_padding_15">--git | -git</d></td>
-        <td class="left_padding_15"><a href="/path_descriptions.html" target="path_descriptions">path</a></td>
-        <td class="left_padding_15"><div class="optional"/></td>
-        <td class="left_padding_15">A local valid <a href="/path_descriptions.html#absolute_path" target="path_descriptions">absolute</a> |
-<a href="/path_descriptions.html#relative_path" target="path_descriptions">relative</a> |
-<a href="/path_descriptions.html#file_path" target="path_descriptions">file:///</a>  path to a Slim style git configuration file</td>
-    </tr>
-    <tr>
-        <td class="left_padding_15">--verbose -v </td>
-        <td class="left_padding_15"></td>
-        <td class="left_padding_15"><div class="optional"/></td>
-        <td class="left_padding_15">Turns on verbose runtime information</td>
-    </tr>
-    <tr>
-        <td class="left_padding_15">--version</td>
-        <td class="left_padding_15"></td>
-        <td class="left_padding_15"><div class="optional"/></td>
-        <td class="left_padding_15">Displays version information</td>
-    </tr>
-</table>
-</details>
-<details class="slim-details"><summary><h3>--config | -c</h3></summary>
-<p class="description">The --[config | -c] flag is required. The argument that follows must be a valid file 
-    <a href="/path_descriptions.html" target="path_descriptions">path</a> ending in .json.</p>
-<div class="usage deno-usage">--config <a href="/path_descriptions.html" target="path_descriptions">path</a> [optional_flags]</div></details>
-<details class="slim-details"><summary><h3>--generate_id | -id</h3></summary>
-<p class="description">The [--generate_id | -id] flag is optional and controls which pages are generated.</p>
-<p class="description">This configuration option overrides the value that is found in the top level configuration if it exists.
-    It triggers page processing when the supplied number matches a page.generate_id value.</p>
-<div class="usage deno-usage">--config <a href="/path_descriptions.html" target="path_descriptions">path</a> [optional_flags] [--generate_id | -id] number</div>
-Top level configuration property is overrided by the command line flag - <div class="optional"></div>
+<p class="description">The generate script accepts multiple command line argument. The first argument must be the path to a JSON configuration file
+    which must be in one of the below forms.
+</p>
+<p class="description">--git path/to/gitaccount.json command line flag is optional.</p>
+<p class="description">All addition command line arguments must represent file names which will be matched to specific configuration page objects.</p>
+
+A relative path.
 <blockquote class="outer">
-    <blockquote><code>
-<pre>{
-    "generate_id": number,
-    ...
-}</pre>
-    </code></blockquote>
+    <blockquote><code>path/to/json_file.json</code></blockquote>
+    <blockquote><code>./path/to/json_file.json</code></blockquote>
+    <blockquote><code>./path/to/json_file.json index.html</code></blockquote>
+    <blockquote><code>./path/to/json_file.json index.html slim.view.html</code></blockquote>
 </blockquote>
-Page level configuration property - <div class="optional"></div>
+An absolute path.
 <blockquote class="outer">
-    <blockquote><code>
-<pre>{
-    "page": {
-        "generate_id": number,
-        ...
-    }
-}</pre>
-    </code></blockquote>
+    <blockquote><code>/path/to/json_file.json</code></blockquote>
 </blockquote>
-</details>
-<details class="slim-details"><summary><h3>--help | -help</h3></summary>
-<p class="description">The [--help | -h] flag is optional and displays the generate.ts program help information.</p>
-<div class="usage deno-usage">[--help | -h]</div></details>
-<details class="slim-details"><summary><h3>--git | -git</h3></summary>
-<p class="description">The [--git | -git] flag is optional and specifies the path to a locally stored git configuration file.
-    When specified on the command line, this option turns on git storage integration.</p>
-<p class="description">This configuration cannot be part of the website configuration file if it is stored in a GitHub repository. GitHub has a process that
+The "file" protocol.
+<blockquote class="outer">
+    <blockquote><code>file:///path/to/json_file.json</code></blockquote>
+</blockquote>
+The "http" protocol.
+<blockquote class="outer">
+    <blockquote><code>http://path/to/json_file.json</code></blockquote>
+</blockquote>
+The "https" protocol.
+<blockquote class="outer">
+    <blockquote><code>https://path/to/json_file.json</code></blockquote>
+</blockquote>
+Slim example.
+<blockquote class="outer">
+    <blockquote><code>slim https://greergan.github.io/slim.generator/generator https://greergan.github.io/models/website.json</code></blockquote>
+</blockquote>
+Slim example with --git.
+<blockquote class="outer">
+    <blockquote><code><div>slim https://greergan.github.io/slim.generator/generator.ts --git git_configuration.json \</div>
+         https://greergan.github.io/models/website.json</code></blockquote>
+</blockquote>
+Deno example.
+<blockquote class="outer">
+    <blockquote><code><div>deno --allow-net --allow-read --allow-write run \</div>
+        https://greergan.github.io/slim.generator/generator.ts https://greergan.github.io/models/website.json</code></blockquote>
+</blockquote></details>
+<details class="slim-details"><summary><h3>Git command line flag --git</h3></summary>
+<p class="description">The --git command line flag is optional and specifies the path to a locally stored git configuration file.
+    This configuration cannot be part of the website configuration file if it is stored in a GitHub repository. GitHub has a process that
     scans repositories looking for GitHub access keys.
 </p>
-<div class="usage deno-usage">--config <a href="/path_descriptions.html" target="path_descriptions">path</a>
-    [optional_flags] [--git | -git] [<a href="/path_descriptions.html#absolute_path" target="path_descriptions">absolute</a> |
-<a href="/path_descriptions.html#relative_path" target="path_descriptions">relative</a> |
-<a href="/path_descriptions.html#file_path" target="path_descriptions">file:///</a> ] path</div>
+
 <blockquote class="outer">
     <blockquote><code>
 <pre>{
@@ -175,13 +129,11 @@ Page level configuration property - <div class="optional"></div>
 }</pre>
     </code></blockquote>
 </blockquote>
-</details>
-<details class="slim-details"><summary><h3>--verbose | -v</h3></summary>
-<p class="description">The [--verbose | -v] flag is optional and enables trace information to be displayed.</p>
-<div class="usage deno-usage">--config <a href="/path_descriptions.html" target="path_descriptions">path</a> [optional_flags] [--verbose | -v]</div></details>
-<details class="slim-details"><summary><h3>--version</h3></summary>
-<p class="description">The --version flag is optional and displays generate.ts help information.</p>
-<div class="usage deno-usage">--version</div></details>
+Slim example with --git.
+<blockquote class="outer">
+    <blockquote><code><div>slim https://greergan.github.io/slim.generator/generator.ts --git git_configuration.json \</div>
+         https://greergan.github.io/models/website.json</code></blockquote>
+</blockquote></details>
 <details class="slim-details"><summary><h3>Configuration options</h3></summary>
 <p class="description">The website_configuration.json file can contian the following options. Some options are required while others are optional.
 </p>
@@ -191,10 +143,8 @@ Top level configuration properties
 <pre>{
     "output_to": path,
     "namespace": path,
-    "generate_id": number,
-    "copy_to_output": object array,
     "site": object,
-    
+    "copy_to_output": object array,
     "pages": object array
 }</pre>
     </code></blockquote>

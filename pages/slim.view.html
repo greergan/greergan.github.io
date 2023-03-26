@@ -1,6 +1,6 @@
 <include view="includes/head.html">
 <h1 class="intro">Welcome to <div class="slim">{{page.title}}</div></h1>
-<div class="catch_line">A Typescript HTML rendering engine</div>
+<div class="catch_line">An HTML rendering engine</div>
 <div class="intro">
 	<p>Inspired by Deno remote imports; there is now a rendering engine that supports remote view inclusion.
 		With Slim.View it is possible to import HTML assets from either remote locations on the Web or from the local file system.
@@ -9,10 +9,20 @@
 		<a href="/slim.generator">Slim.Generator</a> is an example of a static site generator.</p>
 </div>
 <hr class="section-seperator"/>
-<details class="slim-details"><include view="partials/slim.view/variable_substitution.html"></details>
 <details class="slim-details"><include view="partials/slim.view/namespace.html"></details>
+<details class="slim-details"><include view="partials/slim.view/methods.html"></details>
+<details class="slim-details"><include view="partials/slim.view/variable_substitution.html"></details>
 <details class="slim-details"><include view="partials/slim.view/includes.html"></details>
 <details class="slim-details"><include view="partials/slim.view/statements.html"></details>
 <details class="slim-details"><include view="partials/slim.view/filter.html"></details>
 <details class="slim-details"><include view="partials/slim.view/comments.html"></details>
+<details class="slim-details">
+	<summary><h3>Example</h3></summary>
+	<code class="slim-code-span">
+	</code>
+</details>
+
+
+
+
 <include view="includes/foot.html">

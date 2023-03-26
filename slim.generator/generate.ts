@@ -56,12 +56,12 @@ try {
                 }
             }
             let model = slim.utilities.comingleSync([{}, {page:page,site:config!.site}, ...exploaded_models]);
-            //console.debug({ message:"comingled model"}, model);
+// might be a bug in here related to the SLIMOVERRIDES bit console.debug({ message:"comingled model"},{SLIMOVERRIDES:{debug:{suppress:true},path:{suppress:true}}}, model);
             const input_output:slim.types.iKeyValueAny = await set_input_output(model.page, output_to!, namespace!);
             const html_string:string = await view.render(model, input_output.input_file);
             console.debug({ message:"rendered",value:"page size"}, html_string.length);
             await write_output(input_output.output_file, html_string);
-            console.debug({ message:"wrote",value:"to output file"}, input_output.output_file);
+            console.info({ message:"wrote",value:"to output file"}, {SLIMOVERRIDES:{debug:{suppress:false},path:{suppress:true}}}, input_output.output_file);
         }
         else {
             console.debug({message:"ending page processing",value:"page.generate_id is excluded"}, page.generate_id);
@@ -69,6 +69,5 @@ try {
     }
 }
 catch(e) {
-    console.error(e.stack);
     SlimConsole.abort(e.stack);
 }

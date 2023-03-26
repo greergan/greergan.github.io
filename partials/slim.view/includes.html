@@ -4,20 +4,19 @@
 </p>
 <p>Include reusable &lt;head&gt; template which may also contain it's own include files or other reusable site definitions.
 	This type of template inclusion can be used in each top level page of a website.</p>
-<blockquote class="outer">
-	<blockquote><code>&lt;include view="includes/head.html"&gt;</code></blockquote>
-</blockquote>
+<code class="slim-code-span">
+	&lt;include view="includes/head.html"&gt;
+</code>
+
 <p>Include partial view templates. This is an arbitray concent. The following examples includes small,
 	specific, html code based on the idea that a top level file will benefit from including smaller chunks of HTML code.
 	The following "partials" are used to build the current page you are viewing.
 </p>
-<blockquote class="outer">
-	<blockquote>
-		<code>&lt;include view="partials/slim.view/variable_substitution.html"&gt;</code><br>
-		<code>&lt;include view="partials/slim.view/view_includes.html"&gt;</code>
-	</blockquote>
-</blockquote>
+<code class="slim-code-span">
+	&lt;include view="partials/slim.view/variable_substitution.html"&gt;<br>
+	&lt;include view="partials/slim.view/view_includes.html"&gt;
+</code>
 <p>Include standard document &lt;footer&gt;, bottom of page templates and closing of site level HTML objects.</p>
-<blockquote class="outer">
-	<blockquote><code>&lt;include view="includes/foot.html"&gt;</code></blockquote>
-</blockquote>
+<code class="slim-code-span">
+	&lt;include view="includes/foot.html"&gt;
+</code>
