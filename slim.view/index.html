@@ -62,8 +62,8 @@
 <p class="description">A variable supplied when a new view is created. This variable is prepended to all relative paths found inside of include statements</p>
 <p>Used when creating a new SlimView object.</p>
 <code class="slim-code-span">
-import * as slim from "https://greergan.github.io"/slim.view/index.ts";<br>
-const view:slim.view.SlimView = new slim.view.SlimView(<span>namespace_string</span>);
+import { SlimView } from "https://greergan.github.io/slim.view/index.ts";<br>
+const view:SlimView = new SlimView(<span>namespace_string</span>);
 </code>
 
 <p>The "file" protocol.</p>
@@ -218,7 +218,9 @@ const view:slim.view.SlimView = new slim.view.SlimView(<span>namespace_string</s
 		console.log(html_view);
 	</code>
 	<code class="slim-code-span">
-		deno run 
+		deno run --allow-net -r FILE.ts<br>
+		or<br>
+		deno run --allow-net -r https://greergan.github.io/examples/helloworld.ts
 	</code>
 </div></details>
 			<footer class="copyright">
