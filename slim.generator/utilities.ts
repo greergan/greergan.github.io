@@ -33,19 +33,3 @@ export async function set_input_output(config:slim.types.iKeyValueAny, output_to
     console.trace(input_output);
     return input_output;
 }
-export async function write_output(output_file:string, content:string) {
-    const file = slim.utilities.get_absolute_file_path(output_file);
-    if(file !== undefined && file.length > 1) {
-        try {
-            Deno.mkdirSync(file.substring(0, file.lastIndexOf("/")), { recursive: true });
-            Deno.writeTextFileSync(file, content);
-        }
-        catch(e) {
-            SlimConsole.abort({message:"write_output"}, e);
-        }
-    }
-    else {
-        SlimConsole.abort({message: "not a valid file url"}, output_file);
-    }
-    console.trace();
-}

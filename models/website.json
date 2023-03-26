@@ -1,7 +1,7 @@
 {
     "output_to": "file:///home/greergan/mnt/host/src/greergan.github.io",
     "namespace": "http://192.168.122.59",
-    "generate_ids": [0],
+    "generate_ids": [1],
     "meta_tags": [],
     "copy_to_output": [
         {"path": "assets"},
@@ -62,7 +62,7 @@
             "title": "Slim.Utilities"
         },
         {
-            "generate_id": 0,
+            "generate_id": 1,
             "meta_tags": [],
             "input_file": "pages/slim.view.html",
             "output_file": "slim.view/index.html",

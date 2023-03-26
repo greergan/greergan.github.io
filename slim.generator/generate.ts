@@ -1,7 +1,7 @@
 #!/usr/bin/env -S deno run --allow-env -r --check 
 //deno run --allow-env -r --check generate.ts -c http://192.168.122.59/models/website.json
 import * as slim from "./slim_modules.ts";
-import { check_config, explode_models, is_valid_output_namespace, parse_command_line, set_input_output, write_output } from "./index.ts";
+import { check_config, explode_models, is_valid_output_namespace, parse_command_line, set_input_output } from "./index.ts";
 try {
     window.SlimConsole = new slim.colorconsole.SlimColorConsole(await slim.utilities.get_json_contents("http://192.168.122.59/models/console_colors.json"));
     SlimConsole.configurations.trace.stackTrace.suppress = true;
@@ -60,7 +60,7 @@ try {
             const input_output:slim.types.iKeyValueAny = await set_input_output(model.page, output_to!, namespace!);
             const html_string:string = await view.render(model, input_output.input_file);
             console.debug({ message:"rendered",value:"page size"}, html_string.length);
-            await write_output(input_output.output_file, html_string);
+            await slim.utilities.write_output(input_output.output_file, html_string);
             console.info({ message:"wrote",value:"to output file"}, {SLIMOVERRIDES:{debug:{suppress:false},path:{suppress:true}}}, input_output.output_file);
         }
         else {

@@ -22,8 +22,7 @@
         "fileName":{"suppress":false},
         "lineNumber":{"suppress":false}
     },
-    "log":{
-    },
+    "log":{"propogate":true, "suppress":true},
     "trace":{"propogate":true,
         "className":{"suppress":false},
         "methodName":{"suppress":false},

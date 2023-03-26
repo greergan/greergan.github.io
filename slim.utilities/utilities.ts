@@ -57,3 +57,19 @@ export async function get_normalized_url(property:string): Promise<string|undefi
     console.trace(normalized_url);
     return normalized_url;
 }
+export async function write_output(output_file:string, content:string) {
+    const file = get_absolute_file_path(output_file);
+    if(file !== undefined && file.length > 1) {
+        try {
+            Deno.mkdirSync(file.substring(0, file.lastIndexOf("/")), { recursive: true });
+            Deno.writeTextFileSync(file, content);
+        }
+        catch(e) {
+            SlimConsole.abort({message:"write_output"}, e);
+        }
+    }
+    else {
+        SlimConsole.abort({message: "not a valid file url"}, output_file);
+    }
+    console.trace();
+}

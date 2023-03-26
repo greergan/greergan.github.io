@@ -1,1 +1,4 @@
-export { SlimView } from "./view.ts";
+import { SlimView } from "./view.ts";
+export {
+    SlimView
+}

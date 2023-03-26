@@ -126,7 +126,7 @@ export class SlimColorConsole implements colorconsole.iConsole {
             }
         }
         else {
-            if(levelName.toLowerCase() in this.levelSuppressions) {
+            if(this.levelSuppressions.hasOwnProperty(levelName.toLowerCase())) {
                 if(this.levelSuppressions[levelName.toLowerCase()]) {
                     return;
                 }
@@ -163,9 +163,7 @@ export class SlimColorConsole implements colorconsole.iConsole {
         printable_string += this.colorize(event.properties.messageValue, configuration.messageValue);
         printable_string += this.colorize(event.properties.objectString, configuration.objectString);
         printable_string += this.colorize(event.properties.stackTrace, configuration.stackTrace);
-        if(printable_string.length > 0) {
-            this.write(printable_string);
-        }
+        this.stderr(printable_string);
         if(event.overrides.hasOwnProperty(levelName.toLowerCase())) {
             for(const subLevel of configurationSubLevels) {
                 if(subLevel in saved_configuration) {
@@ -175,9 +173,14 @@ export class SlimColorConsole implements colorconsole.iConsole {
             }
         }
     }
-    write(string_to_print:string):void {
-        if('Deno' in window) {
+    stderr(string_to_print:string):void {
+        if(window.hasOwnProperty('Deno')) {
             Deno.stderr.writeSync(new TextEncoder().encode(`${string_to_print}\n`));
+        }
+    }
+    stdout(string_to_print:string):void {
+        if(window.hasOwnProperty('Deno')) {
+            Deno.stdout.writeSync(new TextEncoder().encode(`${string_to_print}\n`));
         }
     }
 }

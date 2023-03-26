@@ -209,15 +209,15 @@ const view:slim.view.SlimView = new slim.view.SlimView(<span>namespace_string</s
 	<div>View page source in your browser to see results</div>
 </code>
 </details>
-<details class="slim-details">
-	<summary><h3>Example</h3></summary>
+<details class="slim-details"><summary><h3>Examples</h3></summary>
+<div class="example">
 	<code class="slim-code-span">
+		import * as slim from "https://greergan.github.io"/slim.view/index.ts";<br>
+		const view:slim.view.SlimView = new slim.view.SlimView("https://greergan.github.io");<br>
+		const html_view:string = view.render({page:{title:"fun"}}, "examples/helloworld.html");<br>
+		console.log(html_view);
 	</code>
-</details>
-
-
-
-
+</div></details>
 			<footer class="copyright">
 				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
 			</footer>

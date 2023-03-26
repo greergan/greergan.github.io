@@ -21,14 +21,14 @@ export class SlimView {
 		// variable replacements
 		coalesce_view = coalesce_view.replace(/{#\s*({{.+}})\s*#}/gm, (match, data) => {
 			const replacement_string:string = "<!-- " + data + " -->";
-			console.debug({message:"comment replacements",value:"capture group"}, match);
-			console.debug({message:"comment replacements",value:"replaced with"}, replacement_string);
+			console.debug({message:"variable comment replacements with substitution",value:"capture group"}, match);
+			console.debug({message:"variable comment replacements with substitution",value:"replaced with"}, replacement_string);
 			return replacement_string;
 		});
 		coalesce_view = coalesce_view.replace(/({#{.+}#})/gm, (match, data) => {
 			const replacement_string:string = "<!-- " + data + " -->";
-			console.debug({message:"comment replacements",value:"capture group"}, match);
-			console.debug({message:"comment replacements",value:"replaced with"}, replacement_string);
+			console.debug({message:"variable comment replacements without substitution",value:"capture group"}, match);
+			console.debug({message:"variable comment replacements without substitution",value:"replaced with"}, replacement_string);
 			return replacement_string;
 		});
 		coalesce_view = coalesce_view.replace(/{#\s*({%.+%})\s*#}/gm, (match, data) => {
@@ -113,7 +113,7 @@ export class SlimView {
 		}
 		await this.compile(normalized_url);
 		if(this.withViewDependencies.has(normalized_url)) {
-			const dependencies = this.withViewDependencies.get(normalized_url) || [];
+			const dependencies = this.withViewDependencies.get(normalized_url) ?? [];
 			for(const dependency in dependencies) {
 				await this.recompile(dependency);
 			}
@@ -134,14 +134,14 @@ export class SlimView {
 		this.withViewDependencies.set(with_view, dependant_views);
 		console.trace();
 	}
-	private async parseStatement(model:slim.types.iKeyValueAny, statement:string): Promise<string> {
+	private async parseStatement(model:slim.types.iKeyValueAny, statement:string):Promise<string> {
 		console.debug({message:"beginning",value:"statement"}, statement);
 		const statement_match:Array<any> = statement.match(/^with|foreach\s*/i) || [];
 		const statement_type:string = (String(statement_match[0]).toLowerCase()).trim();
 		let coalesced_view:string = "";
 		switch(statement_type) {
 			case 'foreach':
-				const foreach_match:Array<string> = statement.match(/^foreach\s+model\s*=\s*"\s*(.+?)\s*"\s+view\s*=\s*"(.+?)"/) || [];
+				const foreach_match:Array<string> = statement.match(/^foreach\s+model\s*=\s*"\s*(.+?)\s*"\s+view\s*=\s*"(.+?)"/) ?? [];
 				console.debug({message:"foreach statement",value:"processing match results"}, foreach_match);
 				if(foreach_match.length == 3) {
 					const process_data = {
@@ -156,7 +156,7 @@ export class SlimView {
 					coalesced_view = await this.processMatch(model, process_data);
 				}
 				else {
-					const foreach_match = statement.match(/^foreach\s+model\s*=\s*"\s*(.+?)\s*"\s*(.+)\s*/m) || [];
+					const foreach_match = statement.match(/^foreach\s+model\s*=\s*"\s*(.+?)\s*"\s*(.+)\s*/m) ?? [];
 					if(foreach_match.length == 3) {
 						const process_data = {
 							"model_string": foreach_match[1],
@@ -183,7 +183,7 @@ export class SlimView {
 					}*/
 				break;
 			case 'with':
-				const with_match:Array<string> = statement.match(/^with\s+model\s*=\s*"\s*(.+?)\s*"\s+view\s*=\s*"(.+?)"/) || [];
+				const with_match:Array<string> = statement.match(/^with\s+model\s*=\s*"\s*(.+?)\s*"\s+view\s*=\s*"(.+?)"/) ?? [];
 				   if(with_match.length == 3) {
 					const process_data = {
 						"model_string": with_match[1],
@@ -197,7 +197,7 @@ export class SlimView {
 					coalesced_view = await this.processMatch(model, process_data);
 				}
 				else {
-					const with_match = statement.match(/^with\s+model\s*=\s*"\s*(.+?)\s*"(.+)/) || [];
+					const with_match = statement.match(/^with\s+model\s*=\s*"\s*(.+?)\s*"(.+)/) ?? [];
 					if(with_match.length == 3) {
 						const process_data = {
 							"model_string": with_match[1],
