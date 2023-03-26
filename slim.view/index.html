@@ -214,7 +214,7 @@ const view:slim.view.SlimView = new slim.view.SlimView(<span>namespace_string</s
 	<code class="slim-code-span">
 		import { SlimView } from "https://greergan.github.io/slim.view/index.ts";<br>
 		const view:SlimView = new SlimView("https://greergan.github.io");<br>
-		const html_view:string = await view.render({page:{title:"fun"}}, "examples/helloworld.html");<br>
+		const html_view:string = await view.render({page:{title:"fun"}, site:{copyright:{started_date:"2023",by:"Your Name"}}}, "examples/helloworld.html");<br>
 		console.log(html_view);
 	</code>
 	<code class="slim-code-span">
