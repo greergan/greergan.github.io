@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>[object Promise]</title>
+		<title>Slim.View</title>
 		<link rel="icon" type="image/png" href="/assets/images/favicon.ico">
 		<meta charset="utf-8">
 		<style type="text/css">
@@ -48,7 +48,7 @@
 
 		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
 		<div class="content">
-<h1 class="intro">Welcome to <div class="slim">[object Promise]</div></h1>
+<h1 class="intro">Welcome to <div class="slim">Slim.View</div></h1>
 <div class="catch_line">A Typescript HTML rendering engine</div>
 <div class="intro">
 	<p>Inspired by Deno remote imports; there is now a rendering engine that supports remote view inclusion.
@@ -63,12 +63,19 @@
 <blockquote class="outer">
 	<blockquote><code>Hello I am &#123;&#123;page.title&#125;&#125;</code></blockquote>
 	<div class="outputs">
-		<blockquote>Hello I am [object Promise]</blockquote>
+		<blockquote>Hello I am Slim.View</blockquote>
 	</div>
 </blockquote>
 </details>
 <details class="slim-details"><summary><h3>Namespace</h3></summary>
 <p class="description">A variable supplied when a new view is created. This variable is prepended to all relative paths found inside of include statements.</p>
+<p>Used when creating a new SlimView object.</p>
+<blockquote class="outer">
+	<blockquote><pre><code>
+import * as slim from "https://greergan.github.io"/slim.view/index.ts";
+const view:slim.view.SlimView = new slim.view.SlimView(namespace_string);
+	</code></pre></blockquote>
+</blockquote>
 <p>The "file" protocol.</p>
 <blockquote class="outer">
 	<blockquote><code>file:///path/to/website/root</code></blockquote>
@@ -114,7 +121,7 @@
 <p>with statement - model and view</p>
 <blockquote class="outer">
 	<blockquote><code>&#123;% with model="users[1]" view="partials/slim.view/user.html" %&#125;</code></blockquote>
-	<div class="outputs"><blockquote>{% with model="users[1]" view="partials/slim.view/user.html" %}</blockquote></div>
+	<div class="outputs"><blockquote><p>Carrie Fisher is a(n) actor</p></blockquote></div>
 </blockquote>
 <p>with statement - model and html fragment</p>
 <blockquote class="outer">
@@ -125,12 +132,12 @@
         &lt;p&gt; &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;/p&gt;
 %&#125;</pre></code>
 	</blockquote>
-	<div class="outputs"><blockquote>{% with model="users[2]" <p>[object Promise] [object Promise] is an [object Promise]</p> %}</blockquote></div>
+	<div class="outputs"><blockquote> <p>Harry Harrison is a(n) author</p> </blockquote></div>
 </blockquote>
 <p>foreach statement - model and view</p>
 <blockquote class="outer">
 	<blockquote><code>&#123;% foreach model="users" view="partials/slim.view/user.html" %&#125;</code></blockquote>
-	<div class="outputs"><blockquote>{% foreach model="users" view="partials/slim.view/user.html" %}</blockquote></div>
+	<div class="outputs"><blockquote><p>Harrison Ford is a(n) actor</p><p>Carrie Fisher is a(n) actor</p><p>Harry Harrison is a(n) author</p><p>Robert Asprin is a(n) author</p></blockquote></div>
 </blockquote>
 <p>foreach statement - model and html fragment</p>
 <blockquote class="outer">
@@ -142,9 +149,7 @@
 	</blockquote>
 	<div class="outputs">
 		<blockquote>
-			{% foreach model="users"
-				<p>[object Promise] [object Promise] is an [object Promise]</p>
-			%}
+			<p>Harrison Ford is a(n) actor</p><p>Carrie Fisher is a(n) actor</p><p>Harry Harrison is a(n) author</p><p>Robert Asprin is a(n) author</p>
 		</blockquote>
 	</div>
 </blockquote>
@@ -154,27 +159,45 @@
 	<p class="description">Slim.View uses the <a href="/slim.filter/">Slim.Filter</a> JSON filtering engine.</p>
 </div></details>
 <details class="slim-details"><summary><h3>Comments</h3></summary>
-<p class="description">Prevent statement and substitution processing.</p>
-<p>Comment with out variable substitution.</p>
+<p class="description">Create HTML comments.</p>
+<p>Comment with variable substitution.</p>
 <blockquote class="outer">
 	<blockquote><code>&#123;#  &#123;&#123;page.title&#125;&#125; #&#125;</code></blockquote>
 	<div class="outputs">
-		<blockquote>&lt;!-- page.title --&gt;</blockquote>
-		<!-- {# {#page.title#} #} -->
+		<blockquote>&lt;!-- Slim.View --&gt;</blockquote>
+		<!-- Slim.View -->
 	</div>
 	<div>View page source in your browser to see results</div>
 </blockquote>
-<p>Comment a complex statement.</p>
+<p>Comment without variable substitution.</p>
+<blockquote class="outer">
+	<blockquote><code>&#123;#&#123;page.title&#125;#&#125;</code></blockquote>
+	<div class="outputs">
+		<blockquote>&lt;!-- &#123;#&#123;page.title&#125;#&#125; --&gt;</blockquote>
+		<!-- {#{page.title}#} -->
+	</div>
+	<div>View page source in your browser to see results</div>
+</blockquote>
+<p>Comment a complex statement with variable substitution.</p>
 <blockquote class="outer">
 	<blockquote><code>&#123;# &#123;% foreach model="users" view="partials/slim.view/user.html" %&#125; #&#125;</code></blockquote>
 	<div class="outputs">
-		<blockquote>&lt;!-- foreach model="users" view="partials/slim.view/user.html" --&gt;</blockquote>
-		<!-- {# {# foreach model="users-0" view="partials/slim.view/user.html" #} #} -->
+		<blockquote>&lt;!-- <p>Harrison Ford is a(n) actor</p><p>Carrie Fisher is a(n) actor</p><p>Harry Harrison is a(n) author</p><p>Robert Asprin is a(n) author</p> --&gt;</blockquote>
+		<!-- <p>Harrison Ford is a(n) actor</p><p>Carrie Fisher is a(n) actor</p><p>Harry Harrison is a(n) author</p><p>Robert Asprin is a(n) author</p> -->
+	</div>
+	<div>View page source in your browser to see results</div>
+</blockquote>
+<p>Comment a complex statement without variable substitution.</p>
+<blockquote class="outer">
+	<blockquote><code>&#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125;</code></blockquote>
+	<div class="outputs">
+		<blockquote>&lt;!-- &#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125; --&gt;</blockquote>
+		<!-- {#% foreach model="users" view="partials/slim.view/user.html" %#} -->
 	</div>
 	<div>View page source in your browser to see results</div>
 </blockquote></details>
 			<footer class="copyright">
-				Copyright &copy; [object Promise] [object Promise]
+				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
 			</footer>
 		</div>
 		</div> <!-- class="content" is now closed -->
