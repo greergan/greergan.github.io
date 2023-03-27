@@ -6,3 +6,11 @@
 	</body>
 	<img class="logo" src="/assets/images/logo.png"/>
 </html>
+<script>
+	function copy2clipboard() {
+		const copyText = document.getElementById("myInput");
+		copyText.select();
+		copyText.setSelectionRange(0, 99999); // For mobile devices
+		navigator.clipboard.writeText(copyText.value);
+	}
+</script>

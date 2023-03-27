@@ -55,11 +55,8 @@
 	<p>More information is to come when it is in the development life cycle.</p>
 </div>
 <hr class="section-seperator"/>
-<details class="slim-details"><summary><h3>Filters</h3></summary>
-<div>
-	<p class="description">Filter JSON objects.</p>
-	<p>Function definitions are forthcoming</p>
-<!--
+<details class="slim-details"><summary><h3>Methods</h3></summary>
+
     <p>Comparative functions</p>
 	<blockquote class="outer">
 		<p>equal(model:object, )</p>
@@ -68,6 +65,7 @@
 		<p class="outputs"></p>
         <blockquote><code></code></blockquote>
     </blockquote>
+<!--
     <p>Inclusion/Exclusion functions</p>
 	<blockquote class="outer">
 		<p>and()</p>
@@ -96,3 +94,11 @@
 	</body>
 	<img class="logo" src="/assets/images/logo.png"/>
 </html>
+<script>
+	function copy2clipboard() {
+		const copyText = document.getElementById("myInput");
+		copyText.select();
+		copyText.setSelectionRange(0, 99999); // For mobile devices
+		navigator.clipboard.writeText(copyText.value);
+	}
+</script>

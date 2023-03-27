@@ -34,7 +34,7 @@
             "title": "Slim.Editor"
         },
         {
-            "generate_id": 0,
+            "generate_id": 1,
             "meta_tags": [],
             "input_file": "pages/slim.filter.html",
             "output_file": "slim.filter/index.html",
@@ -62,7 +62,7 @@
             "title": "Slim.Utilities"
         },
         {
-            "generate_id": 1,
+            "generate_id": 0,
             "meta_tags": [],
             "input_file": "pages/slim.view.html",
             "output_file": "slim.view/index.html",

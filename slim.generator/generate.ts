@@ -3,7 +3,7 @@
 import * as slim from "./slim_modules.ts";
 import { check_config, explode_models, is_valid_output_namespace, parse_command_line, set_input_output } from "./index.ts";
 try {
-    window.SlimConsole = new slim.colorconsole.SlimColorConsole(await slim.utilities.get_json_contents("http://192.168.122.59/models/console_colors.json"));
+    window.SlimConsole = new slim.colorconsole.SlimColorConsole(await slim.utilities.get_json_contents("https://greergan.github.io/configurations/console/default.json"));
     SlimConsole.configurations.trace.stackTrace.suppress = true;
     console.info({message:"awaiting parse_command_line"}, Deno.args);
     const parsed_command_line:slim.types.iKeyValueAny = await parse_command_line(Deno.args);
