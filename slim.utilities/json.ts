@@ -118,10 +118,10 @@ export async function get_node_value(model:slim.types.iKeyValueAny, property:str
 			break;
 		}
 	}
-	console.trace();
+	if(window.hasOwnProperty('SlimConsole')) console.trace();
 	return node_value;
 }
 export function get_value<Type, Key extends keyof Type>(obj: Type, key: Key) {
-	console.trace(key);
+	if(window.hasOwnProperty('SlimConsole')) console.trace(key);
     return obj[key];
 }
