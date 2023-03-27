@@ -12,7 +12,7 @@ export class SlimView {
 			if(window.hasOwnProperty('SlimConsole')) SlimConsole.abort({message:"namespace", value:"not a valid URL"});
 			else throw new Error("namspace must be a valid URL string");
 		}
-		console.trace({message:"namespace",value:this.namespace});
+		if(window.hasOwnProperty('SlimConsole')) console.trace({message:"namespace",value:this.namespace});
 	}
 	private async coalesce(model:slim.types.iKeyValueAny, compiled_view:string):Promise<string> {
 		let coalesce_view = compiled_view;
@@ -21,26 +21,26 @@ export class SlimView {
 		// variable replacements
 		coalesce_view = coalesce_view.replace(/{#\s*({{.+}})\s*#}/gm, (match, data) => {
 			const replacement_string:string = "<!-- " + data + " -->";
-			console.debug({message:"variable comment replacements with substitution",value:"capture group"}, match);
-			console.debug({message:"variable comment replacements with substitution",value:"replaced with"}, replacement_string);
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"variable comment replacements with substitution",value:"capture group"}, match);
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"variable comment replacements with substitution",value:"replaced with"}, replacement_string);
 			return replacement_string;
 		});
 		coalesce_view = coalesce_view.replace(/({#{.+}#})/gm, (match, data) => {
 			const replacement_string:string = "<!-- " + data + " -->";
-			console.debug({message:"variable comment replacements without substitution",value:"capture group"}, match);
-			console.debug({message:"variable comment replacements without substitution",value:"replaced with"}, replacement_string);
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"variable comment replacements without substitution",value:"capture group"}, match);
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"variable comment replacements without substitution",value:"replaced with"}, replacement_string);
 			return replacement_string;
 		});
 		coalesce_view = coalesce_view.replace(/{#\s*({%.+%})\s*#}/gm, (match, data) => {
 			const replacement_string:string = "<!-- " + data + " -->";
-			console.debug({message:"comment replacements with substitution",value:"capture group"}, match);
-			console.debug({message:"comment replacements with substitution",value:"replaced with"}, replacement_string);
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"comment replacements with substitution",value:"capture group"}, match);
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"comment replacements with substitution",value:"replaced with"}, replacement_string);
 			return replacement_string;
 		});
 		coalesce_view = coalesce_view.replace(/{#%\s*.+\s*%#}/gm, (match) => {
 			const replacement_string:string = "<!-- " + match + " -->";
-			console.debug({message:"comment replacements without substitution",value:"capture group"}, match);
-			console.debug({message:"comment replacements without substitution",value:"replaced with"}, replacement_string);
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"comment replacements without substitution",value:"capture group"}, match);
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"comment replacements without substitution",value:"replaced with"}, replacement_string);
 			return replacement_string;
 		});
 		const statement_expanssion_regex = /{%\s*(.+\s*.*)\s*%}/gm;
@@ -54,8 +54,8 @@ export class SlimView {
 			(statement_values) => coalesce_view = 
 			coalesce_view.replace(statement_expanssion_regex, (match, statement_string) => {
 				const replacement_string:string = statement_values.shift() ?? "";
-				console.debug({message:"statement expanssion",value:"capture group"}, match);
-				console.debug({message:"statement expanssion",value:"replaced with"}, replacement_string);
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"statement expanssion",value:"capture group"}, match);
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"statement expanssion",value:"replaced with"}, replacement_string);
 				return replacement_string;
 		}));
 		const variable_expanssion_regex = /\{\{([^}]+?)\}\}/gm;
@@ -69,23 +69,23 @@ export class SlimView {
 			(property_values) => coalesce_view = 
 			coalesce_view.replace(variable_expanssion_regex, (match, property_string) => {
 				const replacement_string:string = property_values.shift() ?? "";
-				console.debug({message:"variable expanssion",value:"capture group"}, match);
-				console.debug({message:"variable expanssion",value:"replaced with"}, replacement_string);
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"variable expanssion",value:"capture group"}, match);
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"variable expanssion",value:"replaced with"}, replacement_string);
 				return replacement_string;
 		}));
-		console.trace({message:"coalesced", value:"file size"}, coalesce_view.length);
+		if(window.hasOwnProperty('SlimConsole')) console.trace({message:"coalesced", value:"file size"}, coalesce_view.length);
 		return coalesce_view;
 	}
 	public async compile(url:string):Promise<string> {
 		const normalized_url:string = slim.utilities.is_valid_url(url) ? url : `${this.namespace}/${url}`;
-		console.debug({message:"beginning",value:"with view_file"}, normalized_url);
+		if(window.hasOwnProperty('SlimConsole')) console.debug({message:"beginning",value:"with view_file"}, normalized_url);
 		if(this.compiledViews.has(normalized_url)) {
 			const compiled_view:string = this.compiledViews.get(normalized_url) ?? "";
-			console.trace({message:"returned",value:"pre-compiled view, length"}, compiled_view.length, normalized_url);
+			if(window.hasOwnProperty('SlimConsole')) console.trace({message:"returned",value:"pre-compiled view, length"}, compiled_view.length, normalized_url);
 			return compiled_view;
 		}
 		if(!this.rawViews.has(normalized_url)) {
-			console.trace({message:"fetching",value:"template file"}, normalized_url);
+			if(window.hasOwnProperty('SlimConsole')) console.trace({message:"fetching",value:"template file"}, normalized_url);
 			const file_contents:string = await(await slim.utilities.get_file_contents(normalized_url)) as string;
 			this.rawViews.set(normalized_url, file_contents);
 		}
@@ -100,7 +100,7 @@ export class SlimView {
 		});
 		await Promise.all(promises).then((results) => view_string = view_string.replace(include_regex, () => results.shift() ?? ""));
 		this.compiledViews.set(normalized_url, view_string);
-		console.trace({message:"compiled",value:"view_string length"}, view_string.length, normalized_url);
+		if(window.hasOwnProperty('SlimConsole')) console.trace({message:"compiled",value:"view_string length"}, view_string.length, normalized_url);
 		return view_string;
 	}
 	public async recompile(url:string):Promise<void> {
@@ -118,12 +118,12 @@ export class SlimView {
 				await this.recompile(dependency);
 			}
 		}
-		console.trace();
+		if(window.hasOwnProperty('SlimConsole')) console.trace();
 	}
 	public async render(model:slim.types.iKeyValueAny, url:string):Promise<string> {
 		const normalized_url:string = slim.utilities.is_valid_url(url) ? url : `${this.namespace}/${url}`;
 		const rendered_view:string = await this.coalesce(model, await this.compile(normalized_url));
-		console.trace({message:"rendered", value:"view"}, rendered_view.length, normalized_url);
+		if(window.hasOwnProperty('SlimConsole')) console.trace({message:"rendered", value:"view"}, rendered_view.length, normalized_url);
 		return rendered_view;
 	}
 	private async add_dependent_view(with_view:string, view:string):Promise<void> {
@@ -132,27 +132,27 @@ export class SlimView {
 			dependant_views.push(view);
 		}
 		this.withViewDependencies.set(with_view, dependant_views);
-		console.trace();
+		if(window.hasOwnProperty('SlimConsole')) console.trace();
 	}
 	private async parseStatement(model:slim.types.iKeyValueAny, statement:string):Promise<string> {
-		console.debug({message:"beginning",value:"statement"}, statement);
+		if(window.hasOwnProperty('SlimConsole')) console.debug({message:"beginning",value:"statement"}, statement);
 		const statement_match:Array<any> = statement.match(/^with|foreach\s*/i) || [];
 		const statement_type:string = (String(statement_match[0]).toLowerCase()).trim();
 		let coalesced_view:string = "";
 		switch(statement_type) {
 			case 'foreach':
 				const foreach_match:Array<string> = statement.match(/^foreach\s+model\s*=\s*"\s*(.+?)\s*"\s+view\s*=\s*"(.+?)"/) ?? [];
-				console.debug({message:"foreach statement",value:"processing match results"}, foreach_match);
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"foreach statement",value:"processing match results"}, foreach_match);
 				if(foreach_match.length == 3) {
 					const process_data = {
 						"model_string": foreach_match[1],
 						"view_string": await (async function(parentClass) {
 							const input_view_file = slim.utilities.is_valid_url(foreach_match[2]) ? foreach_match[2] : `${parentClass.namespace}/${foreach_match[2]}`;
-							console.debug({message:"foreach statement",value:"view file"}, input_view_file);
+							if(window.hasOwnProperty('SlimConsole')) console.debug({message:"foreach statement",value:"view file"}, input_view_file);
 							return await parentClass.compile(input_view_file);
 						})(this)
 					};
-					console.debug({message:"calling processMatch",value:"with process_data"}, process_data);
+					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"calling processMatch",value:"with process_data"}, process_data);
 					coalesced_view = await this.processMatch(model, process_data);
 				}
 				else {
@@ -162,7 +162,7 @@ export class SlimView {
 							"model_string": foreach_match[1],
 							"view_string": foreach_match[2]
 						};
-						console.debug({message:"calling processMatch",value:"with process_data"}, process_data);
+						if(window.hasOwnProperty('SlimConsole')) console.debug({message:"calling processMatch",value:"with process_data"}, process_data);
 						coalesced_view = await this.processMatch(model, process_data);
 					}
 				}
@@ -190,7 +190,7 @@ export class SlimView {
 						"view_string": await (async function(parentClass) {
 							//const input_view_file = (with_match[2].match('http|https|file:\/\/\/')) ? with_match[2] : `${namespace}/${with_match[2]}`;
 							const input_view_file = slim.utilities.is_valid_url(with_match[2]) ? with_match[2] : `${parentClass.namespace}/${with_match[2]}`;
-							console.debug({message:"with statement",value:"view file"}, input_view_file);
+							if(window.hasOwnProperty('SlimConsole')) console.debug({message:"with statement",value:"view file"}, input_view_file);
 							return await parentClass.compile(input_view_file);
 						})(this)
 					};
@@ -208,12 +208,12 @@ export class SlimView {
 				}
 				break;
 		}
-		console.trace({message:"statement",value:"parsed length"},coalesced_view.length);
+		if(window.hasOwnProperty('SlimConsole')) console.trace({message:"statement",value:"parsed length"},coalesced_view.length);
 		return coalesced_view;
 	}
 	private async processMatch(model:slim.types.iKeyValueAny, statement_data:slim.types.iKeyValueAny): Promise<string> {
-		console.debug({message:"beginning",value:"with statement_data.model_string"}, statement_data.model_string);
-		console.debug({message:"beginning",value:"with statement_data.view_string"}, statement_data.view_string);
+		if(window.hasOwnProperty('SlimConsole')) console.debug({message:"beginning",value:"with statement_data.model_string"}, statement_data.model_string);
+		if(window.hasOwnProperty('SlimConsole')) console.debug({message:"beginning",value:"with statement_data.view_string"}, statement_data.view_string);
 		let coalesced_view = "";
 		const model_match = statement_data.model_string.match(/^(.+?)\[(\d+)\]/);
 		let view_models:Array<slim.types.iKeyValueAny> = [];
@@ -223,11 +223,11 @@ export class SlimView {
 		else {
 			view_models = model[statement_data.model_string];
 		}
-		console.debug({message:"processing",value:"view_models"}, view_models);
+		if(window.hasOwnProperty('SlimConsole')) console.debug({message:"processing",value:"view_models"}, view_models);
 		for await(const property_model of view_models) {
 			coalesced_view += await this.coalesce(property_model, statement_data.view_string);
 		}
-		console.trace();
+		if(window.hasOwnProperty('SlimConsole')) console.trace();
 		return coalesced_view;
 	}
 }
