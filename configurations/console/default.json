@@ -35,9 +35,14 @@
         "methodName":{"suppress":false,"bold":true}
     },
     "levelSuppressions": {
-        "debug":true,
-        "todo":true,
-        "trace":true,
+        "debug":false,
+        "todo":false,
+        "trace":false,
+        "slim.filter": {
+            "trace": false,
+            "debug": false
+
+        },
         "slim.generator": {
             "debug": true,
             "trace": true,
@@ -66,6 +71,8 @@
             ]
         },
         "slim.view": {
+            "trace": true,
+            "debug": true,
             "functions": [
                 { "name": "compile", "debug":false, "trace": true}
             ]
