@@ -2,7 +2,7 @@ import { is_file_url, is_valid_url } from "./validations.ts";
 import * as slim from "./slim_modules.ts";
 export function get_absolute_file_path(url:string): string|undefined {
     const file:string|undefined = (is_file_url(url)) ? url.substring(7): undefined;
-    console.trace(file);
+    if(window.hasOwnProperty('SlimConsole')) console.trace(file);
     return file;
 }
 export async function get_file_contents(file:string): Promise<string|undefined> {
@@ -54,7 +54,7 @@ export async function get_normalized_url(property:string): Promise<string|undefi
     if(normalized_url.endsWith("/")) {
         normalized_url = normalized_url.substring(0, normalized_url.lastIndexOf("/"));
     }
-    console.trace(normalized_url);
+    if(window.hasOwnProperty('SlimConsole')) console.trace(normalized_url);
     return normalized_url;
 }
 export async function write_output(output_file:string, content:string) {
@@ -65,11 +65,11 @@ export async function write_output(output_file:string, content:string) {
             Deno.writeTextFileSync(file, content);
         }
         catch(e) {
-            SlimConsole.abort({message:"write_output"}, e);
+            if(window.hasOwnProperty('SlimConsole')) SlimConsole.abort({message:"write_output"}, e);
         }
     }
     else {
-        SlimConsole.abort({message: "not a valid file url"}, output_file);
+        if(window.hasOwnProperty('SlimConsole')) SlimConsole.abort({message: "not a valid file url"}, output_file);
     }
-    console.trace();
+    if(window.hasOwnProperty('SlimConsole')) console.trace();
 }
