@@ -1,6 +1,6 @@
 {
     "users": [
-        {"first_name": "Harrison", "last_name": "Ford", "profession": "actor"},
-        {"first_name": "Carrie", "last_name": "Fisher", "profession": "actor"}
+        {"first_name": "Harrison", "last_name": "Ford", "profession": "actor", "active": true, "age": 80},
+        {"first_name": "Carrie", "last_name": "Fisher", "profession": "actor", "active": false, "age": 60}
     ]
 }

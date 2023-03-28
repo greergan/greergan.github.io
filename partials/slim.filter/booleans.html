@@ -1,0 +1,15 @@
+<summary><h3>Boolean filters</h3></summary>
+<code class="slim-code-span">
+	<span>equal</span><br><br>
+	&#123;&#123; foreach model="<span>equal</span>(users, active, true)" view="partials/user.html" &#125;&#125;
+	<p class="outputs">
+		{% foreach model="equal(users, active, true)" view="partials/user.html" %}
+	</p>
+</code>
+<code class="slim-code-span">
+	<span>not_equal</span><br><br>
+	&#123;&#123; foreach model="<span>not_equal</span>(users, active, true)" view="partials/user.html" &#125;&#125;
+	<p class="outputs">
+		{% foreach model="not_equal(users, active, true)" view="partials/user.html" %}
+	</p>
+</code>

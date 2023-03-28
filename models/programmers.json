@@ -1,0 +1,8 @@
+{
+    "users": [
+        {"first_name": "Dennis", "last_name": "Ritchie", "profession": "programmer", "active": false, "age": 70,
+            "known_for": ["ALTRAN", "B", "BCPL", "C", "Multics", "Unix"]},
+        {"first_name": "Brian", "last_name": "Kernighan", "profession": "programmer", "active": true, "age": 81},
+        {"first_name": "Bjarne", "last_name": "Stroustrup", "profession": "programmer", "active": true, "age": 72}
+    ]
+}

@@ -38,7 +38,13 @@
             "meta_tags": [],
             "input_file": "pages/slim.filter.html",
             "output_file": "slim.filter/index.html",
-            "title": "Slim.Filter"
+            "title": "Slim.Filter",
+            "external_models": [
+                {"path": "models/actors.json"},
+                {"path": "models/authors.json"},
+                {"path": "models/musician.json"},
+                {"path": "models/programmers.json"}
+            ]
         },
         {
             "generate_id": 0,
@@ -62,14 +68,15 @@
             "title": "Slim.Utilities"
         },
         {
-            "generate_id": 0,
+            "generate_id": 1,
             "meta_tags": [],
             "input_file": "pages/slim.view.html",
             "output_file": "slim.view/index.html",
             "title": "Slim.View",
             "external_models": [
                 {"path": "models/actors.json"},
-                {"path": "models/authors.json"}
+                {"path": "models/authors.json"},
+                {"path": "models/musician.json"}
             ]
         }
     ]

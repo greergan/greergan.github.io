@@ -30,9 +30,12 @@
     },
     "todo":{
     },
-    "warn":{"suppress": true,
-        "className":{"suppress":false,"bold":true},
-        "methodName":{"suppress":false,"bold":true}
+    "warn":{"propogate":true, "suppress": false,
+        "className":{"suppress":true,"bold":true},
+        "methodName":{"suppress":true,"bold":true},
+        "fileName":{"suppress":true,"bold":true},
+        "stackTrace":{"suppress":false, "delimiter": ""}
+
     },
     "levelSuppressions": {
         "debug":false,
@@ -46,9 +49,11 @@
         "slim.generator": {
             "debug": true,
             "trace": true,
+            "todo": true,
             "files":[
                 { "name": "config_functions.ts", "debug":true, "trace": true},
-                { "name": "parse_command_line.ts", "debug":true, "trace": true}
+                { "name": "parse_command_line.ts", "debug":true, "trace": true},
+                { "name": "utilities.ts", "debug":true, "trace": true, "todo":true}
             ],
             "functions":[
                 { "name": "explode_models", "debug":true, "trace": true}
@@ -71,10 +76,14 @@
             ]
         },
         "slim.view": {
-            "trace": true,
-            "debug": true,
+            "trace": false,
+            "debug": false,
+            "todo": false,
             "functions": [
-                { "name": "compile", "debug":false, "trace": true}
+                { "name": "compile", "debug":true, "trace": true},
+                { "name": "coalesce", "debug":true, "trace": true},
+                { "name": "render", "debug":true, "trace": true},
+                { "name": "parseStatement", "debug":true, "trace": true}
             ]
         }
     }

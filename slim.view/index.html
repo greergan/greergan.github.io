@@ -126,8 +126,8 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 	The following "partials" are used to build the current page you are viewing.
 </p>
 <code class="slim-code-span">
-	&lt;include view="partials/slim.view/variable_substitution.html"&gt;<br>
-	&lt;include view="partials/slim.view/view_includes.html"&gt;
+	&lt;include view="partials/variable_substitution.html"&gt;<br>
+	&lt;include view="partials/view_includes.html"&gt;
 </code>
 <p>Include standard document &lt;footer&gt;, bottom of page templates and closing of site level HTML objects.</p>
 <code class="slim-code-span">
@@ -140,9 +140,9 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 <code class="slim-code-span">[with|foreach] model="model" view="path/to/view" | html_fragment</code>
 <p>with statement - model and view</p>
 <code class="slim-code-span">
-	&#123;% with model="users[1]" view="partials/slim.view/user.html" %&#125;
+	&#123;% with model="users[1]" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Carrie Fisher is a(n) actor<br>
+		Carrie Fisher is a 60 year old actor who is active => false<br>
 	</p>
 </code>
 <p>with statement - model and html fragment</p>
@@ -155,8 +155,8 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 </code>
 <p>foreach statement - model and view</p>
 <code class="slim-code-span">
-	&#123;% foreach model="users" view="partials/slim.view/user.html" %&#125;
-	<p class="outputs">Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br></p>
+	&#123;% foreach model="users" view="partials/user.html" %&#125;
+	<p class="outputs">Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br></p>
 </code>
 <p>foreach statement - model and html fragment</p>
 <code class="slim-code-span">
@@ -165,14 +165,31 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
         &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;br&gt;
 %&#125;</pre>
 	<p class="outputs">
-		Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br>
+		Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br>Ian Astbury is a(n) musician<br>Robert Smith is a(n) musician<br>
 	</p>
 </code>
 </details>
 <details class="slim-details"><summary><h3>Filters</h3></summary>
-<div>
-	<p class="description">Slim.View uses the <a href="/slim.filter/">Slim.Filter</a> JSON filtering engine.</p>
-</div></details>
+<p class="description">Slim.View uses the <a href="/slim.filter/">Slim.Filter</a> JSON filtering engine.</p>
+All filters take the following form.
+<code class="slim-code-span">
+	&#123;% foreach model="<span>equal</span>(users, profession, musician)" view="partials/user.html" %&#125;
+	<p class="outputs">
+		Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>
+	</p>
+	&#123;% foreach model="<span>not_equal</span>(users, profession, musician)" view="partials/user.html" %&#125;
+	<p class="outputs">
+		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>
+	</p>
+	&#123;% foreach model="<span>greater_than</span>(users, first_name, Ian)" view="partials/user.html" %&#125;
+	<p class="outputs">
+		Robert Asprin is a 61 year old author who is active => false<br>Robert Smith is a 63 year old musician who is active => true<br>
+	</p>
+	&#123;% foreach model="<span>less_than_equal</span>(users, last_name, Ford)" view="partials/user.html" %&#125;
+	<p class="outputs">
+		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>
+	</p>
+</code></details>
 <details class="slim-details"><summary><h3>Comments</h3></summary>
 <p class="description">Create HTML comments.</p>
 <p>Comment with variable substitution.</p>
@@ -194,17 +211,17 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 </code>
 <p>Comment a complex statement with variable substitution.</p>
 <code class="slim-code-span">
-	&#123;# &#123;% foreach model="users" view="partials/slim.view/user.html" %&#125; #&#125;
+	&#123;# &#123;% foreach model="users" view="partials/user.html" %&#125; #&#125;
 	<p class="outputs">&lt;!-- Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br> --&gt;
-		<!-- Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br> -->
+		<!-- Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br> -->
 	</p>
 	<div>View page source in your browser to see results</div>
 </code>
 <p>Comment a complex statement without variable substitution.</p>
 <code class="slim-code-span">
-	&#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125;
-	<p class="outputs">&lt;!-- &#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125; --&gt;
-		<!-- {#% foreach model="users" view="partials/slim.view/user.html" %#} -->
+	&#123;#% foreach model="users" view="partials/user.html" %#&#125;
+	<p class="outputs">&lt;!-- &#123;#% foreach model="users" view="partials/user.html" %#&#125; --&gt;
+		<!-- {#% foreach model="users" view="partials/user.html" %#} -->
 	</p>
 	<div>View page source in your browser to see results</div>
 </code>
@@ -212,7 +229,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 <details class="slim-details"><summary><h3>Examples</h3></summary>
 <div class="example">
 	<code class="slim-code-span">
-		import { SlimView } from "https://greergan.github.io/slim.view/index.ts";<br>
+		import { SlimView } from "https://greergan.github.io/index.ts";<br>
 		const view:SlimView = new SlimView("https://greergan.github.io");<br>
 		const html_view:string = await view.render({page:{title:"fun"}, site:{copyright:{started_date:"2023",by:"Your Name"}}}, "examples/helloworld.html");<br>
 		console.log(html_view);

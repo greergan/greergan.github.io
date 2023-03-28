@@ -19,17 +19,17 @@
 </code>
 <p>Comment a complex statement with variable substitution.</p>
 <code class="slim-code-span">
-	&#123;# &#123;% foreach model="users" view="partials/slim.view/user.html" %&#125; #&#125;
+	&#123;# &#123;% foreach model="users" view="partials/user.html" %&#125; #&#125;
 	<p class="outputs">&lt;!-- Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br> --&gt;
-		{# {% foreach model="users" view="partials/slim.view/user.html" %} #}
+		{# {% foreach model="users" view="partials/user.html" %} #}
 	</p>
 	<div>View page source in your browser to see results</div>
 </code>
 <p>Comment a complex statement without variable substitution.</p>
 <code class="slim-code-span">
-	&#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125;
-	<p class="outputs">&lt;!-- &#123;#% foreach model="users" view="partials/slim.view/user.html" %#&#125; --&gt;
-		{#% foreach model="users" view="partials/slim.view/user.html" %#}
+	&#123;#% foreach model="users" view="partials/user.html" %#&#125;
+	<p class="outputs">&lt;!-- &#123;#% foreach model="users" view="partials/user.html" %#&#125; --&gt;
+		{#% foreach model="users" view="partials/user.html" %#}
 	</p>
 	<div>View page source in your browser to see results</div>
 </code>

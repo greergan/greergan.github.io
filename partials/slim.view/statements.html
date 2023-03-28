@@ -4,9 +4,9 @@
 <code class="slim-code-span">[with|foreach] model="model" view="path/to/view" | html_fragment</code>
 <p>with statement - model and view</p>
 <code class="slim-code-span">
-	&#123;% with model="users[1]" view="partials/slim.view/user.html" %&#125;
+	&#123;% with model="users[1]" view="partials/user.html" %&#125;
 	<p class="outputs">
-		{% with model="users[1]" view="partials/slim.view/user.html" %}
+		{% with model="users[1]" view="partials/user.html" %}
 	</p>
 </code>
 <p>with statement - model and html fragment</p>
@@ -19,8 +19,8 @@
 </code>
 <p>foreach statement - model and view</p>
 <code class="slim-code-span">
-	&#123;% foreach model="users" view="partials/slim.view/user.html" %&#125;
-	<p class="outputs">{% foreach model="users" view="partials/slim.view/user.html" %}</p>
+	&#123;% foreach model="users" view="partials/user.html" %&#125;
+	<p class="outputs">{% foreach model="users" view="partials/user.html" %}</p>
 </code>
 <p>foreach statement - model and html fragment</p>
 <code class="slim-code-span">
