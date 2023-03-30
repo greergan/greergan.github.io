@@ -1,4 +1,1 @@
-import { SlimFilter } from "./filter.ts";
-export {
-    SlimFilter
-}
+export * from "./filter.ts";
