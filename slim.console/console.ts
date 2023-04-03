@@ -145,13 +145,14 @@ export class SlimColorConsole implements colorconsole.iConsole {
         }
         let dir_string = "";
         const addSpaces = ():string => {
-            let spaces:string = "";
+            return "".padStart(working_options.current_depth * 2, ' ');
+/*             let spaces:string = "";
             if(working_options.current_depth > 0) {
                 for(let index = 0; index < working_options.current_depth; index++) {
                     spaces += `  `;
                 }
             }
-            return spaces;
+            return spaces; */
         }
         const keys:string[] = Object.keys(item);
         const new_options:colorconsole.DirOptions = slim.utilities.copy_ofSync(working_options);
@@ -175,7 +176,6 @@ export class SlimColorConsole implements colorconsole.iConsole {
         });
         return dir_string;
     }
-
     print(event:LogInformation, configuration:configuration.iConfiguration): void {
         let working_configuration:configuration.iConfiguration = slim.utilities.copy_ofSync(configuration);
         const levelName:string = configuration!.level!['levelName'];
@@ -183,7 +183,6 @@ export class SlimColorConsole implements colorconsole.iConsole {
         // check for module functions overrides file level
         // check for module files overrides module level
         // check for module levels [debug|trace|...] // overrides base levels
-
         const setOverride = (override_object:slim.types.iKeyValueAny):boolean => {
             let override_found:boolean = true;
             switch(typeof override_object[levelName.toLowerCase()]) {
@@ -201,7 +200,6 @@ export class SlimColorConsole implements colorconsole.iConsole {
             }
             return override_found;
         }
-
         let override_found:boolean = false;
         const slim_module:string = event.properties.path.match(/slim.\w*/);
         if(this.levelSuppressions.hasOwnProperty(slim_module)) {
@@ -209,16 +207,6 @@ export class SlimColorConsole implements colorconsole.iConsole {
                 const funct:object = this.levelSuppressions[slim_module].functions.find(funct => funct.name == event.properties.methodName);
                 if(funct !== undefined && funct.hasOwnProperty(levelName.toLowerCase())) {
                     override_found = setOverride(funct);
-/*                     switch(typeof funct[levelName.toLowerCase()]) {
-                        case 'boolean':
-                            override_found = true;
-                            working_configuration.suppress = funct[levelName.toLowerCase()];
-                            break;
-                        case 'object':
-                            override_found = true;
-                            working_configuration = slim.utilities.comingleSync([working_configuration, funct[levelName.toLowerCase()]]);
-                            break;
-                    } */
                 }
             }
             if(!override_found && this.levelSuppressions[slim_module].hasOwnProperty('files')) {
@@ -226,49 +214,18 @@ export class SlimColorConsole implements colorconsole.iConsole {
                     file => file.name == event.properties.fileName.substring(event.properties.fileName.lastIndexOf('/') + 1));
                 if(file !== undefined && file.hasOwnProperty(levelName.toLowerCase())) {
                     override_found = setOverride(file);
-/*                     switch(typeof file[levelName.toLowerCase()]) {
-                        case 'boolean':
-                            override_found = true;
-                            working_configuration.suppress = file[levelName.toLowerCase()];
-                            break;
-                        case 'object':
-                            override_found = true;
-                            working_configuration = slim.utilities.comingleSync([working_configuration, file[levelName.toLowerCase()]]);
-                            break;
-                    } */
                 }
             }
             if(!override_found && this.levelSuppressions[slim_module][levelName.toLowerCase()]) {
                 override_found = setOverride(this.levelSuppressions[slim_module]);
-/*                 override_found = true;
-                working_configuration.suppress = this.levelSuppressions[slim_module][levelName.toLowerCase()]; */
             }
         }
         if(!override_found && this.configurations.hasOwnProperty(levelName.toLowerCase())) {
             override_found = setOverride(this.configurations);
-/*             switch(typeof this.configurations[levelName.toLowerCase()]) {
-                case 'boolean':
-                    override_found = true;
-                    working_configuration.suppress = this.configurations[levelName.toLowerCase()];
-                    break;
-                case 'object':
-                    override_found = true;
-                    working_configuration = slim.utilities.comingleSync([working_configuration, this.configurations[levelName.toLowerCase()]]);
-                    break;
-            } */
         }
+        // event.overrides takes precedence 
         if(event.overrides.hasOwnProperty(levelName.toLowerCase())) {
             override_found = setOverride(event.overrides);
-/*             switch(typeof event.overrides[levelName.toLowerCase()]) {
-                case 'boolean':
-                    override_found = true;
-                    working_configuration.suppress = event.overrides[levelName.toLowerCase()];
-                    break;
-                case 'object':
-                    override_found = true;
-                    working_configuration = slim.utilities.comingleSync([working_configuration, event.overrides[levelName.toLowerCase()]]);
-                    break;
-            } */
         }
         if(working_configuration.hasOwnProperty('suppress') && working_configuration.suppress) {           
             return;
