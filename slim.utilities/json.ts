@@ -1,11 +1,58 @@
 import * as slim from "./slim_modules.ts";
+
+
+export function array_contains(a:slim.types.iKeyValueAny, b:object):boolean {
+	let is_in:boolean = true;
+	const b_keys:string[] = (Object.keys(b)).sort();
+	const b_keys_string:string = JSON.stringify(b_keys);
+	let keys_checked:number = 0;
+	for(const member of a) {
+		const a_keys:string[] = (Object.keys(member)).sort();
+		if(JSON.stringify(a_keys) !== b_keys_string) {
+			is_in = false;
+			break;
+		}
+		let keys_matched:number = 0;
+		for(const key of Object.keys(member)) {
+			keys_checked++;
+/*
+			if(typeof member[key] === 'object' && typeof b[key] === 'object') {
+				console.log("checking objects");
+				if(Array.isArray(member[key]) && Array.isArray(b[key])) {
+					console.log("checking arrays");
+					if(member[key].every((value,index)=> {
+						b[key][index].
+						value === b[key][index];
+						console.log(value)
+					})) {
+						keys_matched++;
+					}					
+				}
+				else {
+					if(array_contains([member[key]], b[key])) {
+						keys_matched++;
+						console.log("array_contains", key, b[key])
+					}
+				}
+			}
+*/
+			if(member[key] == b[key]) {
+				keys_matched++;
+			}
+		}
+		if(keys_matched == a_keys.length) {
+			is_in = true;
+			break;
+		}
+	}
+	return is_in;
+}
 declare interface comingle_options {
 	skip?:string[],
 	excludes?:string[]
 	depth?:number
 }
 export function copy_ofSync(source:slim.types.iKeyValueAny, options?:comingle_options) : slim.types.iKeyValueAny {
-	if(window.hasOwnProperty('SlimConsole') && SlimConsole.hasOwnProperty('trace')) console.trace();
 	return comingleSync([{}, source], options);
 }
 declare interface localized_comingle_options {
@@ -14,14 +61,11 @@ declare interface localized_comingle_options {
 	depth:number
 }
 export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:comingle_options): slim.types.iKeyValueAny {
-	if(window.hasOwnProperty('SlimConsole')) console.debug({message:"begining with",value:"options"}, options);
 	const localized_options:localized_comingle_options = (options) ? JSON.parse(JSON.stringify(options)) : {depth:1};
 	if(!localized_options.hasOwnProperty('depth')) localized_options.depth = 1;
 	['skip','excludes'].map(element => { if(!localized_options[element]) localized_options[element] = []});
-	if(window.hasOwnProperty('SlimConsole')) console.debug({message:"begining with",value:"localized_options"}, localized_options);
 	if(input_sources.length < 2) {
-		if('SlimConsole' in window) SlimConsole.abort("comingle requires an array of 2 or more slim.types.iKeyValueAny objects");
-		else throw new Error("comingle requires an array of 2 or more slim.types.iKeyValueAny objects");
+		throw new Error("comingle requires an array of 2 or more slim.types.iKeyValueAny objects");
 	}
 	const sources:slim.types.iKeyValueAny[] = JSON.parse(JSON.stringify(input_sources));
 	//const merged_objects:slim.types.iKeyValueAny = sources.shift() ?? {};
@@ -32,11 +76,9 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 			if(['string','number','boolean'].includes(key_type)) {
 				let continue_primitive_processing = true;
 				if(localized_options['skip'].includes(key)) {
-					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"skip"}, key);
 					continue_primitive_processing = false;
 				}
 				if(localized_options['excludes'].includes(key_type)) {
-					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"excludes"}, key);
 					continue_primitive_processing = false;
 				}
 				if(continue_primitive_processing) {
@@ -45,13 +87,10 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 			}
 			else if(Array.isArray(source[key])) {
 				let continue_array_processing:boolean = true;
-				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"processing",value:"array"}, key);
 				if(localized_options['skip'].includes(key)) {
-					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"skip"}, key);
 					continue_array_processing = false;
 				}
 				if(localized_options['excludes']!.includes('array')) {
-					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"excludes"}, key);
 					continue_array_processing = false;
 				}
 				if(continue_array_processing) {
@@ -60,9 +99,7 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 					}
 				}
 				if(continue_array_processing) {
-					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"continue_array_processing",value:"key"}, key, Array.isArray(merged_objects[key]), merged_objects[key]);
  					for(const member of source[key]) {
-						if(window.hasOwnProperty('SlimConsole')) console.debug({message:"member of",value:"source[key]"}, member);
 						let lvalue_exists:boolean = false;
 						for(const index in merged_objects[key]) {
 							if(merged_objects[key][index] == member) {
@@ -77,26 +114,21 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 			}
 			else if(key_type === 'object') {
 				let continue_object_processing = true;
-				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"processing",value:"object"}, key);
 				if(localized_options['skip'].includes(key)) {
-					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"skip"}, key);
 					continue_object_processing = false;
 				}
 				if(localized_options['excludes'].includes(key_type)) {
-					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"options",value:"excludes"}, key);
 					continue_object_processing = false;
 				}
 				if(continue_object_processing) {
 					if(typeof merged_objects[key] == 'undefined') {
 						merged_objects[key] = {};
 					}
-					if(window.hasOwnProperty('SlimConsole')) console.debug({message:"next level",value:"calling comingleSync"} );
 					merged_objects[key] = comingleSync([merged_objects[key], source[key]], {depth: localized_options.depth++});
 				}
 			}
 		}
 	}
-	if(window.hasOwnProperty('SlimConsole')) console.trace({message:"depth", value:localized_options.depth});
 	return merged_objects;
 }
 export async function get_node_value(model:slim.types.iKeyValueAny, property:string): Promise<string | slim.types.iKeyValueAny | undefined> {
@@ -118,10 +150,8 @@ export async function get_node_value(model:slim.types.iKeyValueAny, property:str
 			break;
 		}
 	}
-	if(window.hasOwnProperty('SlimConsole')) console.trace();
 	return node_value;
 }
 export function get_value<Type, Key extends keyof Type>(obj: Type, key: Key) {
-	if(window.hasOwnProperty('SlimConsole')) console.trace(key);
     return obj[key];
 }
