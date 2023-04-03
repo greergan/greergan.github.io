@@ -1,66 +1,98 @@
 import * as slim from "./slim_modules.ts";
+export interface FilterArguments {
+	filter_string:string;
+	model_string?:string;
+}
 export class SlimFilter {
-	predicate:string;
-	property:string;
-	value:any;
-	filterLeft?:SlimFilter;
-	filterRight?:SlimFilter;
-	current_new_model:'right'|'left'|'main' = 'main';
-	new_model_index:Array<number> = [];
-	constructor(predicate:string, property:string, value:string) {
-		this.predicate = predicate;
-		this.property = property;
-		this.value = value;
-		console.trace();
+	private predicate:string|undefined;
+	private property:string|undefined;
+	private value:string|number|boolean|undefined;
+	private model:string|undefined;
+	private model_index:number|undefined;
+	private filters:Array<SlimFilter> = [];
+	private view_models:Array<slim.types.iKeyValueAny> = [];
+	constructor(filterArguments:FilterArguments) {
+		console.trace({message:"Creating new SlimFilter",value:"with"}, filterArguments);
+		this.model = filterArguments.model_string;
+		this.parseFilterString(filterArguments.filter_string);
 	}
-	is_complex():boolean {
-		return (this.filterLeft != undefined && this.filterRight != undefined) ? true : false;
-	}
-}
-
-/*
-export function get_handler(handler_string:string):SlimFilter {
-	console.debug({message:"entry"}, handler_string);
-	const handler:SlimFilter = new SlimFilter();
-	const complex_match:Array<string> = handler_string.match(/^(and|or)\((.+)\)/i) || [];
-	if(complex_match.length == 3) {
-		//new debug({message:"complex array"}, complex_match)
-		handler.handler = complex_match[1];
-		const left_right_match = complex_match[2].match(/[a-z_]+\([a-z0-9- ]+,[a-z0-9'" ]+\)/gi) || [];
-console.debug({message: "left_right_match"}, left_right_match);
-		if(left_right_match.length == 2) {
-			handler.left = get_handler(left_right_match[0])
-			handler.left.current_new_model = 'left';
-			handler.right = get_handler(left_right_match[1]);
-			handler.right.current_new_model = 'right';
+	private getOperator(predicate:string):string {
+		let operator:string = "";
+		switch(predicate) {
+			case 'and': operator = "&&"; break;
+			case 'or': operator = "||"; break;
+			case 'equal': operator = "=="; break;
+			case 'not_equal': operator = "!="; break;
+			case 'greater_than': operator = ">"; break;
+			case 'greater_than_equal': operator = ">="; break;
+			case 'not_greater_than': operator = "!>"; break;
+			case 'less_than': operator = "<"; break;
+			case 'less_than_equal': operator = "<="; break;
+			case 'not_less_than': operator = "!<"; break;
 		}
+		if(window.hasOwnProperty('SlimConsole')) console.trace({message:"operator"}, operator);
+		return operator;
 	}
-	else{
-		let handler_array:Array<string> = handler_string.match(/([a-z]+)\(\s*([a-z0-9-]+)\s*,\s*(.+?)\s*\)/i) || [];
-		handler.handler = handler_array[1];
-		handler.property = handler_array[2];
-		let tick_array:Array<string> = handler_array[3].match(/^'(.+)'$/) || [];
-		SlimConsole.todo({message:"need to continue working on proper quote and double quote handling in string matches"})
-		handler.value = (tick_array.length == 2) ? tick_array[1]: handler_array[3];
+	public getViewModels():Array<slim.types.iKeyValueAny> {
+		if(window.hasOwnProperty('SlimConsole')) console.trace();
+		return this.view_models;
 	}
-	return handler;
+	private parseFilterString(filter_string:string):void {
+		if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"filter_string"}, filter_string);
+		const andor_match:Array<string> = filter_string.match(/^(and|or)\((.+)\)/i) ?? [];
+		if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"is complex filter.length"}, andor_match.length);
+		if(andor_match.length == 3) {
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"is complex filter"}, andor_match[1]);
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"is complex filter"}, andor_match[2]);
+			this.predicate = andor_match[1];
+			const filter_matches = andor_match[2].match(/([\w_]+\([\w\d, "']+\))/g) ?? [];
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"filter_matches"}, filter_matches);
+			filter_matches.forEach((filter_string)=> this.filters.push(new SlimFilter({filter_string:filter_string})));
+		}
+		else {
+			if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"is simple filter"}, filter_string);
+			const property_value_match = filter_string.match(/^([^(][\w_]+)\((.+)\)\s*$/) ?? [];
+			if(property_value_match.length == 3) {
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"property_value_match[1]"}, property_value_match[1]);
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"property_value_match[2]"}, property_value_match[2]);
+				this.predicate = property_value_match[1];
+				this.property = property_value_match[2].substring(0, property_value_match[2].indexOf(',')).trim();
+				this.value = property_value_match[2].substring(property_value_match[2].indexOf(',') + 1).trim();
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"predicate match"}, this.predicate);
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"property match"}, this.property);
+				if(window.hasOwnProperty('SlimConsole')) console.debug({message:"filter_string",value:"value match"}, this.value);
+			}
+		}
+		if(window.hasOwnProperty('SlimConsole')) console.trace({message:"parsed",value:"string into filters"});
+	}
+	public async run(model:slim.types.iKeyValueAny):Promise<void> {
+		if(window.hasOwnProperty('SlimConsole')) console.debug({message:"beginning filter run for",value:"predicate, model"}, this.predicate, this.model);
+		const comparissons:string = this.toString();
+		model[this.model].forEach((obj:object) => { if(eval(comparissons)) this.view_models.push(obj); });
+		if(window.hasOwnProperty('SlimConsole')) console.trace({message:"ended filter run with",value:"this.view_models.length"}, this.view_models.length);
+	}
+	public toString():string {
+		let operations_string = "";
+		const isAndOr = (filter:SlimFilter):boolean => filter.predicate == 'and' || filter.predicate == 'or';
+		if(isAndOr(this)) {
+			operations_string += "(";
+			this.filters.forEach((filter, index) => {
+				if(isAndOr(filter)) {
+					operations_string.toString();
+				}
+				else {
+					operations_string += `obj.${filter.property} ${this.getOperator(filter.predicate!)} ${filter.value}`;
+				}
+				if(this.filters.length -1 > index) {
+					operations_string += ` ${this.getOperator(this.predicate!)} `;
+				}
+			});
+			operations_string += ")"; 
+		}
+		else {
+			operations_string += `obj.${this.property} ${this.getOperator(this.predicate!)} ${this.value}`;
+		}
+		if(window.hasOwnProperty('SlimConsole')) console.trace({message:"created",value:"filter statement"}, operations_string);
+		return operations_string;
+	}
 }
-*/
-/*
-export function parse_handlers(handler_string:string):Array<SlimFilter> {
-	console.trace({message:'entry', value: "/" + handler_string + "/"});
-	let handlers:Array<SlimFilter> = [];
-		
-	let handler_array:Array<string> = handler_string.match(/[a-z]+\(.+\)/ig) || [];
-	console.debug({message:"handler_array", value:handler_array});
-	const handler:SlimFilter = get_handler(handler_array[0])
-	if(handler.is_valid()) {
-		handlers.push(handler);
-	}
-	else if(handler.is_complex()) {
-		console.debug({message:"handler.is_complex()"})
-	}
-	console.trace();
-	return handlers;
-}
-*/
