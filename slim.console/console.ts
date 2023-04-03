@@ -2,7 +2,7 @@
 import * as slim from "./slim_modules.ts";
 import { colorconsole } from "./console.d.ts";
 import { configuration } from "./configuration.d.ts";
-import { configure, configurationLevels, configurationSubLevels } from "./configuration.ts";
+import { configure, configurationLevels, configurationSubLevels, get_default_print_property_values} from "./configuration.ts";
 import * as colors from "./color.ts";
 import { LogInformation } from "./logging.ts";
 declare global {
@@ -11,6 +11,7 @@ declare global {
         SlimConsole:colorconsole.SlimColorConsole;
     }
 }
+const defaultDirOptions:colorconsole.DirOptions = { "showHidden": false, "depth": 2, "colors": false, "current_depth":0 };
 export class SlimColorConsole implements colorconsole.iConsole {
     configurations:configuration.iConfigurations = {};
     levelSuppressions:slim.types.iKeyValueAny = {};
@@ -29,6 +30,23 @@ export class SlimColorConsole implements colorconsole.iConsole {
             levelConfiguration.levelName = level;
             this.configurations[level.toLowerCase()] = configure(levelConfiguration);
         }
+        if(configuration!.hasOwnProperty('dir')) {
+            this.configurations['dir'] = {};
+            ['object','name','value'].forEach((key) => {
+                if(configuration['dir'].hasOwnProperty(key)) {
+                    this.configurations['dir'][key] = slim.utilities.comingleSync([get_default_print_property_values(), configuration['dir'][key]]) as configuration.iPrintProperties;
+                }
+                else {
+                    this.configurations['dir'][key] = slim.utilities.copy_ofSync(get_default_print_property_values());
+                }
+            });
+        }
+        else {
+            this.configurations['dir'] = {};
+            ['object','name','value'].forEach((key) => { 
+                this.configurations['dir'][key] = slim.utilities.copy_ofSync(get_default_print_property_values());
+            });
+        }
         window.console = this;
     }
     abort(...args:any) {
@@ -38,10 +56,26 @@ export class SlimColorConsole implements colorconsole.iConsole {
         }
     }
     assert(...args:any):void {}
-    clear():void {}
+    clear():void {
+        this.stdout('\x1b[2J\x1b[H');
+    }
     count(...args:any):void {}
     countReset(...args:any):void {}
-    dir(...args:any):void {}
+    dir(item:object, options?:object):void {
+        const working_options = slim.utilities.comingleSync([defaultDirOptions, options]);
+        working_options.current_depth++;
+        let print_string = "";
+        let content_string = this.format_dir(item, working_options);
+        if(content_string.length > 0) {
+            print_string += this.colorize(`Object: {\n`, this.configurations['dir']['object']);
+            print_string += content_string;
+            print_string += this.colorize(`}\n`, this.configurations['dir']['object']);
+        }
+        else {
+            print_string += this.colorize(`Object: {}\n`, this.configurations['dir']['object']);
+        }
+        this.stderr(print_string);
+    }
     dirxml(...args:any):void {}
     debug(...args:any):void { this.print(new LogInformation(args), this.configurations.debug); }
     error(...args:any):void { this.print(new LogInformation(args), this.configurations.error); }
@@ -64,21 +98,11 @@ export class SlimColorConsole implements colorconsole.iConsole {
         let colored_string = "";
         if(string_value !== undefined && !configuration.suppress) {
             colored_string = "\u001b[";
-            if(configuration.bold) {
-                colored_string += "1;";
-            }
-            if(configuration.dim) {
-                colored_string += "2;";
-            }
-            if(configuration.italic) {
-                colored_string += "3;";
-            }
-            if(configuration.underLine) {
-                colored_string += "4;";
-            }
-            if(configuration.inverse) {
-                colored_string += "7;";
-            }
+            if(configuration.bold)      { colored_string += "1;"; }
+            if(configuration.dim)       { colored_string += "2;"; }
+            if(configuration.italic)    { colored_string += "3;"; }
+            if(configuration.underLine) { colored_string += "4;"; }
+            if(configuration.inverse)   { colored_string += "7;"; }
             const console_text_color:number = colors.textColors[configuration.textColor];
             const console_background_color:number = colors.backgroundColors[configuration.backgroundColor];
             if(console_text_color > 29) {
@@ -114,64 +138,115 @@ export class SlimColorConsole implements colorconsole.iConsole {
         }
         return colored_string;
     }
+    format_dir(item:object, options:colorconsole.DirOptions):string {
+        const working_options:colorconsole.DirOptions = slim.utilities.copy_ofSync(options);
+        if(working_options.current_depth == working_options.depth) {
+            return "";
+        }
+        let dir_string = "";
+        const addSpaces = ():string => {
+            let spaces:string = "";
+            if(working_options.current_depth > 0) {
+                for(let index = 0; index < working_options.current_depth; index++) {
+                    spaces += `  `;
+                }
+            }
+            return spaces;
+        }
+        const keys:string[] = Object.keys(item);
+        const new_options:colorconsole.DirOptions = slim.utilities.copy_ofSync(working_options);
+        new_options.current_depth++;
+        Object.keys(item).forEach((key:string, index:number) => {
+            if(typeof item[key] == 'object') {
+                const key_value_string:string = this.format_dir(item[key], new_options);
+                if(key_value_string.length > 0) {
+                    dir_string += this.colorize(`${addSpaces()}Object: ${key} {\n`, this.configurations['dir']['object']);
+                    dir_string += key_value_string;
+                    dir_string += this.colorize(`${addSpaces()}}\n`, this.configurations['dir']['object']);
+                }
+                else {
+                    dir_string += this.colorize(`${addSpaces()}Object: ${key} {}\n`, this.configurations['dir']['object']);
+                }
+            }
+            else {
+                dir_string += this.colorize(`${addSpaces()}${key}:`, this.configurations['dir']['name']);
+                dir_string += this.colorize(`${item[key]}${(index < keys.length - 1) ? `,\n` :  `\n`}`, this.configurations['dir']['value']);
+            }
+        });
+        return dir_string;
+    }
+
     print(event:LogInformation, configuration:configuration.iConfiguration): void {
-        const saved_configuration:configuration.iConfiguration = {};
+        let working_configuration:configuration.iConfiguration = slim.utilities.copy_ofSync(configuration);
         const levelName:string = configuration!.level!['levelName'];
+        // check for module entries
+        // check for module functions overrides file level
+        // check for module files overrides module level
+        // check for module levels [debug|trace|...] // overrides base levels
+        let override_found:boolean = false;
+        let suppress:boolean = false;
+        const slim_module:string = event.properties.path.match(/slim.\w*/);
+        if(this.levelSuppressions.hasOwnProperty(slim_module)) {
+            if(this.levelSuppressions[slim_module].hasOwnProperty('functions')) {
+                const funct:object = this.levelSuppressions[slim_module].functions.find(funct => funct.name == event.properties.methodName);
+                if(funct !== undefined && funct.hasOwnProperty(levelName.toLowerCase())) {
+                    override_found = true;
+                    working_configuration.suppress = funct[levelName.toLowerCase()];
+                }
+            }
+            if(!override_found && this.levelSuppressions[slim_module].hasOwnProperty('files')) {
+                const file:object = this.levelSuppressions[slim_module].files.find(
+                    file => file.name == event.properties.fileName.substring(event.properties.fileName.lastIndexOf('/') + 1));
+                if(file !== undefined && file.hasOwnProperty(levelName.toLowerCase())) {
+                    switch(typeof file[levelName.toLowerCase()]) {
+                        case 'boolean':
+                            override_found = true;
+                            working_configuration.suppress = file[levelName.toLowerCase()];
+                            break;
+                        case 'object':
+                            override_found = true;
+                            working_configuration = slim.utilities.comingleSync([working_configuration, file[levelName.toLowerCase()]]);
+                            break;
+                    }
+                }
+            }
+            if(!override_found && this.levelSuppressions[slim_module][levelName.toLowerCase()]) {
+                override_found = true;
+                working_configuration.suppress = this.levelSuppressions[slim_module][levelName.toLowerCase()];
+            }
+        }
+        if(!override_found && this.configurations.hasOwnProperty(levelName.toLowerCase())) {
+            override_found = true;
+            working_configuration.suppress = this.levelSuppressions[levelName.toLowerCase()];
+        }
         if(event.overrides.hasOwnProperty(levelName.toLowerCase())) {
-            for(const subLevel of configurationSubLevels) {
-                if(subLevel in event.overrides) {
-                    saved_configuration[subLevel] = slim.utilities.comingleSync([{},configuration[subLevel]]);
-                    configuration[subLevel] = slim.utilities.comingleSync([configuration[subLevel], event.overrides[subLevel]]);
-                }
+            switch(typeof event.overrides[levelName.toLowerCase()]) {
+                case 'boolean':
+                    override_found = true;
+                    working_configuration.suppress = event.overrides[levelName.toLowerCase()];
+                    break;
+                case 'object':
+                    override_found = true;
+                    working_configuration = slim.utilities.comingleSync([working_configuration, event.overrides[levelName.toLowerCase()]]);
+                    break;
             }
         }
-        else {
-            if(this.levelSuppressions.hasOwnProperty(levelName.toLowerCase())) {
-                if(this.levelSuppressions[levelName.toLowerCase()]) {
-                    return;
-                }
-            }
-            const slim_module:string = event.properties.path.match(/slim.\w*/);
-            if(this.levelSuppressions.hasOwnProperty(slim_module)) {
-                if(this.levelSuppressions[slim_module][levelName.toLowerCase()]) {
-                    return;
-                }
-                if(this.levelSuppressions[slim_module].hasOwnProperty('files')) {
-                    const file:object = this.levelSuppressions[slim_module].files.find(
-                        file => file.name == event.properties.fileName.substring(event.properties.fileName.lastIndexOf('/') + 1)
-                    );
-                    if(file && file[levelName.toLowerCase()]) {
-                        return;
-                    }
-                }
-                if(this.levelSuppressions[slim_module].hasOwnProperty('functions')) {
-                    const funct:object = this.levelSuppressions[slim_module].functions.find(funct => funct.name == event.properties.methodName);
-                    if(funct && funct[levelName.toLowerCase()]) {
-                        return;
-                    }
-                }
-            }
+        if(working_configuration.hasOwnProperty('suppress') && working_configuration.suppress) {           
+            return;
         }
+
         let printable_string:string = "";
-        printable_string += this.colorize(levelName, configuration.level);
-        printable_string += this.colorize(event.properties.path, configuration.path);
-        printable_string += this.colorize(event.properties.fileName, configuration.fileName);
-        printable_string += this.colorize(event.properties.lineNumber, configuration.lineNumber);
-        printable_string += this.colorize(event.properties.className, configuration.className);
-        printable_string += this.colorize(event.properties.methodName, configuration.methodName);
-        printable_string += this.colorize(event.properties.messageText, configuration.messageText);
-        printable_string += this.colorize(event.properties.messageValue, configuration.messageValue);
-        printable_string += this.colorize(event.properties.objectString, configuration.objectString);
-        printable_string += this.colorize(event.properties.stackTrace, configuration.stackTrace);
-        this.stderr(printable_string);
-        if(event.overrides.hasOwnProperty(levelName.toLowerCase())) {
-            for(const subLevel of configurationSubLevels) {
-                if(subLevel in saved_configuration) {
-                    configuration[subLevel] = slim.utilities.comingleSync([configuration[subLevel], saved_configuration[subLevel]]);
-                    delete saved_configuration[subLevel];
-                }
-            }
-        }
+        printable_string += this.colorize(levelName, working_configuration.level);
+        printable_string += this.colorize(event.properties.path, working_configuration.path);
+        printable_string += this.colorize(event.properties.fileName, working_configuration.fileName);
+        printable_string += this.colorize(event.properties.lineNumber, working_configuration.lineNumber);
+        printable_string += this.colorize(event.properties.className, working_configuration.className);
+        printable_string += this.colorize(event.properties.methodName, working_configuration.methodName);
+        printable_string += this.colorize(event.properties.messageText, working_configuration.messageText);
+        printable_string += this.colorize(event.properties.messageValue, working_configuration.messageValue);
+        printable_string += this.colorize(event.properties.objectString, working_configuration.objectString);
+        printable_string += this.colorize(event.properties.stackTrace, working_configuration.stackTrace);
+        if(printable_string.length > 0) { this.stderr(printable_string); }
     }
     stderr(string_to_print:string):void {
         if(window.hasOwnProperty('Deno')) {

@@ -36,4 +36,10 @@ export module colorconsole {
     export interface iConsoleClass {
         new(configuration?:slim.types.iKeyValueAny): iConsole;
     }
+    export interface DirOptions {
+        showHidden:boolean,
+        depth:number,
+        colors:boolean,
+        current_depth:number
+    }
 }

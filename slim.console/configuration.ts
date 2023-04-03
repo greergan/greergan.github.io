@@ -8,7 +8,7 @@ const levelDefaultTextColor:configuration.iLevelDefaultTextColor = {
     ABORT: "bright_red", DEBUG: "green", ERROR: "bright_red", INFO: "default", LOG: "default", TODO: "bright_blue", TRACE: "bright_magenta", WARN: "yellow"};
 const printPropertyNames:configuration.iPrintPropertyNames = ["precision","dim","bold","italic","inverse","underLine","textColor","backgroundColor","expandObject","suppress","delimiter"];
 
-function get_default_print_property_values(): configuration.iPrintProperties {
+export function get_default_print_property_values(): configuration.iPrintProperties {
     return {
         precision: 4, dim: false, bold: false, italic: false, inverse: false, underLine: false,
         textColor: "default", backgroundColor: "default", expandObject: false, suppress: false, delimiter:" "
