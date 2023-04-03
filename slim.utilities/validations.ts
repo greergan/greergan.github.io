@@ -1,4 +1,5 @@
 import { get_absolute_file_path } from "./utilities.ts";
+// '[^]A-Za-z0-9_.~!*''();:@&=+$,/?#[%-]+' are all valid in URI strings
 export async function is_directory(url:string): Promise<boolean> {
     let isDirectory:boolean = false;
     if(is_file_url(url)) {
