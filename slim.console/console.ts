@@ -183,22 +183,50 @@ export class SlimColorConsole implements colorconsole.iConsole {
         // check for module functions overrides file level
         // check for module files overrides module level
         // check for module levels [debug|trace|...] // overrides base levels
+
+        const setOverride = (override_object:slim.types.iKeyValueAny):boolean => {
+            let override_found:boolean = true;
+            switch(typeof override_object[levelName.toLowerCase()]) {
+                case 'boolean':
+                    override_found = true;
+                    working_configuration.suppress = override_object[levelName.toLowerCase()];
+                    break;
+                case 'object':
+                    override_found = true;
+                    working_configuration = slim.utilities.comingleSync([working_configuration, override_object[levelName.toLowerCase()]]);
+                    break;
+                default:
+                    console.warn({message:"object type", value:"not supported"}, override_object)
+                    break;
+            }
+            return override_found;
+        }
+
         let override_found:boolean = false;
-        let suppress:boolean = false;
         const slim_module:string = event.properties.path.match(/slim.\w*/);
         if(this.levelSuppressions.hasOwnProperty(slim_module)) {
             if(this.levelSuppressions[slim_module].hasOwnProperty('functions')) {
                 const funct:object = this.levelSuppressions[slim_module].functions.find(funct => funct.name == event.properties.methodName);
                 if(funct !== undefined && funct.hasOwnProperty(levelName.toLowerCase())) {
-                    override_found = true;
-                    working_configuration.suppress = funct[levelName.toLowerCase()];
+                    override_found = setOverride(funct);
+/*                     switch(typeof funct[levelName.toLowerCase()]) {
+                        case 'boolean':
+                            override_found = true;
+                            working_configuration.suppress = funct[levelName.toLowerCase()];
+                            break;
+                        case 'object':
+                            override_found = true;
+                            working_configuration = slim.utilities.comingleSync([working_configuration, funct[levelName.toLowerCase()]]);
+                            break;
+                    } */
                 }
             }
             if(!override_found && this.levelSuppressions[slim_module].hasOwnProperty('files')) {
                 const file:object = this.levelSuppressions[slim_module].files.find(
                     file => file.name == event.properties.fileName.substring(event.properties.fileName.lastIndexOf('/') + 1));
                 if(file !== undefined && file.hasOwnProperty(levelName.toLowerCase())) {
-                    switch(typeof file[levelName.toLowerCase()]) {
+                    override_found = setOverride(file);
+/*                     switch(typeof file[levelName.toLowerCase()]) {
                         case 'boolean':
                             override_found = true;
                             working_configuration.suppress = file[levelName.toLowerCase()];
@@ -207,20 +235,31 @@ export class SlimColorConsole implements colorconsole.iConsole {
                             override_found = true;
                             working_configuration = slim.utilities.comingleSync([working_configuration, file[levelName.toLowerCase()]]);
                             break;
-                    }
+                    } */
                 }
             }
             if(!override_found && this.levelSuppressions[slim_module][levelName.toLowerCase()]) {
-                override_found = true;
-                working_configuration.suppress = this.levelSuppressions[slim_module][levelName.toLowerCase()];
+                override_found = setOverride(this.levelSuppressions[slim_module]);
+/*                 override_found = true;
+                working_configuration.suppress = this.levelSuppressions[slim_module][levelName.toLowerCase()]; */
             }
         }
         if(!override_found && this.configurations.hasOwnProperty(levelName.toLowerCase())) {
-            override_found = true;
-            working_configuration.suppress = this.levelSuppressions[levelName.toLowerCase()];
+            override_found = setOverride(this.configurations);
+/*             switch(typeof this.configurations[levelName.toLowerCase()]) {
+                case 'boolean':
+                    override_found = true;
+                    working_configuration.suppress = this.configurations[levelName.toLowerCase()];
+                    break;
+                case 'object':
+                    override_found = true;
+                    working_configuration = slim.utilities.comingleSync([working_configuration, this.configurations[levelName.toLowerCase()]]);
+                    break;
+            } */
         }
         if(event.overrides.hasOwnProperty(levelName.toLowerCase())) {
-            switch(typeof event.overrides[levelName.toLowerCase()]) {
+            override_found = setOverride(event.overrides);
+/*             switch(typeof event.overrides[levelName.toLowerCase()]) {
                 case 'boolean':
                     override_found = true;
                     working_configuration.suppress = event.overrides[levelName.toLowerCase()];
@@ -229,12 +268,11 @@ export class SlimColorConsole implements colorconsole.iConsole {
                     override_found = true;
                     working_configuration = slim.utilities.comingleSync([working_configuration, event.overrides[levelName.toLowerCase()]]);
                     break;
-            }
+            } */
         }
         if(working_configuration.hasOwnProperty('suppress') && working_configuration.suppress) {           
             return;
         }
-
         let printable_string:string = "";
         printable_string += this.colorize(levelName, working_configuration.level);
         printable_string += this.colorize(event.properties.path, working_configuration.path);
