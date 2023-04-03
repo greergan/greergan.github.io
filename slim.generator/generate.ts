@@ -4,7 +4,7 @@ import * as slim from "./slim_modules.ts";
 import { check_config, explode_models, is_valid_output_namespace, parse_command_line, set_input_output } from "./index.ts";
 try {
     window.SlimConsole = new slim.colorconsole.SlimColorConsole(await slim.utilities.get_json_contents("http://192.168.122.59/configurations/console/default.json"));
-    SlimConsole.configurations.trace.stackTrace.suppress = true;
+    console.clear();
     console.info({message:"awaiting parse_command_line"}, Deno.args);
     const parsed_command_line:slim.types.iKeyValueAny = await parse_command_line(Deno.args);
     console.info({message:"awaiting get config_file"}, parsed_command_line.config_file);
@@ -56,7 +56,7 @@ try {
                 }
             }
             let model = slim.utilities.comingleSync([{}, {page:page,site:config!.site}, ...exploaded_models]);
-// might be a bug in here related to the SLIMOVERRIDES bit console.debug({ message:"comingled model"},{SLIMOVERRIDES:{debug:{suppress:true},path:{suppress:true}}}, model);
+//console.debug({ message:"comingled model"},{SLIMOVERRIDES:{debug:{suppress:false,path:{suppress:true}}}}, model);
             const input_output:slim.types.iKeyValueAny = await set_input_output(model.page, output_to!, namespace!);
             const html_string:string = await view.render(model, input_output.input_file);
             console.debug({ message:"rendered",value:"page size"}, html_string.length);
@@ -69,5 +69,6 @@ try {
     }
 }
 catch(e) {
-    SlimConsole.abort(e.stack);
+    if(window.hasOwnProperty('SlimConsole')) SlimConsole.abort(e.stack);
+    else console.log(e.stack);
 }
