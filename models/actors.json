@@ -1,6 +1,11 @@
 {
     "users": [
-        {"first_name": "Harrison", "last_name": "Ford", "profession": "actor", "active": true, "age": 80},
+        {"first_name": "Harrison", "last_name": "Ford", "profession": "actor", "active": true, "age": 80,
+            "known_for": [
+                { "type": "movie", "name": "Force 10 from Navarone", "year": 1978 },
+                { "type": "movie", "name": "The Secret Life of Pets", "year": 2016 }
+            ]
+        },
         {"first_name": "Carrie", "last_name": "Fisher", "profession": "actor", "active": false, "age": 60}
     ]
 }
