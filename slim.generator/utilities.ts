@@ -1,15 +1,16 @@
 import * as slim from "./slim_modules.ts";
-export async function explode_models(models_array:Array<slim.types.iKeyValueAny>, namespace:string): Promise<slim.types.iKeyValueAny[]> {
+export async function explode_models(models_array:slim.types.iKeyValueAny[], namespace:string): Promise<slim.types.iKeyValueAny> {
     console.debug({message:"models_array"}, models_array);
-    let exploded_models:slim.types.iKeyValueAny[] = [];
+    let exploded_models:slim.types.iKeyValueAny = {};
     for await(const model of models_array) {
         const input_file:string = (slim.utilities.is_valid_url(model.path)) ? model.path: `${namespace}/${model.path}`;
         console.debug({message:"model path",value:"is_valid_url"}, input_file, slim.utilities.is_valid_url(input_file));
         try {
-            exploded_models.push(await slim.utilities.get_json_contents(input_file) ?? {});
+            const json_contents = await slim.utilities.get_json_contents(input_file) ?? {};
+            exploded_models = slim.utilities.comingleSync([exploded_models, json_contents]);
         }
         catch(e) {
-            SlimConsole.abort({message:"aborting explode_models"}, e.message);
+            SlimConsole.abort({message:"aborting explode_models", value:e.stack}, e.message);
         }
     }
     console.trace({message:"exploded_models",value:"length"}, exploded_models.length);
