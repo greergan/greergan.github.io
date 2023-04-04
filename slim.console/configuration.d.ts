@@ -29,8 +29,8 @@ export module configuration {
         path:iPrintProperties;
     }
     export interface iConfigurationSubLevels extends Array<"level"|"className"|"methodName"|"fileName"|"lineNumber"|"objectString"|"stackTrace"|"path"|"messageText"|"messageValue">{}
-    export interface iConfigurationLevels extends Array<string|"ABORT"|"DEBUG"|"ERROR"|"INFO"|"LOG"|"TODO"|"TRACE"|"WARN">{}
-    export interface iLevelDefaultTextColor extends slim.types.iDictionary<"ABORT"|"DEBUG"|"ERROR"|"INFO"|"LOG"|"TODO"|"TRACE"|"WARN", string>{ [key: string]: string }
+    export interface iConfigurationLevels extends Array<string|"ABORT"|"ASSERT"|"DEBUG"|"ERROR"|"INFO"|"LOG"|"TODO"|"TRACE"|"WARN">{}
+    export interface iLevelDefaultTextColor extends slim.types.iDictionary<"ABORT"|"ASSERT"|"DEBUG"|"ERROR"|"INFO"|"LOG"|"TODO"|"TRACE"|"WARN", string>{ [key: string]: string }
     export interface iPrintPropertyNames extends Array<"precision"|"dim"|"bold"|"italic"|"inverse"|"underLine"|"textColor"|"backgroundColor"|"expandObject"|"suppress"|"delimiter">{}
     export interface iConfigurations extends slim.types.iDictionary<string, iConfiguration>{}
 }

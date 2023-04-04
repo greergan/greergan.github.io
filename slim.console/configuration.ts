@@ -1,7 +1,7 @@
 ///// <reference types="./configuration.d.ts" />
 import { configuration  } from "./configuration.d.ts";
 import * as slim from "./slim_modules.ts";
-export const configurationLevels:configuration.iConfigurationLevels = ["ABORT", "DEBUG", "ERROR", "INFO", "LOG", "TODO", "TRACE", "WARN"];
+export const configurationLevels:configuration.iConfigurationLevels = ["ABORT", "ASSERT", "DEBUG", "ERROR", "INFO", "LOG", "TODO", "TRACE", "WARN"];
 export const configurationSubLevels:configuration.iConfigurationSubLevels = ["level", "className", "methodName", "fileName", "lineNumber",
         "objectString", "stackTrace", "path", "messageText", "messageValue"];
 const levelDefaultTextColor:configuration.iLevelDefaultTextColor = {

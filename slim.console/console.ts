@@ -55,7 +55,11 @@ export class SlimColorConsole implements colorconsole.iConsole {
             Deno.exit(1);
         }
     }
-    assert(...args:any):void {}
+    assert(...args:any):void {
+        if(args[0]) return;
+        args.shift();
+        this.print(new LogInformation(args), this.configurations.assert);
+    }
     clear():void {
         this.stdout('\x1b[2J\x1b[H');
     }
@@ -65,14 +69,15 @@ export class SlimColorConsole implements colorconsole.iConsole {
         const working_options = slim.utilities.comingleSync([defaultDirOptions, options]);
         working_options.current_depth++;
         let print_string = "";
+        const object_type:string = Array.isArray(item) ? "Array" : typeof item;
         let content_string = this.format_dir(item, working_options);
         if(content_string.length > 0) {
-            print_string += this.colorize(`Object:\n`, this.configurations['dir']['object']);
+            print_string += this.colorize(`${object_type}:\n`, this.configurations['dir']['object']);
             print_string += content_string;
             //print_string += `\n`;
         }
         else {
-            print_string += this.colorize(`Object:\n`, this.configurations['dir']['object']);
+            print_string += this.colorize(`${object_type}:\n`, this.configurations['dir']['object']);
         }
         this.stderr(print_string);
     }
@@ -149,15 +154,16 @@ export class SlimColorConsole implements colorconsole.iConsole {
         const new_options:colorconsole.DirOptions = slim.utilities.copy_ofSync(working_options);
         new_options.current_depth++;
         Object.keys(item).forEach((key:string, index:number) => {
-            if(typeof item[key] == 'object') {
+            let object_type:string = Array.isArray(item[key]) ? "Array" : (typeof item[key]);
+            if(object_type == 'object' || object_type == 'Array') {
                 const key_value_string:string = this.format_dir(item[key], new_options);
                 if(key_value_string.length > 0) {
-                    dir_string += this.colorize(`${addSpaces()}Object: ${key}\n`, this.configurations['dir']['object']);
+                    dir_string += this.colorize(`${addSpaces()}${object_type}: ${key}\n`, this.configurations['dir']['object']);
                     dir_string += key_value_string;
                     dir_string += this.colorize(`${addSpaces()}\n`, this.configurations['dir']['object']);
                 }
                 else {
-                    dir_string += this.colorize(`${addSpaces()}Object: ${key}\n`, this.configurations['dir']['object']);
+                    dir_string += this.colorize(`${addSpaces()}${object_type}: ${key}\n`, this.configurations['dir']['object']);
                 }
             }
             else {
