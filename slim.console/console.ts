@@ -67,12 +67,12 @@ export class SlimColorConsole implements colorconsole.iConsole {
         let print_string = "";
         let content_string = this.format_dir(item, working_options);
         if(content_string.length > 0) {
-            print_string += this.colorize(`Object: {\n`, this.configurations['dir']['object']);
+            print_string += this.colorize(`Object:\n`, this.configurations['dir']['object']);
             print_string += content_string;
-            print_string += this.colorize(`}\n`, this.configurations['dir']['object']);
+            //print_string += `\n`;
         }
         else {
-            print_string += this.colorize(`Object: {}\n`, this.configurations['dir']['object']);
+            print_string += this.colorize(`Object:\n`, this.configurations['dir']['object']);
         }
         this.stderr(print_string);
     }
@@ -144,16 +144,7 @@ export class SlimColorConsole implements colorconsole.iConsole {
             return "";
         }
         let dir_string = "";
-        const addSpaces = ():string => {
-            return "".padStart(working_options.current_depth * 2, ' ');
-/*             let spaces:string = "";
-            if(working_options.current_depth > 0) {
-                for(let index = 0; index < working_options.current_depth; index++) {
-                    spaces += `  `;
-                }
-            }
-            return spaces; */
-        }
+        const addSpaces = ():string => "".padStart(working_options.current_depth * 2, ' ');
         const keys:string[] = Object.keys(item);
         const new_options:colorconsole.DirOptions = slim.utilities.copy_ofSync(working_options);
         new_options.current_depth++;
@@ -161,17 +152,17 @@ export class SlimColorConsole implements colorconsole.iConsole {
             if(typeof item[key] == 'object') {
                 const key_value_string:string = this.format_dir(item[key], new_options);
                 if(key_value_string.length > 0) {
-                    dir_string += this.colorize(`${addSpaces()}Object: ${key} {\n`, this.configurations['dir']['object']);
+                    dir_string += this.colorize(`${addSpaces()}Object: ${key}\n`, this.configurations['dir']['object']);
                     dir_string += key_value_string;
-                    dir_string += this.colorize(`${addSpaces()}}\n`, this.configurations['dir']['object']);
+                    dir_string += this.colorize(`${addSpaces()}\n`, this.configurations['dir']['object']);
                 }
                 else {
-                    dir_string += this.colorize(`${addSpaces()}Object: ${key} {}\n`, this.configurations['dir']['object']);
+                    dir_string += this.colorize(`${addSpaces()}Object: ${key}\n`, this.configurations['dir']['object']);
                 }
             }
             else {
                 dir_string += this.colorize(`${addSpaces()}${key}:`, this.configurations['dir']['name']);
-                dir_string += this.colorize(`${item[key]}${(index < keys.length - 1) ? `,\n` :  `\n`}`, this.configurations['dir']['value']);
+                dir_string += this.colorize(`${item[key]}${(index < keys.length - 1) ? `,\n` : `\n`}`, this.configurations['dir']['value']);
             }
         });
         return dir_string;
@@ -240,7 +231,8 @@ export class SlimColorConsole implements colorconsole.iConsole {
         printable_string += this.colorize(event.properties.messageText, working_configuration.messageText);
         printable_string += this.colorize(event.properties.messageValue, working_configuration.messageValue);
         printable_string += this.colorize(event.properties.objectString, working_configuration.objectString);
-        printable_string += this.colorize(event.properties.stackTrace, working_configuration.stackTrace);
+        if(printable_string.length > 0) { this.stderr(printable_string); }
+        printable_string = this.colorize(event.properties.stackTrace, working_configuration.stackTrace);
         if(printable_string.length > 0) { this.stderr(printable_string); }
     }
     stderr(string_to_print:string):void {
