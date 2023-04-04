@@ -14,8 +14,8 @@ export class LogInformation extends Error implements logging.iLogInformation {
                 this.properties.messageText = arg.message;
                 this.properties.messageValue = arg.value;
             }
-            else if(typeof arg == 'object' && arg.hasOwnProperty('SLIMOVERRIDES')) {
-                this.overrides = arg.SLIMOVERRIDES;
+            else if(typeof arg == 'object' && (arg.hasOwnProperty('SLIMOVERRIDE') || arg.hasOwnProperty('SLIMOVERRIDES'))) {
+                this.overrides = arg.SLIMOVERRIDE ? arg.SLIMOVERRIDE : arg.SLIMOVERRIDES;
             }
             else {
                 this.properties.objectString += JSON.stringify(arg) + ", ";
