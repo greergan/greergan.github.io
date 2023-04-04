@@ -58,6 +58,9 @@ export class SlimColorConsole implements colorconsole.iConsole {
     assert(...args:any):void {
         if(args[0]) return;
         args.shift();
+        if(typeof args[0] !== 'object' || !args[0].hasOwnProperty('message')) {
+            args.unshift("Assertion failed");
+        }
         this.print(new LogInformation(args), this.configurations.assert);
     }
     clear():void {
