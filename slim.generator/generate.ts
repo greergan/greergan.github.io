@@ -55,7 +55,7 @@ try {
                     delete page.external_models;
                 }
             }
-            let model = slim.utilities.comingleSync([{}, {page:page,site:config!.site}, ...exploaded_models]);
+            let model = slim.utilities.comingleSync([{}, {page:page,site:config!.site, ...exploaded_models}]);
 //console.debug({ message:"comingled model"},{SLIMOVERRIDES:{debug:{suppress:false,path:{suppress:true}}}}, model);
             const input_output:slim.types.iKeyValueAny = await set_input_output(model.page, output_to!, namespace!);
             const html_string:string = await view.render(model, input_output.input_file);
@@ -69,6 +69,6 @@ try {
     }
 }
 catch(e) {
-    if(window.hasOwnProperty('SlimConsole')) SlimConsole.abort(e.stack);
+    if(window.hasOwnProperty('SlimConsole')) SlimConsole.abort({message:"caught unhandled error",value:e.stack});
     else console.log(e.stack);
 }
