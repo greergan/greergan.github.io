@@ -5,7 +5,7 @@ export const configurationLevels:configuration.iConfigurationLevels = ["ABORT", 
 export const configurationSubLevels:configuration.iConfigurationSubLevels = ["level", "className", "methodName", "fileName", "lineNumber",
         "objectString", "stackTrace", "path", "messageText", "messageValue"];
 const levelDefaultTextColor:configuration.iLevelDefaultTextColor = {
-    ABORT: "bright_red", DEBUG: "green", ERROR: "bright_red", INFO: "default", LOG: "default", TODO: "bright_blue", TRACE: "bright_magenta", WARN: "yellow"};
+    ABORT: "bright_red", ASSERT: "bright_blue", DEBUG: "green", ERROR: "bright_red", INFO: "default", LOG: "default", TODO: "bright_blue", TRACE: "bright_magenta", WARN: "yellow"};
 const printPropertyNames:configuration.iPrintPropertyNames = ["precision","dim","bold","italic","inverse","underLine","textColor","backgroundColor","expandObject","suppress","delimiter"];
 
 export function get_default_print_property_values(): configuration.iPrintProperties {
