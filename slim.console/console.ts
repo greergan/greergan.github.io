@@ -51,9 +51,7 @@ export class SlimColorConsole implements colorconsole.iConsole {
     }
     abort(...args:any) {
         this.print(new LogInformation(args), this.configurations.abort);
-        if(Deno !== undefined) {
-            Deno.exit(1);
-        }
+        if(Deno !== undefined) { Deno.exit(1); }
     }
     assert(...args:any):void {
         if(args[0]) return;
@@ -86,7 +84,7 @@ export class SlimColorConsole implements colorconsole.iConsole {
     }
     dirxml(...args:any):void {}
     debug(...args:any):void { this.print(new LogInformation(args), this.configurations.debug); }
-    error(...args:any):void { this.print(new LogInformation(args), this.configurations.error); }
+    error(...args:any):void { this.print(new LogInformation(args), this.configurations.error); if(Deno !== undefined) { Deno.exit(1); } }
     group(...args:any):void {}
     groupCollapsed(...args:any):void {}
     groupEnd(...args:any):void {}
