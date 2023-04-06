@@ -2,20 +2,20 @@
 <p class="description">Slim.View uses the <a href="/slim.filter/">Slim.Filter</a> JSON filtering engine.</p>
 All filters take the following form.
 <code class="slim-code-span">
-	&#123;% foreach model="<span>equal</span>(users, profession, musician)" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		{% foreach model="equal(users, profession, musician)" view="partials/user.html" %}
+		{% foreach model="page.users" filter="equal(profession, "musician")" view="partials/user.html" %}
 	</p>
-	&#123;% foreach model="<span>not_equal</span>(users, profession, musician)" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>not_equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		{% foreach model="not_equal(users, profession, musician)" view="partials/user.html" %}
+		{% foreach model="page.users" filter="not_equal(profession, "musician")" view="partials/user.html" %}
 	</p>
-	&#123;% foreach model="<span>greater_than</span>(users, first_name, Ian)" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>greater_than</span>(first_name, "Ian")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		{% foreach model="greater_than(users, first_name, Ian)" view="partials/user.html" %}
+		{% foreach model="page.users" filter="greater_than(first_name, "Ian")" view="partials/user.html" %}
 	</p>
-	&#123;% foreach model="<span>less_than_equal</span>(users, last_name, Ford)" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>less_than_equal</span>(last_name, "Ford")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		{% foreach model="less_than_equal(users, last_name, Ford)" view="partials/user.html" %}
+		{% foreach model="page.users" filter="less_than_equal(last_name, "Ford")" view="partials/user.html" %}
 	</p>
 </code>

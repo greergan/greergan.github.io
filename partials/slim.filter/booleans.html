@@ -2,19 +2,19 @@
 <code class="slim-code-span">
 	<span>equal</span><br><br>
 	&#123;%<pre>
-foreach model="users" filter="<span>equal</span>(active, true)"
+foreach model="page.users" filter="<span>equal</span>(active, true)"
 	&#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; &#123;&#123;profession&#125;&#125; &#123;&#123;active&#125;&#125;</pre>%&#125;
 	<p class="outputs">
 		{%
-			foreach model="users" filter="equal(active, true)"
+			foreach model="page.users" filter="equal(active, true)"
 				{{first_name}} {{last_name}} {{profession}} {{active}}<br>
 		%}
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>not_equal</span><br><br>
-	&#123;% foreach model="users" filter="<span>not_equal</span>(active, true)" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>not_equal</span>(active, true)" view="partials/user.html" %&#125;
 	<p class="outputs">
-		{% foreach model="users" filter="not_equal(active, true)" view="partials/user.html" %}
+		{% foreach model="page.users" filter="not_equal(active, true)" view="partials/user.html" %}
 	</p>
 </code>

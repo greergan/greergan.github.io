@@ -1,6 +1,7 @@
 {
     "users": [
         {"first_name": "Ian", "last_name": "Astbury", "profession": "musician", "active": true, "age": 60},
-        {"first_name": "Robert", "last_name": "Smith", "profession": "musician", "active": true, "age": 63}
+        {"first_name": "Robert", "last_name": "Smith", "profession": "musician", "active": true, "age": 63},
+        {"first_name":"Dave", "last_name": "Gahan", "age":60, "active":true, "profession": "musician", "known_for":[]}
     ]
 }

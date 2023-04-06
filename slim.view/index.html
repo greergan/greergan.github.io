@@ -140,32 +140,32 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 <code class="slim-code-span">[with|foreach] model="model" view="path/to/view" | html_fragment</code>
 <p>with statement - model and view</p>
 <code class="slim-code-span">
-	&#123;% with model="users[1]" view="partials/user.html" %&#125;
+	&#123;% with model="page.users[1]" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Carrie Fisher is a 60 year old actor who is active => false<br>
-	</p>
+	</p> 
 </code>
 <p>with statement - model and html fragment</p>
 <code class="slim-code-span">
 <pre>&#123;%
-    with model="users[2]"
+    with model="page.users[2]"
         &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is a(n) &#123;&#123;profession&#125;&#125; &lt;br&gt;
 %&#125;</pre>
-	 <p class="outputs">Harry Harrison is a(n) author</p> 
+	<p class="outputs">Harry Harrison is a(n) author</p>
 </code>
 <p>foreach statement - model and view</p>
 <code class="slim-code-span">
-	&#123;% foreach model="users" view="partials/user.html" %&#125;
-	<p class="outputs">Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br></p>
+	&#123;% foreach model="page.users" view="partials/user.html" %&#125;
+	<p class="outputs">Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br></p>
 </code>
 <p>foreach statement - model and html fragment</p>
 <code class="slim-code-span">
 <pre>&#123;%
-    foreach model="users"
+    foreach model="page.users"
         &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;br&gt;
 %&#125;</pre>
 	<p class="outputs">
-		Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br>Ian Astbury is a(n) musician<br>Robert Smith is a(n) musician<br>
+		Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br>Ian Astbury is a(n) musician<br>Robert Smith is a(n) musician<br>Dave Gahan is a(n) musician<br>
 	</p>
 </code>
 </details>
@@ -173,19 +173,19 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 <p class="description">Slim.View uses the <a href="/slim.filter/">Slim.Filter</a> JSON filtering engine.</p>
 All filters take the following form.
 <code class="slim-code-span">
-	&#123;% foreach model="<span>equal</span>(users, profession, musician)" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>
+		Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br>
 	</p>
-	&#123;% foreach model="<span>not_equal</span>(users, profession, musician)" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>not_equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>
 	</p>
-	&#123;% foreach model="<span>greater_than</span>(users, first_name, Ian)" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>greater_than</span>(first_name, "Ian")" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Robert Asprin is a 61 year old author who is active => false<br>Robert Smith is a 63 year old musician who is active => true<br>
 	</p>
-	&#123;% foreach model="<span>less_than_equal</span>(users, last_name, Ford)" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>less_than_equal</span>(last_name, "Ford")" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>
 	</p>
@@ -211,17 +211,17 @@ All filters take the following form.
 </code>
 <p>Comment a complex statement with variable substitution.</p>
 <code class="slim-code-span">
-	&#123;# &#123;% foreach model="users" view="partials/user.html" %&#125; #&#125;
+	&#123;# &#123;% foreach model="page.users" view="partials/user.html" %&#125; #&#125;
 	<p class="outputs">&lt;!-- Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br> --&gt;
-		<!-- Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br> -->
+		<!-- Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br> -->
 	</p>
 	<div>View page source in your browser to see results</div>
 </code>
 <p>Comment a complex statement without variable substitution.</p>
 <code class="slim-code-span">
-	&#123;#% foreach model="users" view="partials/user.html" %#&#125;
-	<p class="outputs">&lt;!-- &#123;#% foreach model="users" view="partials/user.html" %#&#125; --&gt;
-		<!-- {#% foreach model="users" view="partials/user.html" %#} -->
+	&#123;#% foreach model="page.users" view="partials/user.html" %#&#125;
+	<p class="outputs">&lt;!-- &#123;#% foreach model="page.users" view="partials/user.html" %#&#125; --&gt;
+		<!-- {#% foreach model="page.users" view="partials/user.html" %#} -->
 	</p>
 	<div>View page source in your browser to see results</div>
 </code>

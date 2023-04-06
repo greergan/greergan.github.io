@@ -26,7 +26,10 @@
         "fileName":{"suppress":false},
         "lineNumber":{"suppress":false}
     },
-    "log":{"propogate":true, "suppress":true},
+    "log":{"propogate":true, "suppress":true,
+            "fileName":{"suppress":false},
+            "lineNumber":{"suppress":false}
+    },
     "trace":{"propogate":true,
         "className":{"suppress":false},
         "methodName":{"suppress":false},
@@ -61,7 +64,7 @@
             "functions":[
                 { "name": "getOperator", "trace": true, "debug": true },
                 { "name": "getViewModels", "trace": true },
-                { "name": "run", "trace": true, "debug": true, "warn": {"suppress": false, "stackTrace":{"suppress":true}}}
+                { "name": "run", "warn": {"suppress": true, "stackTrace":{"suppress":true}}}
             ]
         },
         "slim.generator": {
@@ -88,7 +91,8 @@
                 { "name": "validations.ts", "debug":true, "trace":true }
             ],
             "functions": [
-                { "name": "comingleSync", "debug":true},
+                { "name": "comingleSync", "debug":false},
+                { "name": "get_node_value", "debug":true},
                 { "name": "is_http_url", "trace": true},
                 { "name": "is_https_url", "trace": true},
                 { "name": "is_file_url", "trace": true},
