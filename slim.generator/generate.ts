@@ -10,18 +10,18 @@ try {
     console.info({message:"awaiting get config_file"}, parsed_command_line.config_file);
     const config:slim.types.iKeyValueAny|undefined = await slim.utilities.get_json_contents(parsed_command_line.config_file);
     if(!config) {
-        SlimConsole.abort({message:"valid configuration file not found"});
+        console.error({message:"valid configuration file not found"});
     }
     if(!(await check_config(config!))) {
-        SlimConsole.abort({message:"check_config","value":"failed"});
+        console.error({message:"check_config","value":"failed"});
     }
     const namespace:string|undefined = await slim.utilities.get_normalized_url(config!.namespace);
     const output_to:string|undefined = await slim.utilities.get_normalized_url(config!.output_to);
     if(namespace === undefined) {
-        SlimConsole.abort({message:"namespace","value":"undefined"});
+        console.error({message:"namespace","value":"undefined"});
     }
     if(output_to === undefined) {
-        SlimConsole.abort({message:"output_to","value":"undefined"});
+        console.error({message:"output_to","value":"undefined"});
     }
 
     // Is this needed?
@@ -48,7 +48,7 @@ try {
             let exploaded_models:slim.types.iKeyValueAny = {};
             if(page.hasOwnProperty('external_models')) {
                 if(!Array.isArray(page.external_models)) {
-                    SlimConsole.abort({message:"page level property",value:"external_models not an Array"}, page.title);
+                    console.error({message:"page level property",value:"external_models not an Array"}, page.title);
                 }
                 else {
                     exploaded_models = await explode_models(page.external_models, namespace!);
@@ -57,9 +57,6 @@ try {
             }
             let model = slim.utilities.comingleSync([{}, {page:page,site:config!.site}]);
             model.page = slim.utilities.comingleSync([model.page, exploaded_models]);
-            //model.page = slim.utilities.comingleSync([model.page, model.page]);
-console.dir(model.page, {depth:4})
-SlimConsole.abort();
             const input_output:slim.types.iKeyValueAny = await set_input_output(model.page, output_to!, namespace!);
             const html_string:string = await view.render(model, input_output.input_file);
             console.debug({ message:"rendered",value:"page size"}, html_string.length);
@@ -72,6 +69,5 @@ SlimConsole.abort();
     }
 }
 catch(e) {
-    if(window.hasOwnProperty('SlimConsole')) SlimConsole.abort({message:"caught unhandled error",value:e.stack});
-    else console.log(e.stack);
+    console.error({message:"caught unhandled error",value:e.stack});
 }
