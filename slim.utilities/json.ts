@@ -1,12 +1,10 @@
 import * as slim from "./slim_modules.ts";
-
-
-export function array_contains(a:slim.types.iKeyValueAny, b:object):boolean {
-	let is_in:boolean = true;
-	const b_keys:string[] = (Object.keys(b)).sort();
+export function array_contains(array:slim.types.iKeyValueAny[], check_for_member:object, merge_arrays:boolean=false):boolean {
+	let is_in:boolean = false;
+	const b_keys:string[] = (Object.keys(check_for_member)).sort();
 	const b_keys_string:string = JSON.stringify(b_keys);
 	let keys_checked:number = 0;
-	for(const member of a) {
+	for(const member of array) {
 		const a_keys:string[] = (Object.keys(member)).sort();
 		if(JSON.stringify(a_keys) !== b_keys_string) {
 			is_in = false;
@@ -15,29 +13,41 @@ export function array_contains(a:slim.types.iKeyValueAny, b:object):boolean {
 		let keys_matched:number = 0;
 		for(const key of Object.keys(member)) {
 			keys_checked++;
-/*
-			if(typeof member[key] === 'object' && typeof b[key] === 'object') {
-				console.log("checking objects");
-				if(Array.isArray(member[key]) && Array.isArray(b[key])) {
-					console.log("checking arrays");
-					if(member[key].every((value,index)=> {
-						b[key][index].
-						value === b[key][index];
-						console.log(value)
-					})) {
-						keys_matched++;
-					}					
-				}
-				else {
-					if(array_contains([member[key]], b[key])) {
-						keys_matched++;
-						console.log("array_contains", key, b[key])
-					}
+			if(['string','boolean','number'].includes(typeof member[key])) {
+				if(member[key] == check_for_member[key]) {
+					keys_matched++;
 				}
 			}
-*/
-			if(member[key] == b[key]) {
-				keys_matched++;
+			else if(Array.isArray(member[key]) && Array.isArray(check_for_member[key])) {
+				if(member[key].length == check_for_member[key].length && member[key].length == 0) {
+					keys_matched++;
+				}
+				else {
+					let members_match:boolean = false;
+					let member_matches:number = 0;
+					member[key].forEach((array_member:any) => {
+						
+						if(['string','number','boolean'].includes(typeof array_member)) {
+							if(check_for_member[key].includes(array_member)) {
+								member_matches++;
+							}
+						}
+					});
+					check_for_member[key].forEach((array_member:any) => {
+						if(member[key].includes(array_member)) {
+							member_matches++;
+						}
+					});
+					if(member_matches = (member[key].length + check_for_member[key])) {
+						members_match = true;
+					}
+/* 					if(!members_match && merge_arrays) {
+						check_for_member[key].forEach((array_member:any) => {
+							member[key].push(array_member)
+						});
+						keys_matched++;
+					} */
+				}
 			}
 		}
 		if(keys_matched == a_keys.length) {
@@ -68,9 +78,8 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 		throw new Error("comingle requires an array of 2 or more slim.types.iKeyValueAny objects");
 	}
 	const sources:slim.types.iKeyValueAny[] = JSON.parse(JSON.stringify(input_sources));
-	//const merged_objects:slim.types.iKeyValueAny = sources.shift() ?? {};
 	const merged_objects:slim.types.iKeyValueAny = {};
-	for(let source of sources) {
+	for(const source of sources) {
 		for(const key in source) {
 			const key_type:string = typeof source[key];
 			if(['string','number','boolean'].includes(key_type)) {
@@ -96,19 +105,32 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 				if(continue_array_processing) {
 					if(typeof merged_objects[key] == 'undefined') {
 						merged_objects[key] = [];
+						merged_objects[key] = source[key];
+						continue_array_processing = false;
 					}
 				}
 				if(continue_array_processing) {
  					for(const member of source[key]) {
-						let lvalue_exists:boolean = false;
+						if(!this.array_contains(merged_objects[key], member)) {
+							merged_objects[key].push(member);
+						}
+
+/* 						let lvalue_exists:boolean = false;
+						let keys_matched:number = 0;
 						for(const index in merged_objects[key]) {
-							if(merged_objects[key][index] == member) {
-								lvalue_exists = true;
-							}
+							Object.keys(merged_objects[key][index]).forEach(k => {
+								if(typeof merged_objects[key][index][k] != 'object') {
+									lvalue_exists = (merged_objects[key][index][k] == member[k]);
+									if(found_gahan && lvalue_exists) {
+										console.log(merged_objects[key][index][k], member[k])
+										console.log(sources[0][key][index].first_name, member.first_name);
+									}
+								}
+							});
 						}
 						if(!lvalue_exists) {
 							merged_objects[key].push(member);
-						}
+						} */
 					}
 				}
 			}
@@ -129,29 +151,15 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 			}
 		}
 	}
-	return merged_objects;
+	return merged_objects as slim.types.iKeyValueAny;
 }
-export async function get_node_value(model:slim.types.iKeyValueAny, property:string): Promise<string | slim.types.iKeyValueAny | undefined> {
-	const node_array:Array<any> = property.trim().split('.');
-	let node_value:any = undefined;
-	let next_property_string:string = "";
-	for await (const node of node_array) {
-		next_property_string = property.substring(property.indexOf('.') + 1);
-		node_value = model[`${node}`];
- 		if(typeof node_value === 'object') {
-			if(next_property_string.length == 0) {
-				break;
-			}
-			else {
-				node_value = await get_node_value(model[`${node}`], next_property_string);
-			}
-		}
-		if(property.endsWith(next_property_string)) {
-			break;
-		}
-	}
-	return node_value;
+export async function get_node_value(model:slim.types.iKeyValueAny, property:string): Promise<string|number|boolean|slim.types.iKeyValueAny> {
+	console.debug({message:"beginning with", value:"property"}, property);
+	let shifted_model:slim.types.iKeyValueAny = model;
+	property.trim().split('.').forEach((node_name:string) => {
+		const matched:string[] = node_name.match(/([\w\d]+)\[(\d)\]$/) ?? [];
+		shifted_model = matched.length == 3 ? shifted_model = shifted_model[matched[1]][matched[2]] : shifted_model = shifted_model[node_name];
+	});
+	return shifted_model;
 }
-export function get_value<Type, Key extends keyof Type>(obj: Type, key: Key) {
-    return obj[key];
-}
+export function get_value<Type, Key extends keyof Type>(obj: Type, key: Key) { return obj[key]; }
