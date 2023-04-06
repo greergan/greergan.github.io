@@ -45,7 +45,7 @@ try {
         }
         if(continue_processing) {
             console.info({message:"Generating output",value:"page"}, page.title, `page.generate_id => ${page.generate_id}`);
-            let exploaded_models:slim.types.iKeyValueAny[] = [];
+            let exploaded_models:slim.types.iKeyValueAny = {};
             if(page.hasOwnProperty('external_models')) {
                 if(!Array.isArray(page.external_models)) {
                     SlimConsole.abort({message:"page level property",value:"external_models not an Array"}, page.title);
@@ -55,8 +55,11 @@ try {
                     delete page.external_models;
                 }
             }
-            let model = slim.utilities.comingleSync([{}, {page:page,site:config!.site, ...exploaded_models}]);
-//console.debug({ message:"comingled model"},{SLIMOVERRIDES:{debug:{suppress:false,path:{suppress:true}}}}, model);
+            let model = slim.utilities.comingleSync([{}, {page:page,site:config!.site}]);
+            model.page = slim.utilities.comingleSync([model.page, exploaded_models]);
+            //model.page = slim.utilities.comingleSync([model.page, model.page]);
+console.dir(model.page, {depth:4})
+SlimConsole.abort();
             const input_output:slim.types.iKeyValueAny = await set_input_output(model.page, output_to!, namespace!);
             const html_string:string = await view.render(model, input_output.input_file);
             console.debug({ message:"rendered",value:"page size"}, html_string.length);
