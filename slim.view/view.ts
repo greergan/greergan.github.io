@@ -132,10 +132,10 @@ export class SlimView {
 		}
 		console.trace();
 	}
-	public async render(model:slim.types.iKeyValueAny, url:string):Promise<string> {
-		const normalized_url:string = slim.utilities.is_valid_url(url) ? url : `${this.namespace}/${url}`;
-		const rendered_view:string = await this.coalesce(model, await this.compile(normalized_url));
-		console.trace({message:"rendered", value:"view"}, rendered_view.length, normalized_url);
+	public async render(model:slim.types.iKeyValueAny, html_ref:string):Promise<string> {
+		const view_string:string = html_ref.match(/\s|{|}/) ? html_ref : await this.compile(html_ref);
+		const rendered_view:string = await this.coalesce(model, view_string);
+		console.trace({message:"rendered", value:"view"}, rendered_view.length, view_string);
 		return rendered_view;
 	}
 	private async add_dependent_view(with_view:string, view:string):Promise<void> {
@@ -161,7 +161,7 @@ export class SlimView {
 			throw new Error(`unknown statement => ${statement_string}`);
 		}
 		const model_match:Array<string> = statement_string.match(/\s+(model)\s*=\s*"*\s*([\w\d\.]+\[*\d*\]*)\s*"*/i) ?? [];
-		console.debug({message:"beginning",value:"model_match[0]"}, model_match[1]);
+		console.debug({message:"beginning",value:"model_match[2]"}, model_match[2]);
 		if(model_match.length != 3) {
 			throw new Error(`model keyword not found in ${statement_string}`);
 		}
@@ -181,15 +181,35 @@ export class SlimView {
 		return {view_string:view_string,filter};
 	}
 	private async processStatement(model:slim.types.iKeyValueAny, statement_string:string):Promise<string> {
-		console.debug({message:"beginning",value:"statement"}, statement_string/*, {SLIMOVERRIDES:{debug:{suppress:false}}}*/);
+		console.debug({message:"beginning",value:"statement"}, statement_string);
 		const results:slim.types.iKeyValueAny = this.parseStatement(statement_string.trim());
 		await results.filter.run(model);
-		console.debug({message:"processing",value:"results.filter.getViewModels()"}, results.filter.getViewModels());
-		console.debug({message:"processing",value:"results.view_string"}, results.view_string);
-		const view_string:string = results.view_string.match(/\s|{|}/) ? results.view_string : await this.compile(results.view_string);
+		const nested_statement_match:string[] = results.view_string.match(/{%(.+)%}/gms) ?? [];
+		let nested_view:string = "";
 		let coalesced_view = "";
-		for await(const property_model of results.filter.getViewModels()) {
-			coalesced_view += await this.coalesce(property_model, view_string);
+		if(nested_statement_match.length > 0) {
+			console.debug({message:"nested",value:"results.view_string"}, results.view_string);
+			console.debug({message:"nested",value:"nested_statement"}, nested_statement_match);
+			const parent_model:slim.types.iKeyValueAny = await slim.utilities.get_node_value(model, results.filter.model) as slim.types.iKeyValueAny;
+			console.debug({message:"nested",value:"nested_statement"}, nested_statement_match[0]);
+			const nested_results:slim.types.iKeyValueAny = this.parseStatement(nested_statement_match[0].replace('{%', '').replace('%}', '').trim());
+			console.debug({message:"nested_results"}, nested_results);
+			const nested_model:slim.types.iKeyValueAny[] = await slim.utilities.get_node_value(parent_model, nested_results.filter.model) as slim.types.iKeyValueAny[];
+			for await(const object_model of nested_model) {
+				nested_view += await this.coalesce(object_model, nested_results.view_string);
+			}
+			console.debug({message:"nested_view"}, nested_view);
+			console.debug({message:"processing",value:"results.view_string"}, results.view_string);
+			coalesced_view = results.view_string.replace(/({%.+%})/gms, nested_view);
+			console.debug({message:"processed nested statement",value:"coalesced_view"}, coalesced_view);
+		}
+		else {
+			console.debug({message:"processing",value:"results.filter.getViewModels()"}, results.filter.getViewModels());
+			console.debug({message:"processing",value:"results.view_string"}, results.view_string, {SLIMOVERRIDES:{debug:{suppress:false}}});
+			const view_string:string = results.view_string.match(/\s|{|}/) ? results.view_string : await this.compile(results.view_string);
+			for await(const property_model of results.filter.getViewModels()) {
+				coalesced_view += await this.coalesce(property_model, view_string);
+			}
 		}
 		console.trace({message:"statement",value:"coalesced"},coalesced_view.length);
 		return coalesced_view;
