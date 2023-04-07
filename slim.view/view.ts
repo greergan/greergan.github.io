@@ -49,7 +49,7 @@ export class SlimView {
 			debugCommentReplacement4(match, replacement_string);
 			return replacement_string;
 		});
-		const statement_expanssion_regex = /{%(.+?)%}/gsm
+		const statement_expanssion_regex = /{%(.+?)%}$/gsm
 		const statement_expanssion_promises:Array<Promise<string>> = [];
 		const get_statement_replacement = (model:slim.types.iKeyValueAny, statement_string:string) => Promise.resolve(this.processStatement(model, statement_string));
 	 	coalesce_view = coalesce_view.replace(statement_expanssion_regex, (match, statement):string => {
