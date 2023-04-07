@@ -1,7 +1,7 @@
 {
     "output_to": "file:///home/greergan/mnt/host/src/greergan.github.io",
     "namespace": "http://192.168.122.59",
-    "generate_ids": [3],
+    "generate_ids": [3,0,1],
     "meta_tags": [],
     "copy_to_output": [
         {"path": "assets"},
@@ -31,7 +31,26 @@
             "meta_tags": [],
             "input_file": "pages/slim.blog.html",
             "output_file": "index.html",
-            "title": "Slim.Blog"
+            "title": "Slim.Blog",
+            "entries": [
+                {"title": "The power of regex", "teaser":"nice words here"},
+                {"title": "Using Slim.View"},
+                {"title": "Using Slim.Console"},
+                {"title": "Using Slim.Generate"},
+                {"title": "Using Slim Typescript modules"},
+                {"title": "Why Slim?"}
+            ]
+        },
+        {
+            "generate_id": 3,
+            "meta_tags": [],
+            "input_file": "pages/slim.console.html",
+            "output_file": "slim.console/index.html",
+            "title": "Slim.Console",
+            "methods": [
+                {"name": "console.assert", "security": "public", "return": "void", "async":false, "usage": "console.assert()", "description": "", "impelmented": false},
+                {"name": "console.assert", "security": "public", "return": "void", "async":false, "usage": "console.assert()", "description": "", "impelmented": false}
+            ]
         },
         {
             "generate_id": 0,

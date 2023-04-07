@@ -4,6 +4,14 @@
     <div class="intro">
         <p></p>
     </div>
+    {% with model="page"
+        <div class="slim-blog-entries"> 
+            {% foreach model="entries"
+                <div class="slim-blog-entry">
+                    <h3>{{title}}</h3>
+                    <p>{{teaser}}</p>
+                </div>
+    %}</div>
+    %}
     <hr class="section-seperator"/>
-    {% with model="page.entries" <div class="slim-blog-entries">{% foreach <div class="slim-blog-entry"></div> %}</div> %}
     <include view="includes/foot.html">
