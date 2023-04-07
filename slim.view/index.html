@@ -37,7 +37,8 @@
 	</head>
 	<body>
 		<menu>
-    <li><a href="/">Slim</a></li>
+    <li><a href="/">Slim.Blog</a></li>
+    <li><a href="/slim">Slim</a></li>
     <li><a href="/slim.view/">Slim.View</a></li>
     <li><a href="/slim.filter/">Slim.Filter</a></li>
     <li><a href="/slim.utilities/">Slim.Utilities</a></li>
@@ -156,16 +157,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 <p>foreach statement - model and view</p>
 <code class="slim-code-span">
 	&#123;% foreach model="page.users" view="partials/user.html" %&#125;
-	<p class="outputs">Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br></p>
-</code>
-<p>foreach statement - model and html fragment</p>
-<code class="slim-code-span">
-<pre>&#123;%
-    foreach model="page.users"
-        &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;br&gt;
-%&#125;</pre>
-	<p class="outputs">
-		Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br>Ian Astbury is a(n) musician<br>Robert Smith is a(n) musician<br>Dave Gahan is a(n) musician<br>
+	<p class="outputs">Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br>
 	</p>
 </code>
 </details>
@@ -213,7 +205,7 @@ All filters take the following form.
 <code class="slim-code-span">
 	&#123;# &#123;% foreach model="page.users" view="partials/user.html" %&#125; #&#125;
 	<p class="outputs">&lt;!-- Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br> --&gt;
-		<!-- Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br> -->
+		<!-- {% foreach model="page.users" view="partials/user.html" %} -->
 	</p>
 	<div>View page source in your browser to see results</div>
 </code>

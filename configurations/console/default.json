@@ -110,7 +110,7 @@
                 { "name": "parseStatement",  "debug":true, "trace": true},
                 { "name": "processStatement",  "debug":true, "trace": true},
                 { "name": "debugVariableExpanssion",  "debug":true},
-                { "name": "debugStatementExpanssion", "debug":true},
+                { "name": "debugStatementExpanssion", "debug":false},
                 { "name": "debugCommentReplacement1", "debug":true},
                 { "name": "debugCommentReplacement2", "debug":true},
                 { "name": "debugCommentReplacement3", "debug":true},

@@ -37,7 +37,8 @@
 	</head>
 	<body>
 		<menu>
-    <li><a href="/">Slim</a></li>
+    <li><a href="/">Slim.Blog</a></li>
+    <li><a href="/slim">Slim</a></li>
     <li><a href="/slim.view/">Slim.View</a></li>
     <li><a href="/slim.filter/">Slim.Filter</a></li>
     <li><a href="/slim.utilities/">Slim.Utilities</a></li>
@@ -76,42 +77,42 @@ foreach model="page.users" filter="<span>equal</span>(active, true)"
 <details class="slim-details"><summary><h3>Number filters</h3></summary>
 <code class="slim-code-span">
 	<span>equal</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>equal</span>(age, 60)" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>equal</span>(age, 60)" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Dave Gahan is a 60 year old musician who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>not_equal</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>not_equal</span>(age, 60)" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>not_equal</span>(age, 60)" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Harrison Ford is a 80 year old actor who is active => true<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Robert Smith is a 63 year old musician who is active => true<br>Dennis Ritchie is a 70 year old programmer who is active => false<br>Brian Kernighan is a 81 year old programmer who is active => true<br>Bjarne Stroustrup is a 72 year old programmer who is active => true<br>
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>greater_than</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>greater_than</span>(age, 60)" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>greater_than</span>(age, 60)" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Harrison Ford is a 80 year old actor who is active => true<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Robert Smith is a 63 year old musician who is active => true<br>Dennis Ritchie is a 70 year old programmer who is active => false<br>Brian Kernighan is a 81 year old programmer who is active => true<br>Bjarne Stroustrup is a 72 year old programmer who is active => true<br>
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>greater_than_equal</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>greater_than_equal</span>(age, 60)" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>greater_than_equal</span>(age, 60)" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Dave Gahan is a 60 year old musician who is active => true<br>Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dennis Ritchie is a 70 year old programmer who is active => false<br>Brian Kernighan is a 81 year old programmer who is active => true<br>Bjarne Stroustrup is a 72 year old programmer who is active => true<br>
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>less_than</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>less_than</span>(age, 60)" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>less_than</span>(age, 60)" view="partials/user.html" %&#125;
 	<p class="outputs">
 		
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>less_than_equal</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>less_than_equal</span>(age, 60)" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>less_than_equal</span>(age, 60)" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Dave Gahan is a 60 year old musician who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>
 	</p>
@@ -120,42 +121,42 @@ foreach model="page.users" filter="<span>equal</span>(active, true)"
 <details class="slim-details"><summary><h3>String filters</h3></summary>
 <code class="slim-code-span">
 	<span>equal</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>equal</span>(profession, "musician")" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Dave Gahan is a 60 year old musician who is active => true<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>not_equal</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>not_equal</span>(profession, "musician")" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>not_equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Dennis Ritchie is a 70 year old programmer who is active => false<br>Brian Kernighan is a 81 year old programmer who is active => true<br>Bjarne Stroustrup is a 72 year old programmer who is active => true<br>
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>greater_than</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>greater_than</span>(profession, "musician")" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>greater_than</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Dennis Ritchie is a 70 year old programmer who is active => false<br>Brian Kernighan is a 81 year old programmer who is active => true<br>Bjarne Stroustrup is a 72 year old programmer who is active => true<br>
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>greater_than_equal</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>greater_than_equal</span>(profession, "musician")" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>greater_than_equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Dave Gahan is a 60 year old musician who is active => true<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dennis Ritchie is a 70 year old programmer who is active => false<br>Brian Kernighan is a 81 year old programmer who is active => true<br>Bjarne Stroustrup is a 72 year old programmer who is active => true<br>
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>less_than</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>less_than</span>(profession, "musician")" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>less_than</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>less_than_equal</span><br><br>
-	&#123;&#123; foreach model="page.users" filter="<span>less_than_equal</span>(profession, "musician")" view="partials/user.html" &#125;&#125;
+	&#123;% foreach model="page.users" filter="<span>less_than_equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
 		Dave Gahan is a 60 year old musician who is active => true<br>Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>
 	</p>
