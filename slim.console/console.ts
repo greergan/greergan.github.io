@@ -229,7 +229,7 @@ export class SlimColorConsole implements colorconsole.iConsole {
             return;
         }
         let printable_string:string = "";
-        printable_string += this.colorize(levelName, working_configuration.level);
+        printable_string += this.colorize(`${levelName} ${new Date().getTime().toString().substring(5)}`, working_configuration.level);
         printable_string += this.colorize(event.properties.path, working_configuration.path);
         printable_string += this.colorize(event.properties.fileName, working_configuration.fileName);
         printable_string += this.colorize(event.properties.lineNumber, working_configuration.lineNumber);
