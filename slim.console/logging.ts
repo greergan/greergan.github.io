@@ -42,14 +42,14 @@ export class LogInformation extends Error implements logging.iLogInformation {
                 }
                 else {
                     break_while = true;
-                    const file_info_regex:RegExp = /^at\s(new)*\s*([\w\d_\$\.]+)\s\((.+)\)/;
+                    const file_info_regex:RegExp = /^at\s(new)*\s*([\w\d_\$\.\s]+)\s\((.+)\)/;
                     const string_matches = stack_end_file?.match(file_info_regex) || [];
                     if(string_matches && string_matches.length == 4) {
                         if(string_matches[1] == "new") {
                             this.properties.className = string_matches[2];
                         }
                         else if(string_matches[2]) {
-                            const class_method_match = string_matches[2].match(/^([\w\d_\$]+)\.*(([\w\d_\$]+)*)$/) || [];
+                            const class_method_match = string_matches[2].match(/^([\w\d_\$]+)\.*(([\w\d_\$\s]+)*)$/) || [];
                             if(class_method_match.length >= 3) {
                                 if(class_method_match[0] == class_method_match[1]) {
                                     this.properties.methodName = class_method_match[1];    
