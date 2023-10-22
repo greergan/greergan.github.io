@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Control Panel</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="/SLIM_GENERATOR_ADMIN/assets/css/app.css">
+        <link rel="icon" type="image/x-icon" href="/SLIM_GENERATOR_ADMIN/assets/images/favicon.ico">
+	</head>
+	<body>
+		<div class="content">
+            <div class="flex-container-top">
+                <div class="flex-child-top">
+                    <h1 class="intro">Welcome to <div class="slim">Control Panel</div></h1>
+                    <div class="catch_line">A Slim.Generator tool</div>
+                    <div class="intro"></div>
+                </div>
+                <div class="flex-child-top">
+                    <div class="date_times">
+                        <table>
+                            <tr>
+                                <td><span class="label">Current Time:</span></td><td><span class="time" id="current_time"></span></td>
+                                <td><span class="label">Last Updated:</span></td><td><span class="time" id="last_updated_time"></span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="label">Server Started:</span></td><td><span class="time" id="server_start_time"></span></td>
+                                <td><span class="label">Last Connected:</span></td><td><span class="time" id="connected_time"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-container side-dashboard">
+                <div class="flex-child">
+                    <div id="projects-tree-anchor"></div>
+                </div>
+                <div class="flex-child" id="workspaces">
+                    <div class="dashboard" id="dashboard">
+                        <div id="routes-tree-anchor"></div>
+                        <div id="view-tree-anchor"></div>
+                        <div id="reverse-mappings-tree-anchor"></div>
+                    </div>
+                </div>
+            </div>
+            <footer class="copyright">
+				Copyright &copy; 2023 Jeff Greer
+			</footer>
+		</div> <!-- class="content" is now closed -->
+        <script type="module">
+            import { ControlPanel } from "/SLIM_GENERATOR_ADMIN/assets/js/control_panel.js";
+            const controlPanel = new ControlPanel();
+        </script>
+	</body>
+</html>

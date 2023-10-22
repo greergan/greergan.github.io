@@ -1,8 +1,7 @@
 {
-    "output_to": "file:///home/greergan/mnt/host/src/greergan.github.io",
+    "output_to": "http://192.168.122.59",
     "namespace": "http://192.168.122.59",
-    "generate_ids": [3,0,1],
-    "meta_tags": [],
+    "generate_ids": [3],
     "copy_to_output": [
         {"path": "assets"},
         {"path": "models"},
@@ -11,13 +10,16 @@
         {"path": "includes"},
         {"path": "../slim.generator/generator.ts", "output": "./"}
     ],
-    "site": {
-        "meta_tags": [],
-        "copyright": {
-            "by": "<a href=\"https://github.com/greergan\" target=_new_window>Jeff Greer</a>",
-            "started_date": "2023"
+    "meta_tags": [],
+    "models": {
+        "site": {
+            "copyright": {
+                "by": "<a href=\"https://github.com/greergan\" target=_new_window>Jeff Greer</a>",
+                "started_date": "2023"
+            }
         }
     },
+    "external_models": [],
     "pages": [
         {
             "generate_id": 0,
@@ -32,13 +34,17 @@
             "input_file": "pages/slim.blog.html",
             "output_file": "index.html",
             "title": "Slim.Blog",
-            "entries": [
-                {"title": "The power of regex", "teaser":"nice words here"},
-                {"title": "Using Slim.View"},
-                {"title": "Using Slim.Console"},
-                {"title": "Using Slim.Generate"},
-                {"title": "Using Slim Typescript modules"},
-                {"title": "Why Slim?"}
+            "models":[
+                {"entries": [
+                    {"title": "The power of regex", "teaser":"nice words here"},
+                    {"title": "Using Slim.Utilities"},
+                    {"title": "Using Slim.Filter"},
+                    {"title": "Using Slim.View"},
+                    {"title": "Using Slim.Console"},
+                    {"title": "Using Slim.Generate"},
+                    {"title": "Using Slim Typescript modules"},
+                    {"title": "Why Slim?"}
+                ]}
             ]
         },
         {
@@ -47,9 +53,11 @@
             "input_file": "pages/slim.console.html",
             "output_file": "slim.console/index.html",
             "title": "Slim.Console",
-            "methods": [
-                {"name": "console.assert", "security": "public", "return": "void", "async":false, "usage": "console.assert()", "description": "", "impelmented": false},
-                {"name": "console.assert", "security": "public", "return": "void", "async":false, "usage": "console.assert()", "description": "", "impelmented": false}
+            "models": [
+                { "methods": [
+                    {"name": "console.assert", "security": "public", "return": "void", "async":false, "usage": "console.assert()", "description": "", "impelmented": false},
+                    {"name": "console.assert", "security": "public", "return": "void", "async":false, "usage": "console.assert()", "description": "", "impelmented": false}
+                ]}
             ]
         },
         {
@@ -65,9 +73,10 @@
             "input_file": "pages/slim.filter.html",
             "output_file": "slim.filter/index.html",
             "title": "Slim.Filter",
-            "users": [
-                {"first_name":"Dave", "last_name": "Gahan", "age":60, "active":true, "profession": "musician", 
-                    "known_for":[]}
+            "models": [
+                {"users": [
+                    {"first_name":"Dave", "last_name": "Gahan", "age":60, "active":true, "profession": "musician", "known_for":[]}
+                ]}
             ],
             "external_models": [
                 {"path": "models/actors.json"},
@@ -103,10 +112,12 @@
             "input_file": "pages/slim.view.html",
             "output_file": "slim.view/index.html",
             "title": "Slim.View",
-            "external_models": [
-                {"path": "models/actors.json"},
-                {"path": "models/authors.json"},
-                {"path": "models/musician.json"}
+            "models": [
+                { "external_models": [
+                    {"path": "models/actors.json"},
+                    {"path": "models/authors.json"},
+                    {"path": "models/musician.json"}
+                ]}
             ]
         }
     ]

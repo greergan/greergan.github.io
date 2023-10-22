@@ -31,6 +31,7 @@
             "lineNumber":{"suppress":false}
     },
     "trace":{"propogate":true,
+        "lineNumber":{"suppress":false},
         "className":{"suppress":false},
         "methodName":{"suppress":false},
         "stackTrace":{"delimiter": ""}
@@ -73,26 +74,63 @@
             "todo": true,
             "info": true,
             "files":[
-                { "name": "generate.ts", "debug": true, "info": {"suppress":false, "path":{"suppress":true}}},
+                { "name": "generate.ts", "debug": true, "info": {"suppress":true, "path":{"suppress":true}}},
+                { "name": "generator_server.ts", "debug": true, "info": {"suppress":true, "path":{"suppress":true}}},
+                { "name": "watch_and_update.ts", "debug": false, "trace":false, "info": {"suppress":false, "path":{"suppress":true}}},
                 { "name": "config_functions.ts", "debug":true, "trace": true},
                 { "name": "parse_command_line.ts", "debug":true, "trace": true},
                 { "name": "utilities.ts", "debug":true, "trace": true}
             ],
             "functions":[
-                { "name": "explode_models", "debug":true, "trace": true}
+                { "name": "handleAddView", "debug":true, "trace": true},
+                { "name": "handleAddRoute", "debug":true, "trace": true},
+                { "name": "explode_models", "debug":true, "trace": true},
+                { "name": "onConnect", "debug":true, "trace": true, "info":true},
+                { "name": "onMessage", "debug":true, "trace": true, "info":true},
+                { "name": "function", "debug":true, "trace": true},
+                { "name": "watch", "debug":false, "trace": true},
+                { "name": "prepareResponse", "debug":true, "trace": true},
+                { "name": "addMiddleWare", "debug":true, "trace": true},
+                { "name": "handleQuery", "debug":true, "trace": true},
+                { "name": "handleGetRoutes", "debug":true, "trace": true},
+                { "name": "handleGetView", "debug":true, "trace": true},
+                { "name": "handleProjectQuery", "debug":true, "trace": true},
+                { "name": "handleProjectsQuery", "debug":true, "trace": true},
+                { "name": "handleReverseMappingsQuery", "debug":true, "trace": true},
+                { "name": "sendMessageToWebSocketClient", "debug":true, "trace": true}
+
+                
+            ]
+        },
+        "slim.server": {
+            "trace": true,
+            "debug": true,
+            "files":[
+                { "name": "HttpRouter.ts", "info": {"suppress":false, "path":{"suppress":true}}}
+            ],
+            "functions":[
+                { "name": "respondHTTP", "trace":false, "debug":false},
+                { "name": "addRoute", "debug":true, "trace": true},
+                { "name": "getRoute", "debug":true, "trace": true},
+                { "name": "getRoutes", "debug":true, "trace": true},
+                { "name": "addMiddleWare", "debug":true, "trace": true},
+                { "name": "requestHandler", "debug":true, "trace": true},
+                { "name": "notFoundHandler", "debug":true, "trace": true},
+                { "name": "webSocketRequestHandler", "debug":true, "trace": true}
             ]
         },
         "slim.utilities": {
             "trace": true,
             "debug": true,
             "files": [
-                { "name": "json.ts", "debug":true, "trace":false },
+                { "name": "json.ts", "debug":true, "trace":true },
                 { "name": "utilities.ts", "debug":true, "trace":true },
                 { "name": "validations.ts", "debug":true, "trace":true }
             ],
             "functions": [
-                { "name": "comingleSync", "debug":false},
-                { "name": "get_node_value", "debug":false},
+                { "name": "get_content_type", "debug":true, "trace":true},
+                { "name": "comingleSync", "debug":true},
+                { "name": "get_node_value", "debug":true},
                 { "name": "is_http_url", "trace": true},
                 { "name": "is_https_url", "trace": true},
                 { "name": "is_file_url", "trace": true},
@@ -100,15 +138,18 @@
             ]
         },
         "slim.view": {
+            "log": true,
             "trace": true,
             "debug": true,
             "todo": true,
             "warn": true,
             "functions": [
+                { "name": "getViewData", "debug":true, "trace": true},
                 { "name": "coalesce", "debug":true, "trace": true},
-                { "name": "compile",  "debug":true, "trace": true},
                 { "name": "parseStatement",  "debug":true, "trace": true},
                 { "name": "processStatement",  "debug":true, "trace": true},
+                { "name": "compile",  "debug":true, "trace": true},
+                { "name": "recompile",  "debug":true, "trace": true},
                 { "name": "render",  "debug":true, "trace": true},
                 { "name": "debugVariableExpanssion",  "debug":true},
                 { "name": "debugStatementExpanssion", "debug":true},

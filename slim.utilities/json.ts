@@ -154,13 +154,17 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 	return merged_objects as slim.types.iKeyValueAny;
 }
 export async function get_node_value(model:slim.types.iKeyValueAny, property:string): Promise<string|number|boolean|slim.types.iKeyValueAny|undefined> {
-	console.debug({message:"beginning with", value:"property"}, property);
+	console.debug({message:"beginning with", value:"property"}, property, model);
+	if(model === undefined || Object.keys(model).length == 0) {
+		return undefined;
+	}
 	let shifted_model:slim.types.iKeyValueAny = model;
 	property.trim().split('.').forEach((node_name:string) => {
 		const model_has_index_match:string[] = node_name.match(/([\w\d]+)\[(\d)\]$/) ?? [];
 		shifted_model = model_has_index_match.length == 3 
 			? shifted_model[model_has_index_match[1]] && [model_has_index_match[2]] 
-				? shifted_model[model_has_index_match[1]][model_has_index_match[2]] : undefined : shifted_model[node_name];
+				? shifted_model[model_has_index_match[1]][model_has_index_match[2]] 
+					: undefined : shifted_model && shifted_model[node_name] ? shifted_model[node_name] : undefined;
 	});
 	return shifted_model;
 }

@@ -16,6 +16,10 @@ export async function explode_models(models_array:slim.types.iKeyValueAny[], nam
     console.trace({message:"exploded_models",value:"length"}, exploded_models.length);
     return exploded_models;
 }
+export async function populate_model(page:slim.types.iKeyValueAny, site:slim.types.iKeyValueAny) {
+    
+
+}
 export async function set_input_output(config:slim.types.iKeyValueAny, output_to:string, namespace:string): Promise<slim.types.iKeyValueAny> {
     if(config.input_file === 'undefined' || config.input_file === "") {
         SlimConsole.abort({message: "set_input_output"}, "input_file property not found");

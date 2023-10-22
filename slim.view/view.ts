@@ -1,12 +1,33 @@
 import * as slim from "./slim_modules.ts";
+interface compiled_view {
+	"time":number;
+	"view":string;
+	"url":string;
+};
 export class SlimView {
 	private namespace:string = "";
-	private rawViews:Map<string, string> = new Map<string, string>();
-	private compiledViews:Map<string, string> = new Map<string, string>();
-	private withViewDependencies:Map<string, Array<string>> = new Map<string, Array<string>>();
+	private rawViews:Map<string, compiled_view> = new Map<string, compiled_view>();
+	private compiledViews:Map<string, compiled_view> = new Map<string, compiled_view>();
+	private viewDependencies:Map<string, Array<string>> = new Map<string, Array<string>>();
 	constructor(namespace:string) {
 		slim.utilities.is_valid_url(namespace) ? this.namespace = namespace : console.error("namspace must be a valid URL string");
 		console.trace({message:"namespace",value:this.namespace});
+	}
+	public async getViewData(): Promise<slim.types.iKeyValueAny> {
+		console.debug({message:'beginning'});
+		const raw_views:compiled_view[] = [];
+		const compiled_views:compiled_view[] = [];
+		const dependent_views:object[] = [];
+		this.rawViews.forEach((value, key) => raw_views.push(value));
+		this.compiledViews.forEach((value, key) => compiled_views.push(value));
+		this.viewDependencies.forEach((value, key) =>{ dependent_views.push({url: key, dependent_urls: value}); });
+		console.trace(compiled_views);
+		return {
+			"namespace": this.namespace,
+			"raw_views": raw_views,
+			"compiled_views": compiled_views,
+			"dependent_views": dependent_views
+		}
 	}
 	private async coalesce(model:slim.types.iKeyValueAny, compiled_view:string):Promise<string> {
 		let coalesce_view = compiled_view;
@@ -88,22 +109,32 @@ export class SlimView {
 		console.trace({message:"coalesced", value:"file size"}, coalesce_view.length);
 		return coalesce_view;
 	}
-	public async compile(url:string):Promise<string> {
+	public async compile(url:string, parent_url:string|undefined=undefined):Promise<string> {
 		const normalized_url:string = slim.utilities.is_valid_url(url) ? url : `${this.namespace}/${url}`;
-		console.debug({message:"beginning",value:"with view_file"}, normalized_url);
+		console.debug({message:"beginning",value:"with view_file"}, normalized_url, parent_url);
+		if(parent_url && slim.utilities.is_valid_url(parent_url)) {
+			if(this.viewDependencies.has(normalized_url)) {
+				if(!this.viewDependencies.get(normalized_url)?.includes(parent_url)) {
+					this.viewDependencies.get(normalized_url)?.push(parent_url);
+				}
+			}
+			else {
+				this.viewDependencies.set(normalized_url, [parent_url]);
+			}
+		}
 		if(this.compiledViews.has(normalized_url)) {
-			const compiled_view:string = this.compiledViews.get(normalized_url) ?? "";
-			console.trace({message:"returned",value:"pre-compiled view, length"}, compiled_view.length, normalized_url);
+			const compiled_view:string = this.compiledViews.get(normalized_url)?.view ?? "";
+			console.debug({message:"returned",value:"pre-compiled view, length"}, compiled_view.length, normalized_url);
 			return compiled_view;
 		}
 		if(!this.rawViews.has(normalized_url)) {
-			console.trace({message:"fetching",value:"template file"}, normalized_url);
-			const file_contents:string = await(await slim.utilities.get_file_contents(normalized_url)) as string;
-			this.rawViews.set(normalized_url, file_contents);
+			console.debug({message:"fetching",value:"template file"}, normalized_url);
+			const file_contents:string = await slim.utilities.get_file_contents(normalized_url) as string;
+			this.rawViews.set(normalized_url, {time:new Date().getTime(), view:file_contents, url:normalized_url});
 		}
-		let view_string = this.rawViews.get(normalized_url)!;
-		const include_regex =/<\s*include\s+view\s*=\s*"\s*([a-z0-9-_/?&=.]+?)\s*"\s*\/?\s*>/gmi;
-		const fetch_file = (file:string) => Promise.resolve(this.compile(file));
+		let view_string = this.rawViews.get(normalized_url)?.view!;
+		const include_regex =/<\s*include\s+view\s*=\s*"\s*([a-z0-9-_/?&=.:]+?)\s*"\s*\/?\s*>/gmi;
+		const fetch_file = (file:string) => Promise.resolve(this.compile(file, normalized_url));
 		const promises:Array<Promise<string>> = [];
 		view_string.replace(include_regex, (match:string, url:string): string => {
 			const url_string:string = slim.utilities.is_valid_url(url) ? url : `${this.namespace}/${url}`;
@@ -111,40 +142,44 @@ export class SlimView {
 			return match;
 		});
 		await Promise.all(promises).then((results) => view_string = view_string.replace(include_regex, () => results.shift() ?? ""));
-		this.compiledViews.set(normalized_url, view_string);
+		this.compiledViews.set(normalized_url, {time:new Date().getTime(), view: view_string, url:normalized_url});
 		console.trace({message:"compiled",value:"view_string length"}, view_string.length, normalized_url);
 		return view_string;
 	}
-	public async recompile(url:string):Promise<void> {
-		const normalized_url:string = slim.utilities.is_valid_url(url) ? url : `${this.namespace}/${url}`;
+	public async recompile(url:string):Promise<string[]> {
+		const normalized_url:string = await slim.utilities.get_normalized_url(url);
+		console.debug({message: "beginning with", value:"normalized_url"}, normalized_url)
 		if(this.rawViews.has(normalized_url)) {
 			this.rawViews.delete(normalized_url);
 		}
 		if(this.compiledViews.has(normalized_url)) {
 			this.compiledViews.delete(normalized_url);
 		}
-		await this.compile(normalized_url);
-		if(this.withViewDependencies.has(normalized_url)) {
-			const dependencies = this.withViewDependencies.get(normalized_url) ?? [];
-			for(const dependency in dependencies) {
+		const dependent_files:string[] = [];
+		if(this.viewDependencies.has(normalized_url)) {
+			for await (const dependency of this.viewDependencies.get(normalized_url)!) {
+				if(this.rawViews.has(dependency)) {
+					this.rawViews.delete(dependency);
+				}
+				if(this.compiledViews.has(dependency)) {
+					this.compiledViews.delete(dependency);
+				}
 				await this.recompile(dependency);
+				dependent_files.push(dependency);
 			}
 		}
-		console.trace();
+		else {
+			await this.compile(normalized_url);
+			dependent_files.push(normalized_url);
+		}
+		console.trace({message:"url",value:normalized_url});
+		return dependent_files;
 	}
 	public async render(model:slim.types.iKeyValueAny, html_ref:string):Promise<string> {
 		const view_string:string = html_ref.match(/\s|{|}/) ? html_ref : await this.compile(html_ref);
 		const rendered_view:string = await this.coalesce(model, view_string);
 		console.trace({message:"rendered", value:"view"}, rendered_view.length, view_string);
 		return rendered_view;
-	}
-	private async add_dependent_view(with_view:string, view:string):Promise<void> {
-		let dependant_views:Array<string> = this.withViewDependencies.get(with_view) ?? [];
-		if(!dependant_views.indexOf(view)) {
-			dependant_views.push(view);
-		}
-		this.withViewDependencies.set(with_view, dependant_views);
-		console.trace();
 	}
 	private parseStatement(statement_string:string):{view_string:string,filter:slim.filter.SlimFilter} {
 		// what is left over after this next block is considered an HTML fragement to be used as the view_string
@@ -194,7 +229,7 @@ export class SlimView {
 			console.debug({message:"nested",value:"nested_statement"}, nested_statement_match[0]);
 			const nested_results:slim.types.iKeyValueAny = this.parseStatement(nested_statement_match[0].replace('{%', '').replace('%}', '').trim());
 			console.debug({message:"nested_results"}, nested_results);
-			const nested_model:slim.types.iKeyValueAny[] = await slim.utilities.get_node_value(parent_model, nested_results.filter.model) as slim.types.iKeyValueAny[];
+			const nested_model:slim.types.iKeyValueAny[] = await slim.utilities.get_node_value(parent_model, nested_results.filter.model) as slim.types.iKeyValueAny[] ?? [];
 			for await(const object_model of nested_model) {
 				nested_view += await this.coalesce(object_model, nested_results.view_string);
 			}
@@ -205,7 +240,7 @@ export class SlimView {
 		}
 		else {
 			console.debug({message:"processing",value:"results.filter.getViewModels()"}, results.filter.getViewModels());
-			console.debug({message:"processing",value:"results.view_string"}, results.view_string, {SLIMOVERRIDES:{debug:{suppress:false}}});
+			console.debug({message:"processing",value:"results.view_string"}, results.view_string);
 			const view_string:string = results.view_string.match(/\s|{|}/) ? results.view_string : await this.compile(results.view_string);
 			for await(const property_model of results.filter.getViewModels()) {
 				coalesced_view += await this.coalesce(property_model, view_string);
