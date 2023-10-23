@@ -1,7 +1,7 @@
 {
-    "output_to": "http://192.168.122.59",
+    "output_to": "file:///home/greergan/greergan.github.io",
     "namespace": "http://192.168.122.59",
-    "generate_ids": [3],
+    "generate_ids": [0,1,2,3,4,5,6,7,8,9],
     "copy_to_output": [
         {"path": "assets"},
         {"path": "models"},
@@ -29,7 +29,7 @@
             "title": "Slim"
         },
         {
-            "generate_id": 3,
+            "generate_id": 14,
             "meta_tags": [],
             "input_file": "pages/slim.blog.html",
             "output_file": "index.html",
@@ -48,7 +48,7 @@
             ]
         },
         {
-            "generate_id": 3,
+            "generate_id": 1,
             "meta_tags": [],
             "input_file": "pages/slim.console.html",
             "output_file": "slim.console/index.html",
@@ -61,14 +61,7 @@
             ]
         },
         {
-            "generate_id": 0,
-            "meta_tags": [],
-            "input_file": "pages/slim.editor.html",
-            "output_file": "slim.editor/index.html",
-            "title": "Slim.Editor"
-        },
-        {
-            "generate_id": 1,
+            "generate_id": 2,
             "meta_tags": [],
             "input_file": "pages/slim.filter.html",
             "output_file": "slim.filter/index.html",
@@ -86,28 +79,7 @@
             ]
         },
         {
-            "generate_id": 0,
-            "meta_tags": [],
-            "input_file": "pages/slim.generator.html",
-            "output_file": "slim.generator/index.html",
-            "title": "Slim.Generator"
-        },
-        {
-            "generate_id": 0,
-            "meta_tags": [],
-            "input_file": "pages/slim.objects.html",
-            "output_file": "slim.objects/index.html",
-            "title": "Slim.Objects"
-        },
-        {
-            "generate_id": 0,
-            "meta_tags": [],
-            "input_file": "pages/slim.utilities.html",
-            "output_file": "slim.utilities/index.html",
-            "title": "Slim.Utilities"
-        },
-        {
-            "generate_id": 1,
+            "generate_id": 3,
             "meta_tags": [],
             "input_file": "pages/slim.view.html",
             "output_file": "slim.view/index.html",
@@ -119,6 +91,49 @@
                     {"path": "models/musician.json"}
                 ]}
             ]
+        },
+        {
+            "generate_id": 4,
+            "meta_tags": [],
+            "input_file": "pages/slim.server/httprouter.html",
+            "output_file": "slim.server/httprouter/index.html",
+            "title": "Slim.server.HttpRouter",
+            "models": []
+        },
+        {
+            "generate_id": 5,
+            "meta_tags": [],
+            "input_file": "pages/slim.utilities.html",
+            "output_file": "slim.utilities/index.html",
+            "title": "Slim.Utilities"
+        },
+        {
+            "generate_id": 6,
+            "meta_tags": [],
+            "input_file": "pages/slim.generator.html",
+            "output_file": "slim.generator/index.html",
+            "title": "Slim.Generator"
+        },
+        {
+            "generate_id": 7,
+            "meta_tags": [],
+            "input_file": "pages/slim.livereload.html",
+            "output_file": "slim.livereload/index.html",
+            "title": "Slim.LiveReload"
+        },
+        {
+            "generate_id": 8,
+            "meta_tags": [],
+            "input_file": "pages/slim.objecteditor.html",
+            "output_file": "slim.objecteditor/index.html",
+            "title": "Slim.ObjectEditor"
+        },
+        {
+            "generate_id": 9,
+            "meta_tags": [],
+            "input_file": "pages/slim.objects.html",
+            "output_file": "slim.objects/index.html",
+            "title": "Slim.Objects"
         }
     ]
 }

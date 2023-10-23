@@ -52,6 +52,7 @@ export async function get_file_contents(file:string): Promise<string|undefined> 
         return text;
 }
 export async function get_json_contents(file:string): Promise<slim.types.iKeyValueAny|undefined> {
+    console.debug({message:"starting with", value:"file"}, file, "time to add error handling from fetch results");
     const json:slim.types.iKeyValueAny|undefined = await (await fetch(file)).json();
     if(window.hasOwnProperty('SlimConsole') && json) console.trace({message:"fetch",value:json ? "succeded" : "failed"}, file);
     console.trace();

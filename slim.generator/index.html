@@ -39,15 +39,17 @@
 	</head>
 	<body>
 		<menu>
-    <li><a href="/">Slim.Blog</a></li>
+    <!-- <li><a href="/">Slim.Blog</a></li> -->
     <li><a href="/slim">Slim</a></li>
-    <li><a href="/slim.view/">Slim.View</a></li>
-    <li><a href="/slim.filter/">Slim.Filter</a></li>
     <li><a href="/slim.console/">Slim.Console</a></li>
+    <li><a href="/slim.filter/">Slim.Filter</a></li>
+    <li><a href="/slim.view/">Slim.View</a></li>
+    <li><a href="/slim.server/httprouter/">Slim.server.HttpRouter</a></li>
     <li><a href="/slim.utilities/">Slim.Utilities</a></li>
     <li><a href="/slim.generator/">Slim.Generator</a></li>
+    <li><a href="/slim.livereload/">Slim.LiveReload</a></li>
+    <li><a href="/slim.objecteditor/">Slim.ObjectEditor</a></li>
     <li><a href="/slim.objects/">Slim.Objects</a></li>
-    <li><a href="/slim.editor/">Slim.Editor</a></li>
 </menu>
 
 		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
@@ -263,7 +265,7 @@ Create an output directory and then run this working configuration from that dir
          https://greergan.github.io/models/website.json</code></blockquote>
 </blockquote></details>
 			<footer class="copyright">
-				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
+				Copyright &copy;  
 			</footer>
 		</div>
 		</div> <!-- class="content" is now closed -->
@@ -276,5 +278,22 @@ Create an output directory and then run this working configuration from that dir
 		copyText.select();
 		copyText.setSelectionRange(0, 99999); // For mobile devices
 		navigator.clipboard.writeText(copyText.value);
-	}
+  }
+</script>
+<script>
+  "use strict";
+  let socket = new WebSocket(window.location.origin.startsWith('https')
+    ? window.location.origin.replace("https", "wss")
+    : window.location.origin.replace("http", "wss")
+  );
+  socket.onopen = function(e) { console.log("[open] Connection established"); };
+  socket.onmessage = function(event) { if(event.data == 'refresh') { location.reload();} };
+  socket.onerror = function(error) { console.error(`[error]`);};
+  socket.onclose = function(event) {
+    if (event.wasClean) {
+      console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+    } else {
+      console.log('[close] Connection died', event);
+    }
+  };
 </script>

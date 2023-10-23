@@ -39,15 +39,17 @@
 	</head>
 	<body>
 		<menu>
-    <li><a href="/">Slim.Blog</a></li>
+    <!-- <li><a href="/">Slim.Blog</a></li> -->
     <li><a href="/slim">Slim</a></li>
-    <li><a href="/slim.view/">Slim.View</a></li>
-    <li><a href="/slim.filter/">Slim.Filter</a></li>
     <li><a href="/slim.console/">Slim.Console</a></li>
+    <li><a href="/slim.filter/">Slim.Filter</a></li>
+    <li><a href="/slim.view/">Slim.View</a></li>
+    <li><a href="/slim.server/httprouter/">Slim.server.HttpRouter</a></li>
     <li><a href="/slim.utilities/">Slim.Utilities</a></li>
     <li><a href="/slim.generator/">Slim.Generator</a></li>
+    <li><a href="/slim.livereload/">Slim.LiveReload</a></li>
+    <li><a href="/slim.objecteditor/">Slim.ObjectEditor</a></li>
     <li><a href="/slim.objects/">Slim.Objects</a></li>
-    <li><a href="/slim.editor/">Slim.Editor</a></li>
 </menu>
 
 		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
@@ -146,7 +148,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 <code class="slim-code-span">
 	&#123;% with model="page.users[1]" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Carrie Fisher is a 60 year old actor who is active => false<br>
+		
 	</p> 
 </code>
 <p>with statement - model and html fragment</p>
@@ -155,12 +157,12 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
     with model="page.users[2]"
         &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is a(n) &#123;&#123;profession&#125;&#125; &lt;br&gt;
 %&#125;</pre>
-	<p class="outputs">Harry Harrison is a(n) author</p>
+	
 </code>
 <p>foreach statement - model and view</p>
 <code class="slim-code-span">
 	&#123;% foreach model="page.users" view="partials/user.html" %&#125;
-	<p class="outputs">Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br>
+	<p class="outputs">
 	</p>
 </code>
 </details>
@@ -170,19 +172,19 @@ All filters take the following form.
 <code class="slim-code-span">
 	&#123;% foreach model="page.users" filter="<span>equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br>
+		
 	</p>
 	&#123;% foreach model="page.users" filter="<span>not_equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Harry Harrison is a 87 year old author who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>
+		
 	</p>
 	&#123;% foreach model="page.users" filter="<span>greater_than</span>(first_name, "Ian")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Robert Asprin is a 61 year old author who is active => false<br>Robert Smith is a 63 year old musician who is active => true<br>
+		
 	</p>
 	&#123;% foreach model="page.users" filter="<span>less_than_equal</span>(last_name, "Ford")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => false<br>Robert Asprin is a 61 year old author who is active => false<br>Ian Astbury is a 60 year old musician who is active => true<br>
+		
 	</p>
 </code></details>
 <details class="slim-details"><summary><h3>Comments</h3></summary>
@@ -236,7 +238,7 @@ All filters take the following form.
 	</code>
 </div></details>
 			<footer class="copyright">
-				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
+				Copyright &copy;  
 			</footer>
 		</div>
 		</div> <!-- class="content" is now closed -->
@@ -249,5 +251,22 @@ All filters take the following form.
 		copyText.select();
 		copyText.setSelectionRange(0, 99999); // For mobile devices
 		navigator.clipboard.writeText(copyText.value);
-	}
+  }
+</script>
+<script>
+  "use strict";
+  let socket = new WebSocket(window.location.origin.startsWith('https')
+    ? window.location.origin.replace("https", "wss")
+    : window.location.origin.replace("http", "wss")
+  );
+  socket.onopen = function(e) { console.log("[open] Connection established"); };
+  socket.onmessage = function(event) { if(event.data == 'refresh') { location.reload();} };
+  socket.onerror = function(error) { console.error(`[error]`);};
+  socket.onclose = function(event) {
+    if (event.wasClean) {
+      console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+    } else {
+      console.log('[close] Connection died', event);
+    }
+  };
 </script>

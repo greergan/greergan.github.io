@@ -39,15 +39,17 @@
 	</head>
 	<body>
 		<menu>
-    <li><a href="/">Slim.Blog</a></li>
+    <!-- <li><a href="/">Slim.Blog</a></li> -->
     <li><a href="/slim">Slim</a></li>
-    <li><a href="/slim.view/">Slim.View</a></li>
-    <li><a href="/slim.filter/">Slim.Filter</a></li>
     <li><a href="/slim.console/">Slim.Console</a></li>
+    <li><a href="/slim.filter/">Slim.Filter</a></li>
+    <li><a href="/slim.view/">Slim.View</a></li>
+    <li><a href="/slim.server/httprouter/">Slim.server.HttpRouter</a></li>
     <li><a href="/slim.utilities/">Slim.Utilities</a></li>
     <li><a href="/slim.generator/">Slim.Generator</a></li>
+    <li><a href="/slim.livereload/">Slim.LiveReload</a></li>
+    <li><a href="/slim.objecteditor/">Slim.ObjectEditor</a></li>
     <li><a href="/slim.objects/">Slim.Objects</a></li>
-    <li><a href="/slim.editor/">Slim.Editor</a></li>
 </menu>
 
 		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
@@ -59,7 +61,7 @@
     </div>
     <hr class="section-seperator"/>
     			<footer class="copyright">
-				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
+				Copyright &copy;  
 			</footer>
 		</div>
 		</div> <!-- class="content" is now closed -->
@@ -72,73 +74,22 @@
 		copyText.select();
 		copyText.setSelectionRange(0, 99999); // For mobile devices
 		navigator.clipboard.writeText(copyText.value);
-	}
+  }
 </script>
 <script>
-(() => {
-  let socket, reconnectionTimerId;
-
-  // Construct the WebSocket url from the current
-  // page origin.
-  const requestUrl = `${window.location.origin.replace("http", "ws")}/refresh`
-
-  // Kick off the connection code on load.
-  connect();
-
-  /**
-   * Info message logger.
-   */
-  function log(message) {
-    console.info("[refresh] ", message);
-  }
-
-  /**
-   * Refresh the browser.
-   */
-  function refresh() {
-    window.location.reload();
-  }
-
-  /**
-   * Create WebSocket, connect to the server and
-   * listen for refresh events.
-   */
-  function connect(callback) {
-    // Close any existing sockets.
-    if (socket) {
-      socket.close();
+  "use strict";
+  let socket = new WebSocket(window.location.origin.startsWith('https')
+    ? window.location.origin.replace("https", "wss")
+    : window.location.origin.replace("http", "wss")
+  );
+  socket.onopen = function(e) { console.log("[open] Connection established"); };
+  socket.onmessage = function(event) { if(event.data == 'refresh') { location.reload();} };
+  socket.onerror = function(error) { console.error(`[error]`);};
+  socket.onclose = function(event) {
+    if (event.wasClean) {
+      console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+    } else {
+      console.log('[close] Connection died', event);
     }
-
-    // Create a new WebSocket pointing to the server.
-    socket = new WebSocket(requestUrl);
-
-    // When the connection opens, execute the callback.
-    socket.addEventListener("open", callback);
-
-    // Add a listener for messages from the server.
-    socket.addEventListener("message", (event) => {
-      // Check whether we should refresh the browser.
-      if (event.data === "refresh") {
-        log("refreshing...");
-        refresh();
-      }
-    });
-
-    // Handle when the WebSocket closes. We log
-    // the loss of connection and set a timer to
-    // start the connection again after a second.
-    socket.addEventListener("close", () => {
-      log("connection lost - reconnecting...");
-
-      clearTimeout(reconnectionTimerId);
-
-      reconnectionTimerId = setTimeout(() => {
-        // Try to connect again, and if successful
-        // trigger a browser refresh.
-        connect(refresh);
-      }, 1000);
-    });
-  }
-})();
-
+  };
 </script>

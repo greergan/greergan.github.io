@@ -9,7 +9,6 @@
     "messageValue":{"suppress":false, "textColor":"bright_green", "bold": true},
     "objectString":{"suppress":false, "textColor":"yellow","delimiter":""},
     "path":{"textColor":"white","dim":true,"suppress":true},
-    "abort":{"suppress":true},
     "assert":{"suppress":false, "stackTrace":{"textColor":"bright_red", "delimiter":""}},
     "debug":{"suppress":false,
         "path":{"suppress":true},
@@ -19,7 +18,14 @@
         "fileName":{"suppress":false},
         "lineNumber":{"suppress":false}
     },
-    "error":{"stackTrace":{"suppress":false,"textColor": "red","delimiter":""}},
+    "error":{
+        "path":{"suppress":true},
+        "className":{"suppress":false},
+        "methodName":{"suppress":false},
+        "fileName":{"suppress":false},
+        "lineNumber":{"suppress":false},
+        "stackTrace":{"suppress":false,"textColor": "red","delimiter":""}
+    },
     "info":{"propogate":true, "suppress":false,
         "path":{"suppress":false},
         "stackTrace":{"suppress":true},
@@ -72,9 +78,9 @@
             "debug": true,
             "trace": true,
             "todo": true,
-            "info": true,
+            "info": false,
             "files":[
-                { "name": "generate.ts", "debug": true, "info": {"suppress":true, "path":{"suppress":true}}},
+                { "name": "generate.ts", "debug": true, "info": {"suppress":false, "path":{"suppress":true}}},
                 { "name": "generator_server.ts", "debug": true, "info": {"suppress":true, "path":{"suppress":true}}},
                 { "name": "watch_and_update.ts", "debug": false, "trace":false, "info": {"suppress":false, "path":{"suppress":true}}},
                 { "name": "config_functions.ts", "debug":true, "trace": true},
@@ -129,6 +135,7 @@
             ],
             "functions": [
                 { "name": "get_content_type", "debug":true, "trace":true},
+                { "name": "get_json_contents", "debug":false, "trace":false},
                 { "name": "comingleSync", "debug":true},
                 { "name": "get_node_value", "debug":true},
                 { "name": "is_http_url", "trace": true},

@@ -1,5 +1,5 @@
 #!/usr/bin/env -S deno run --allow-env -r --check 
-//deno run --allow-env -r --check generate.ts -c http://192.168.122.59/models/website.json
+//deno run --allow-env --allow-net --allow-read -r --check generate.ts -c http://192.168.122.59/models/website.json
 import * as slim from "./slim_modules.ts";
 import { check_config, explode_models, populate_model, is_valid_output_namespace, parse_command_line, set_input_output } from "./index.ts";
 try {
