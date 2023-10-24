@@ -1,2 +1,2 @@
-# Slim.Console
-A colorized console replacement
+# slim.console
+A highly configurable Javascript Console object

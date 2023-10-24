@@ -28,20 +28,29 @@
 			.slim-details h3 {display: inline; font-size: 100%; }
 			details.slim-details {margin-bottom: 10px;}
 			details.slim-details:last-child {margin-bottom: 0px;}
-			div.status{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: #303031; z-index: 901;}
+			div.project_is_experimental{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: white; z-index: 901;}
 			.slim-code-span span{color:#1da1de;}
 			code.slim-code-span{ background-color: #4d524e; padding: 10px; padding-left: 25px; color: #a5b012; border-radius: 25px; display: block; margin: 12px;
 				margin-left: 30px; margin-right: 30px;
 			}
 			div.slim-blog-entries { }
 			div.slim-blog-entry {font-size: 20px;}
+			div.module_metadata_status::before { color: #1da1de; content: "Status: "}
+			div.module_metadata_maturity::before { color: #1da1de; content: "Maturity level: "}
+			div.module_metadata_implemented::before { color: #1da1de; content: "Implemented: "}
+			div.module_metadata_repository::before { color: #1da1de; content: "Repository: "}
+			div.module_metadata_status, div.module_metadata_maturity, div.module_metadata_implemented, div.module_metadata_repository { color: #a5b012 }
 		</style>
 	</head>
 	<body>
 		<menu>
     <!-- <li><a href="/">Slim.Blog</a></li> -->
     <li><a href="/slim">Slim</a></li>
+    <li><a href="/slim.v8">Slim.V8</a></li>
+    <!-- <li><a href="/slim.documentation">Slim.Documentation</a></li> -->
+    <li><a href="/slim.interfaces">Slim.Interfaces</a></li>
     <li><a href="/slim.console/">Slim.Console</a></li>
+    <li><a href="/slim.multiql">Slim.MultiQL</a></li>
     <li><a href="/slim.filter/">Slim.Filter</a></li>
     <li><a href="/slim.view/">Slim.View</a></li>
     <li><a href="/slim.server/httprouter/">Slim.server.HttpRouter</a></li>
@@ -52,16 +61,21 @@
     <li><a href="/slim.objects/">Slim.Objects</a></li>
 </menu>
 
-		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
+		<div class="project_is_experimental">Code and concepts foud herein are experimental. Eventually it will develop into a usable platform.</div>
 		<div class="content">
     <h1 class="intro">Welcome to <div class="slim">Slim.server.HttpRouter</div></h1>
     <div class="catch_line">A Slim Http server with dynamic router</div>
     <div class="intro">
-        <p></p>
+        <p>slim.server.HttpRouter includes support for standard http routes and websocket routes. Static files and directories are suppored in addition to route handelers. Middleware hooks are available for each request if so configured.</p>
+        <div class="module_metadata_status">development</div>
+        <div class="module_metadata_maturity">functional</div>
+        <div class="module_metadata_implemented">partial</div>
+        <div class="module_metadata_repository"><a href='https://github.com/greergan/slim.server.HttpRouter' target='slim.repository'>slim.server.HttpRouter</a></div>
     </div>
+    <br>
     <hr class="section-seperator"/>
-    			<footer class="copyright">
-				Copyright &copy;  
+			<footer class="copyright">
+				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
 			</footer>
 		</div>
 		</div> <!-- class="content" is now closed -->

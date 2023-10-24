@@ -1,5 +1,5 @@
 #!/usr/bin/env -S deno run --allow-env -r --check 
-//deno run --allow-env --allow-net --allow-read -r --check generate.ts -c http://192.168.122.59/models/website.json
+//deno run --allow-all -r --check generate.ts -c http://192.168.122.59/configurations/website.json
 import * as slim from "./slim_modules.ts";
 import { check_config, explode_models, populate_model, is_valid_output_namespace, parse_command_line, set_input_output } from "./index.ts";
 try {
@@ -33,15 +33,18 @@ try {
     console.debug({message:"parsed_command_line.generate_id",value:parsed_command_line.generate_id});
     for(const page of config!.pages) {
         let continue_processing = true;
-        if(page.hasOwnProperty('generate_id')) {
-            if(config!.hasOwnProperty('generate_ids')) {
+        if('generate_id' in page) {
+            if('generate_ids' in config!) {
                 if(!config!.generate_ids.includes(page.generate_id)) {
                     continue_processing = false;
                 }
             }
-            if(parsed_command_line.hasOwnProperty('generate_id') && page.generate_id != parsed_command_line.generate_id) {
+            if('generate_id' in parsed_command_line && page.generate_id != parsed_command_line.generate_id) {
                 continue_processing = false;
             }
+        }
+        if('generate_all' in config! && config.generate_all == true) {
+            continue_processing = true;
         }
         if(continue_processing) {
             console.info({message:"Generating output",value:"page"}, page.title, `page.generate_id => ${page.generate_id}`);
@@ -58,14 +61,12 @@ try {
             let model = slim.utilities.comingleSync([{}, {page:page,site:config!.site}]);
             model.page = slim.utilities.comingleSync([model.page, exploaded_models]);
             //model.page =  populate_model(page, site);
+            console.debug({message:"model", value: "page"}, model.page);
             const input_output:slim.types.iKeyValueAny = await set_input_output(model.page, output_to!, namespace!);
             const html_string:string = await view.render(model, input_output.input_file);
             console.debug({ message:"rendered",value:"page size"}, html_string.length);
             await slim.utilities.write_output(input_output.output_file, html_string);
             console.info({ message:"wrote",value:"to output file"}, {SLIMOVERRIDES:{debug:{suppress:false},path:{suppress:true}}}, input_output.output_file);
-        }
-        else {
-            console.debug({message:"ending page processing",value:"page.generate_id is excluded"}, page.generate_id);
         }
     }
 }

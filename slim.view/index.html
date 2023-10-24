@@ -28,20 +28,29 @@
 			.slim-details h3 {display: inline; font-size: 100%; }
 			details.slim-details {margin-bottom: 10px;}
 			details.slim-details:last-child {margin-bottom: 0px;}
-			div.status{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: #303031; z-index: 901;}
+			div.project_is_experimental{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: white; z-index: 901;}
 			.slim-code-span span{color:#1da1de;}
 			code.slim-code-span{ background-color: #4d524e; padding: 10px; padding-left: 25px; color: #a5b012; border-radius: 25px; display: block; margin: 12px;
 				margin-left: 30px; margin-right: 30px;
 			}
 			div.slim-blog-entries { }
 			div.slim-blog-entry {font-size: 20px;}
+			div.module_metadata_status::before { color: #1da1de; content: "Status: "}
+			div.module_metadata_maturity::before { color: #1da1de; content: "Maturity level: "}
+			div.module_metadata_implemented::before { color: #1da1de; content: "Implemented: "}
+			div.module_metadata_repository::before { color: #1da1de; content: "Repository: "}
+			div.module_metadata_status, div.module_metadata_maturity, div.module_metadata_implemented, div.module_metadata_repository { color: #a5b012 }
 		</style>
 	</head>
 	<body>
 		<menu>
     <!-- <li><a href="/">Slim.Blog</a></li> -->
     <li><a href="/slim">Slim</a></li>
+    <li><a href="/slim.v8">Slim.V8</a></li>
+    <!-- <li><a href="/slim.documentation">Slim.Documentation</a></li> -->
+    <li><a href="/slim.interfaces">Slim.Interfaces</a></li>
     <li><a href="/slim.console/">Slim.Console</a></li>
+    <li><a href="/slim.multiql">Slim.MultiQL</a></li>
     <li><a href="/slim.filter/">Slim.Filter</a></li>
     <li><a href="/slim.view/">Slim.View</a></li>
     <li><a href="/slim.server/httprouter/">Slim.server.HttpRouter</a></li>
@@ -52,19 +61,20 @@
     <li><a href="/slim.objects/">Slim.Objects</a></li>
 </menu>
 
-		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
+		<div class="project_is_experimental">Code and concepts foud herein are experimental. Eventually it will develop into a usable platform.</div>
 		<div class="content">
-<h1 class="intro">Welcome to <div class="slim">Slim.View</div></h1>
-<div class="catch_line">An HTML rendering engine</div>
-<div class="intro">
-	<p>Inspired by Deno remote imports; there is now a rendering engine that supports remote view inclusion.
-		With Slim.View it is possible to import HTML assets from either remote locations on the Web or from the local file system.
-	</p>
-	<p>Use Slim.View as part of a Typescript web server stack or as part of a static website generator.
-		<a href="/slim.generator">Slim.Generator</a> is an example of a static site generator.</p>
-</div>
-<hr class="section-seperator"/>
-<details class="slim-details"><summary><h3>Namespace</h3></summary>
+    <h1 class="intro">Welcome to <div class="slim">Slim.View</div></h1>
+    <div class="catch_line">An HTML rendering engine</div>
+    <div class="intro">
+        <p>Slim.View allows HTML assets to be imported from either remote locations on the Web or from the local file system.</p>
+        <div class="module_metadata_status">development</div>
+        <div class="module_metadata_maturity">functional</div>
+        <div class="module_metadata_implemented">partial</div>
+        <div class="module_metadata_repository"><a href='https://github.com/greergan/slim.view' target='slim.repository'>slim.view</a></div>
+    </div>
+    <br>
+    <hr class="section-seperator"/>
+	<details class="slim-details"><summary><h3>Namespace</h3></summary>
 <p class="description">A variable supplied when a new view is created. This variable is prepended to all relative paths found inside of include statements</p>
 <p>Used when creating a new SlimView object.</p>
 <code class="slim-code-span">
@@ -81,7 +91,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 <p>The "https" protocol.</p>
 <code class="slim-code-span">https://greergan.github.io</code>
 </details>
-<details class="slim-details"><summary><h3>Methods</h3></summary>
+	<details class="slim-details"><summary><h3>Methods</h3></summary>
 <div>
 	<p class="description">Slim.View methods</p>
 </div>
@@ -107,7 +117,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 	private async <span>processMatch</span>(model:slim.types.iKeyValueAny, statement_data:slim.types.iKeyValueAny):<span>Promise&lt;string&gt;</span>
 </code>
 </details>
-<details class="slim-details"><summary><h3>Variable substitution</h3></summary>
+	<details class="slim-details"><summary><h3>Variable substitution</h3></summary>
 <p class="description">Substitute tokens for values found in a JSON model.</p>
 <code class="slim-code-span">
 	Hello I am &#123;&#123;page.title&#125;&#125;
@@ -117,7 +127,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 </code>
 
 </details>
-<details class="slim-details"><summary><h3>Includes</h3></summary>
+	<details class="slim-details"><summary><h3>Includes</h3></summary>
 <p class="description">Include view templates whithin any HTML document. The "view" tag can contain either relative or absolute URLs.
 	The view namespace is prepended to each relative path.
 </p>
@@ -140,7 +150,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 	&lt;include view="includes/foot.html"&gt;
 </code>
 </details>
-<details class="slim-details"><summary><h3>Statements</h3></summary>
+	<details class="slim-details"><summary><h3>Statements</h3></summary>
 <p class="description">Render views or html fragments using "with" or "foreach" statements.
 	Statements are called using positional arguments and can span multiple lines.</p>
 <code class="slim-code-span">[with|foreach] model="model" view="path/to/view" | html_fragment</code>
@@ -148,7 +158,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 <code class="slim-code-span">
 	&#123;% with model="page.users[1]" view="partials/user.html" %&#125;
 	<p class="outputs">
-		
+		Carrie Fisher is a 60 year old actor who is active => <br>
 	</p> 
 </code>
 <p>with statement - model and html fragment</p>
@@ -157,37 +167,37 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
     with model="page.users[2]"
         &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is a(n) &#123;&#123;profession&#125;&#125; &lt;br&gt;
 %&#125;</pre>
-	
+	<p class="outputs">Harry Harrison is a(n) author</p>
 </code>
 <p>foreach statement - model and view</p>
 <code class="slim-code-span">
 	&#123;% foreach model="page.users" view="partials/user.html" %&#125;
-	<p class="outputs">
+	<p class="outputs">Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => <br>Harry Harrison is a 87 year old author who is active => <br>Robert Asprin is a 61 year old author who is active => <br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br>
 	</p>
 </code>
 </details>
-<details class="slim-details"><summary><h3>Filters</h3></summary>
+	<details class="slim-details"><summary><h3>Filters</h3></summary>
 <p class="description">Slim.View uses the <a href="/slim.filter/">Slim.Filter</a> JSON filtering engine.</p>
 All filters take the following form.
 <code class="slim-code-span">
 	&#123;% foreach model="page.users" filter="<span>equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		
+		Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br>
 	</p>
 	&#123;% foreach model="page.users" filter="<span>not_equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		
+		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => <br>Harry Harrison is a 87 year old author who is active => <br>Robert Asprin is a 61 year old author who is active => <br>
 	</p>
 	&#123;% foreach model="page.users" filter="<span>greater_than</span>(first_name, "Ian")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		
+		Robert Asprin is a 61 year old author who is active => <br>Robert Smith is a 63 year old musician who is active => true<br>
 	</p>
 	&#123;% foreach model="page.users" filter="<span>less_than_equal</span>(last_name, "Ford")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		
+		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => <br>Robert Asprin is a 61 year old author who is active => <br>Ian Astbury is a 60 year old musician who is active => true<br>
 	</p>
 </code></details>
-<details class="slim-details"><summary><h3>Comments</h3></summary>
+	<details class="slim-details"><summary><h3>Comments</h3></summary>
 <p class="description">Create HTML comments.</p>
 <p>Comment with variable substitution.</p>
 <code class="slim-code-span">
@@ -223,22 +233,8 @@ All filters take the following form.
 	<div>View page source in your browser to see results</div>
 </code>
 </details>
-<details class="slim-details"><summary><h3>Examples</h3></summary>
-<div class="example">
-	<code class="slim-code-span">
-		import { SlimView } from "https://greergan.github.io/index.ts";<br>
-		const view:SlimView = new SlimView("https://greergan.github.io");<br>
-		const html_view:string = await view.render({page:{title:"fun"}, site:{copyright:{started_date:"2023",by:"Your Name"}}}, "examples/helloworld.html");<br>
-		console.log(html_view);
-	</code>
-	<code class="slim-code-span">
-		deno run --allow-net -r FILE.ts<br>
-		or<br>
-		deno run --allow-net -r https://greergan.github.io/examples/helloworld.ts
-	</code>
-</div></details>
 			<footer class="copyright">
-				Copyright &copy;  
+				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
 			</footer>
 		</div>
 		</div> <!-- class="content" is now closed -->

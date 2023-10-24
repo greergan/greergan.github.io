@@ -28,20 +28,29 @@
 			.slim-details h3 {display: inline; font-size: 100%; }
 			details.slim-details {margin-bottom: 10px;}
 			details.slim-details:last-child {margin-bottom: 0px;}
-			div.status{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: #303031; z-index: 901;}
+			div.project_is_experimental{position: sticky; top: 30px; font-size: 20px; color: red; margin: auto; width: 75%; text-align: center; background-color: white; z-index: 901;}
 			.slim-code-span span{color:#1da1de;}
 			code.slim-code-span{ background-color: #4d524e; padding: 10px; padding-left: 25px; color: #a5b012; border-radius: 25px; display: block; margin: 12px;
 				margin-left: 30px; margin-right: 30px;
 			}
 			div.slim-blog-entries { }
 			div.slim-blog-entry {font-size: 20px;}
+			div.module_metadata_status::before { color: #1da1de; content: "Status: "}
+			div.module_metadata_maturity::before { color: #1da1de; content: "Maturity level: "}
+			div.module_metadata_implemented::before { color: #1da1de; content: "Implemented: "}
+			div.module_metadata_repository::before { color: #1da1de; content: "Repository: "}
+			div.module_metadata_status, div.module_metadata_maturity, div.module_metadata_implemented, div.module_metadata_repository { color: #a5b012 }
 		</style>
 	</head>
 	<body>
 		<menu>
     <!-- <li><a href="/">Slim.Blog</a></li> -->
     <li><a href="/slim">Slim</a></li>
+    <li><a href="/slim.v8">Slim.V8</a></li>
+    <!-- <li><a href="/slim.documentation">Slim.Documentation</a></li> -->
+    <li><a href="/slim.interfaces">Slim.Interfaces</a></li>
     <li><a href="/slim.console/">Slim.Console</a></li>
+    <li><a href="/slim.multiql">Slim.MultiQL</a></li>
     <li><a href="/slim.filter/">Slim.Filter</a></li>
     <li><a href="/slim.view/">Slim.View</a></li>
     <li><a href="/slim.server/httprouter/">Slim.server.HttpRouter</a></li>
@@ -52,18 +61,21 @@
     <li><a href="/slim.objects/">Slim.Objects</a></li>
 </menu>
 
-		<div class="status">Currently in the initial development cycle. Examples found on this site might not work as described yet.</div>
+		<div class="project_is_experimental">Code and concepts foud herein are experimental. Eventually it will develop into a usable platform.</div>
 		<div class="content">
-<h1 class="intro">Welcome to <div class="slim">Slim.Generator</div></h1>
-<div class="catch_line">A Typescript static website generator</div>
-<div class="intro">
-    <p>
-        Slim.Generator is a highly configurable static website generator written in 100% pure Typescript. It uses <a href ="/slim.view">Slim.View</a>
-        as its HTML rendering engine and supports both <a href="https://deno.land" target="deno">Deno</a> and <a href="/">Slim</a> Typescript platforms.
-    </p>
-</div>
-<hr class="section-seperator"/>
-<details class="slim-details"><summary><h3>Command line arguments</h3></summary>
+    <h1 class="intro">Welcome to <div class="slim">Slim.Generator</div></h1>
+    <div class="catch_line">A static website generator</div>
+    <div class="intro">
+        <p>Slim.Generator is a highly configurable static website generator written in 100% pure Typescript. It uses <a href ='/slim.view'>Slim.View</a> as its HTML rendering engine.</p>
+        <div class="module_metadata_status">development</div>
+        <div class="module_metadata_maturity">functional</div>
+        <div class="module_metadata_implemented">partial</div>
+        <div class="module_metadata_repository"><a href='https://github.com/greergan/slim.generator' target='slim.repository'>slim.generator</a></div>
+    </div>
+    <br>
+    <hr class="section-seperator"/>
+<!--
+    <details class="slim-details"><summary><h3>Command line arguments</h3></summary>
 <p class="description">The generate script accepts multiple command line argument. The first argument must be the path to a JSON configuration file
     which must be in one of the below forms.
 </p>
@@ -107,7 +119,7 @@ Deno example.
     <blockquote><code><div>deno --allow-net --allow-read --allow-write run \</div>
         https://greergan.github.io/slim.generator/generator.ts https://greergan.github.io/models/website.json</code></blockquote>
 </blockquote></details>
-<details class="slim-details"><summary><h3>Git command line flag --git</h3></summary>
+    <details class="slim-details"><summary><h3>Git command line flag --git</h3></summary>
 <p class="description">The --git command line flag is optional and specifies the path to a locally stored git configuration file.
     This configuration cannot be part of the website configuration file if it is stored in a GitHub repository. GitHub has a process that
     scans repositories looking for GitHub access keys.
@@ -140,7 +152,7 @@ Slim example with --git.
     <blockquote><code><div>slim https://greergan.github.io/slim.generator/generator.ts --git git_configuration.json \</div>
          https://greergan.github.io/models/website.json</code></blockquote>
 </blockquote></details>
-<details class="slim-details"><summary><h3>Configuration options</h3></summary>
+    <details class="slim-details"><summary><h3>Configuration options</h3></summary>
 <p class="description">The website_configuration.json file can contian the following options. Some options are required while others are optional.
 </p>
 Top level configuration properties
@@ -196,7 +208,7 @@ External_models level configuration properties
 ]</pre>
     </code></blockquote>
 </blockquote></details>
-<details class="slim-details"><summary><h3>Configuration example</h3></summary>
+    <details class="slim-details"><summary><h3>Configuration example</h3></summary>
 <p class="description">The following configuration example is used to generate the Slim website.</p>
 <a href="https://greergan.github.io/models/website.json">https://greergan.github.io/models/website.json</a>
 <blockquote class="outer">
@@ -264,8 +276,9 @@ Create an output directory and then run this working configuration from that dir
     <blockquote><code><div>slim https://greergan.github.io/slim.generator/generator.ts  \</div>
          https://greergan.github.io/models/website.json</code></blockquote>
 </blockquote></details>
+-->
 			<footer class="copyright">
-				Copyright &copy;  
+				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
 			</footer>
 		</div>
 		</div> <!-- class="content" is now closed -->

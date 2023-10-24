@@ -1,2 +1,2 @@
 # slim.view
-A Typescript HTML rendering engine
+An HTML rendering engine

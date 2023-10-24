@@ -135,7 +135,7 @@
             ],
             "functions": [
                 { "name": "get_content_type", "debug":true, "trace":true},
-                { "name": "get_json_contents", "debug":false, "trace":false},
+                { "name": "get_json_contents", "debug":true, "trace":true},
                 { "name": "comingleSync", "debug":true},
                 { "name": "get_node_value", "debug":true},
                 { "name": "is_http_url", "trace": true},

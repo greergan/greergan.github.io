@@ -1,7 +1,8 @@
 {
     "output_to": "file:///home/greergan/greergan.github.io",
     "namespace": "http://192.168.122.59",
-    "generate_ids": [0,1,2,3,4,5,6,7,8,9],
+    "generate_ids": [1],
+    "generate_all": false,
     "copy_to_output": [
         {"path": "assets"},
         {"path": "models"},
@@ -11,12 +12,10 @@
         {"path": "../slim.generator/generator.ts", "output": "./"}
     ],
     "meta_tags": [],
-    "models": {
-        "site": {
-            "copyright": {
-                "by": "<a href=\"https://github.com/greergan\" target=_new_window>Jeff Greer</a>",
-                "started_date": "2023"
-            }
+    "site": {
+        "copyright": {
+            "by": "<a href=\"https://github.com/greergan\" target=_new_window>Jeff Greer</a>",
+            "started_date": "2023"
         }
     },
     "external_models": [],
@@ -27,6 +26,58 @@
             "input_file": "pages/slim.html",
             "output_file": "slim/index.html",
             "title": "Slim"
+        },
+        {
+            "generate_id": 0,
+            "meta_tags": [],
+            "input_file": "pages/slim.v8.html",
+            "output_file": "slim.v8/index.html",
+            "title": "Slim.V8",
+            "catch_line": "A Typescript and Javascript server",
+            "module_metadata": {
+                "status": "development",
+                "maturity": "experimental",
+                "implemented": "partial",
+                "repository": "none",
+                "summary": "A new server inspired by Deno which supports both typescript and javascript as first class languages. Written in C++ and dependant only Google V8 and the MS Typescript compiler."
+            }
+        },
+        {
+            "generate_id": 0,
+            "meta_tags": [],
+            "input_file": "pages/slim.documentation.html",
+            "output_file": "slim.documentation/index.html",
+            "title": "Slim.Documentation"
+        },
+        {
+            "generate_id": 0,
+            "meta_tags": [],
+            "input_file": "pages/slim.interfaces.html",
+            "output_file": "slim.interfaces/index.html",
+            "title": "Slim.Interfaces",
+            "catch_line": "Slim Typescript Interfaces",
+            "module_metadata": {
+                "status": "ongoing",
+                "maturity": "experimental",
+                "implemented": "ongoing",
+                "repository": "see individual modules",
+                "summary": "A list of Slim typescript interfaces ordered by module."
+            }
+        },
+        {
+            "generate_id": 0,
+            "meta_tags": [],
+            "input_file": "pages/slim.multiql.html",
+            "output_file": "slim.multiql/index.html",
+            "title": "Slim.MultiQL",
+            "catch_line": "A usable query language",
+            "module_metadata": {
+                "status": "planning",
+                "maturity": "pre-experimental",
+                "implemented": "no",
+                "repository": "none",
+                "summary": "Inspired by a limited knowledge of GraphQL. A query language which supports all CRUD verbs within a single query object. It allows multiple queries for unrelated objects within a single request."
+            }
         },
         {
             "generate_id": 14,
@@ -48,24 +99,44 @@
             ]
         },
         {
-            "generate_id": 1,
+            "generate_id": 0,
             "meta_tags": [],
             "input_file": "pages/slim.console.html",
             "output_file": "slim.console/index.html",
             "title": "Slim.Console",
-            "models": [
-                { "methods": [
-                    {"name": "console.assert", "security": "public", "return": "void", "async":false, "usage": "console.assert()", "description": "", "impelmented": false},
-                    {"name": "console.assert", "security": "public", "return": "void", "async":false, "usage": "console.assert()", "description": "", "impelmented": false}
-                ]}
+            "catch_line": "A highly configurable Javascript Console object",
+            "module_metadata": {
+                "status": "development",
+                "maturity": "functional",
+                "implemented": "partial",
+                "repository": "<a href='https://github.com/greergan/slim.console' target='slim.repository'>slim.console</a>",
+                "summary": [
+                    "Slim.Console is a replacemet for the Javascript console object that ships with Deno. Eventually there will be a transpiled version available for Node.",
+                    "<p>This module fills the need where console.log output levels are to be color coded or are to expose execution metadata. ",
+                    "Metadata includes log level name, file name or full path to the calling file, line number, class name, function name and formatted programmer defined messages.</p>"
+                ]
+            },
+            "methods": [
+                {"name": "console.assert", "security": "public", "return": "void", "async":false, "usage": "console.assert()", "description": "", "impelmented": false},
+                {"name": "console.assert", "security": "public", "return": "void", "async":false, "usage": "console.assert()", "description": "", "impelmented": false}
             ]
         },
         {
-            "generate_id": 2,
+            "generate_id": 0,
             "meta_tags": [],
             "input_file": "pages/slim.filter.html",
             "output_file": "slim.filter/index.html",
             "title": "Slim.Filter",
+            "catch_line": "A Just-In-Time JSON object filtering engine",
+            "module_metadata": {
+                "status": "development",
+                "maturity": "functional",
+                "implemented": "partial",
+                "repository": "<a href='https://github.com/greergan/slim.filter' target='slim.repository'>slim.filter</a>",
+                "summary": [
+                    "Slim.Filter syntax is expressed using Polish Notation. It is useful where ever there is a need for JIT filtering of JSON objects."
+                ]
+            },
             "models": [
                 {"users": [
                     {"first_name":"Dave", "last_name": "Gahan", "age":60, "active":true, "profession": "musician", "known_for":[]}
@@ -79,61 +150,124 @@
             ]
         },
         {
-            "generate_id": 3,
+            "generate_id": 0,
             "meta_tags": [],
             "input_file": "pages/slim.view.html",
             "output_file": "slim.view/index.html",
             "title": "Slim.View",
-            "models": [
-                { "external_models": [
+            "catch_line": "An HTML rendering engine",
+            "module_metadata": {
+                "status": "development",
+                "maturity": "functional",
+                "implemented": "partial",
+                "repository": "<a href='https://github.com/greergan/slim.view' target='slim.repository'>slim.view</a>",
+                "summary": [
+                    "Slim.View allows HTML assets to be imported from either remote locations on the Web or from the local file system. "
+                ]
+            },
+            "external_models": [
                     {"path": "models/actors.json"},
                     {"path": "models/authors.json"},
                     {"path": "models/musician.json"}
-                ]}
             ]
         },
         {
-            "generate_id": 4,
+            "generate_id": 1,
             "meta_tags": [],
             "input_file": "pages/slim.server/httprouter.html",
             "output_file": "slim.server/httprouter/index.html",
             "title": "Slim.server.HttpRouter",
-            "models": []
+            "catch_line": "A Slim Http server with dynamic router",
+            "module_metadata": {
+                "status": "development",
+                "maturity": "functional",
+                "implemented": "partial",
+                "repository": "<a href='https://github.com/greergan/slim.server.HttpRouter' target='slim.repository'>slim.server.HttpRouter</a>",
+                "summary": [
+                    "slim.server.HttpRouter includes support for standard http routes and websocket routes. Static files and directories are suppored in addition to route handelers. Middleware hooks are available for each request if so configured."
+                ]
+            }
         },
         {
-            "generate_id": 5,
+            "generate_id": 0,
             "meta_tags": [],
             "input_file": "pages/slim.utilities.html",
             "output_file": "slim.utilities/index.html",
-            "title": "Slim.Utilities"
+            "title": "Slim.Utilities",
+            "catch_line": "Slim utility functions",
+            "module_metadata": {
+                "status": "development",
+                "maturity": "functional",
+                "implemented": "partial",
+                "repository": "<a href='https://github.com/greergan/slim.utilities' target='slim.repository'>slim.utilities</a>",
+                "summary": [
+                    "Simple tooling used throughout Slim tyescript code. Includes JSON manipulation functions, validation functions and I/O functions."
+                ]
+            }
         },
         {
-            "generate_id": 6,
+            "generate_id": 0,
             "meta_tags": [],
             "input_file": "pages/slim.generator.html",
             "output_file": "slim.generator/index.html",
-            "title": "Slim.Generator"
+            "title": "Slim.Generator",
+            "catch_line": "A static website generator",
+            "module_metadata": {
+                "status": "development",
+                "maturity": "functional",
+                "implemented": "partial",
+                "repository": "<a href='https://github.com/greergan/slim.generator' target='slim.repository'>slim.generator</a>",
+                "summary": [
+                    "Slim.Generator is a highly configurable static website generator written in 100% pure Typescript. It uses <a href ='/slim.view'>Slim.View</a> as its HTML rendering engine."
+                ]
+            }
         },
         {
-            "generate_id": 7,
+            "generate_id": 0,
             "meta_tags": [],
             "input_file": "pages/slim.livereload.html",
             "output_file": "slim.livereload/index.html",
-            "title": "Slim.LiveReload"
+            "title": "Slim.LiveReload",
+            "catch_line": "A livereload server and dashboard",
+            "module_metadata": {
+                "status": "development",
+                "maturity": "experimental",
+                "implemented": "partial",
+                "repository": "<a href='https://github.com/greergan/slim.generator' target='slim.repository'>slim.generator</a>",
+                "summary": [
+                    "Slim.LiveReload uses websockets to keep your browser in sync with the HTML (and other files) that you are updating in your editor. The dashboard offers telemitry for <a href='/slim.server/httprouter'>Slim.server.HttpRouter</a>, <a href='slim/view'>Slim.View</a> templates and compiled html. The source code needs to be decoupled from Slim.Generator - both require the same configuration file format."
+                ]
+            }
         },
         {
-            "generate_id": 8,
+            "generate_id": 1,
             "meta_tags": [],
             "input_file": "pages/slim.objecteditor.html",
             "output_file": "slim.objecteditor/index.html",
-            "title": "Slim.ObjectEditor"
+            "title": "Slim.ObjectEditor",
+            "catch_line": "An object/class editor",
+            "module_metadata": {
+                "status": "planning",
+                "maturity": "pre-experimental",
+                "implemented": "no",
+                "repository": "none",
+                "summary": "Intended to be included in programs that allow for dynamic typescript interfaces."
+            }
         },
         {
-            "generate_id": 9,
+            "generate_id": 1,
             "meta_tags": [],
             "input_file": "pages/slim.objects.html",
             "output_file": "slim.objects/index.html",
-            "title": "Slim.Objects"
+            "title": "Slim.Objects",
+            "catch_line": "A set of currated reusable class objects",
+            "module_metadata": {
+                "status": "planning",
+                "maturity": "experimental",
+                "implemented": "no",
+                "repository": "<a href='https://github.com/greergan/slim.objects' target='slim.repository'>slim.objects</a>",
+                "summary": "Simple and reusable data objects. Classes created from JSON objects."
+            }
         }
     ]
 }
