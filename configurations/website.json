@@ -87,7 +87,7 @@
             "generate_id": 14,
             "meta_tags": [],
             "input_file": "pages/slim.blog.html",
-            "output_file": "index.html",
+            "output_file": "blog/index.html",
             "title": "Slim.Blog",
             "models":[
                 {"entries": [
