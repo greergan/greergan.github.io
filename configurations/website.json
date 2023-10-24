@@ -21,11 +21,15 @@
     "external_models": [],
     "pages": [
         {
-            "generate_id": 0,
+            "generate_id": 1,
             "meta_tags": [],
             "input_file": "pages/slim.html",
-            "output_file": "slim/index.html",
-            "title": "Slim"
+            "output_file": "index.html",
+            "title": "Slim",
+            "catch_line": "A Typescript platform",
+            "module_metadata":{
+                "summary": "Born from a need to learn."
+            }
         },
         {
             "generate_id": 0,
@@ -172,7 +176,7 @@
             ]
         },
         {
-            "generate_id": 1,
+            "generate_id": 0,
             "meta_tags": [],
             "input_file": "pages/slim.server/httprouter.html",
             "output_file": "slim.server/httprouter/index.html",
@@ -240,7 +244,7 @@
             }
         },
         {
-            "generate_id": 1,
+            "generate_id": 0,
             "meta_tags": [],
             "input_file": "pages/slim.objecteditor.html",
             "output_file": "slim.objecteditor/index.html",
@@ -255,7 +259,7 @@
             }
         },
         {
-            "generate_id": 1,
+            "generate_id": 0,
             "meta_tags": [],
             "input_file": "pages/slim.objects.html",
             "output_file": "slim.objects/index.html",
