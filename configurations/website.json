@@ -2,7 +2,7 @@
     "output_to": "file:///home/greergan/greergan.github.io",
     "namespace": "http://192.168.122.59",
     "generate_ids": [1],
-    "generate_all": false,
+    "generate_all": true,
     "copy_to_output": [
         {"path": "assets"},
         {"path": "models"},
@@ -43,7 +43,8 @@
                 "maturity": "experimental",
                 "implemented": "partial",
                 "repository": "none",
-                "summary": "A new server inspired by Deno which supports both typescript and javascript as first class languages. Written in C++ and dependant only Google V8 and the MS Typescript compiler."
+                "issues": "none",
+                "summary": "A new server inspired by Deno which supports both typescript and javascript as first class languages. Written in C++ and dependant on only Google V8, the MS Typescript compiler and embedded Git."
             }
         },
         {
@@ -65,6 +66,7 @@
                 "maturity": "experimental",
                 "implemented": "ongoing",
                 "repository": "see individual modules",
+                "issues": "none",
                 "summary": "A list of Slim typescript interfaces ordered by module."
             }
         },
@@ -80,6 +82,7 @@
                 "maturity": "pre-experimental",
                 "implemented": "no",
                 "repository": "none",
+                "issues": "none",
                 "summary": "Inspired by a limited knowledge of GraphQL. A query language which supports all CRUD verbs within a single query object. It allows multiple queries for unrelated objects within a single request."
             }
         },
@@ -114,6 +117,7 @@
                 "maturity": "functional",
                 "implemented": "partial",
                 "repository": "<a href='https://github.com/greergan/slim.console' target='slim.repository'>slim.console</a>",
+                "issues": "<a href='https://github.com/greergan/slim.console/issues' target='slim.repository'>Github issues</a>",
                 "summary": [
                     "Slim.Console is a replacemet for the Javascript console object that ships with Deno. Eventually there will be a transpiled version available for Node.",
                     "<p>This module fills the need where console.log output levels are to be color coded or are to expose execution metadata. ",
@@ -137,6 +141,7 @@
                 "maturity": "functional",
                 "implemented": "partial",
                 "repository": "<a href='https://github.com/greergan/slim.filter' target='slim.repository'>slim.filter</a>",
+                "issues": "<a href='https://github.com/greergan/slim.filter/issues' target='slim.issues'>Github issues</a>",
                 "summary": [
                     "Slim.Filter syntax is expressed using Polish Notation. It is useful where ever there is a need for JIT filtering of JSON objects."
                 ]
@@ -165,6 +170,7 @@
                 "maturity": "functional",
                 "implemented": "partial",
                 "repository": "<a href='https://github.com/greergan/slim.view' target='slim.repository'>slim.view</a>",
+                "issues": "<a href='https://github.com/greergan/slim.view/issues' target='slim.issues'>Github issues</a>",
                 "summary": [
                     "Slim.View allows HTML assets to be imported from either remote locations on the Web or from the local file system. "
                 ]
@@ -187,6 +193,7 @@
                 "maturity": "functional",
                 "implemented": "partial",
                 "repository": "<a href='https://github.com/greergan/slim.server.HttpRouter' target='slim.repository'>slim.server.HttpRouter</a>",
+                "issues": "<a href='https://github.com/greergan/slim.server.httprouter/issues' target='slim.issues'>Github issues</a>",
                 "summary": [
                     "slim.server.HttpRouter includes support for standard http routes and websocket routes. Static files and directories are suppored in addition to route handelers. Middleware hooks are available for each request if so configured."
                 ]
@@ -204,6 +211,7 @@
                 "maturity": "functional",
                 "implemented": "partial",
                 "repository": "<a href='https://github.com/greergan/slim.utilities' target='slim.repository'>slim.utilities</a>",
+                "issues": "<a href='https://github.com/greergan/slim.utilities/issues' target='slim.issues'>Github issues</a>",
                 "summary": [
                     "Simple tooling used throughout Slim tyescript code. Includes JSON manipulation functions, validation functions and I/O functions."
                 ]
@@ -221,6 +229,7 @@
                 "maturity": "functional",
                 "implemented": "partial",
                 "repository": "<a href='https://github.com/greergan/slim.generator' target='slim.repository'>slim.generator</a>",
+                "issues": "<a href='https://github.com/greergan/slim.generator/issues' target='slim.issues'>Github issues</a>",
                 "summary": [
                     "Slim.Generator is a highly configurable static website generator written in 100% pure Typescript. It uses <a href ='/slim.view'>Slim.View</a> as its HTML rendering engine."
                 ]
@@ -238,6 +247,7 @@
                 "maturity": "experimental",
                 "implemented": "partial",
                 "repository": "<a href='https://github.com/greergan/slim.generator' target='slim.repository'>slim.generator</a>",
+                "issues": "none - yet",
                 "summary": [
                     "Slim.LiveReload uses websockets to keep your browser in sync with the HTML (and other files) that you are updating in your editor. The dashboard offers telemitry for <a href='/slim.server/httprouter'>Slim.server.HttpRouter</a>, <a href='slim/view'>Slim.View</a> templates and compiled html. The source code needs to be decoupled from Slim.Generator - both require the same configuration file format."
                 ]
@@ -255,6 +265,7 @@
                 "maturity": "pre-experimental",
                 "implemented": "no",
                 "repository": "none",
+                "issues": "none",
                 "summary": "Intended to be included in programs that allow for dynamic typescript interfaces."
             }
         },
@@ -270,6 +281,7 @@
                 "maturity": "experimental",
                 "implemented": "no",
                 "repository": "<a href='https://github.com/greergan/slim.objects' target='slim.repository'>slim.objects</a>",
+                "issues": "<a href='https://github.com/greergan/slim.objects/issues' target='slim.issues'>Github issues</a>",
                 "summary": "Simple and reusable data objects. Classes created from JSON objects."
             }
         }
