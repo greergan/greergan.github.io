@@ -76,7 +76,10 @@
     </div>
     <br>
     <hr class="section-seperator"/>
-	<details class="slim-details"><summary><h3>Namespace</h3></summary>
+    
+    <p>partials include file</p>
+
+<details class="slim-details"><summary><h3>Namespace</h3></summary>
 <p class="description">A variable supplied when a new view is created. This variable is prepended to all relative paths found inside of include statements</p>
 <p>Used when creating a new SlimView object.</p>
 <code class="slim-code-span">
@@ -93,7 +96,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 <p>The "https" protocol.</p>
 <code class="slim-code-span">https://greergan.github.io</code>
 </details>
-	<details class="slim-details"><summary><h3>Methods</h3></summary>
+<details class="slim-details"><summary><h3>Methods</h3></summary>
 <div>
 	<p class="description">Slim.View methods</p>
 </div>
@@ -119,7 +122,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 	private async <span>processMatch</span>(model:slim.types.iKeyValueAny, statement_data:slim.types.iKeyValueAny):<span>Promise&lt;string&gt;</span>
 </code>
 </details>
-	<details class="slim-details"><summary><h3>Variable substitution</h3></summary>
+<details class="slim-details"><summary><h3>Variable substitution</h3></summary>
 <p class="description">Substitute tokens for values found in a JSON model.</p>
 <code class="slim-code-span">
 	Hello I am &#123;&#123;page.title&#125;&#125;
@@ -129,7 +132,7 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 </code>
 
 </details>
-	<details class="slim-details"><summary><h3>Includes</h3></summary>
+<details class="slim-details"><summary><h3>Includes</h3></summary>
 <p class="description">Include view templates whithin any HTML document. The "view" tag can contain either relative or absolute URLs.
 	The view namespace is prepended to each relative path.
 </p>
@@ -152,16 +155,16 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 	&lt;include view="includes/foot.html"&gt;
 </code>
 </details>
-	<details class="slim-details"><summary><h3>Statements</h3></summary>
+<details class="slim-details"><summary><h3>Statements</h3></summary>
 <p class="description">Render views or html fragments using "with" or "foreach" statements.
 	Statements are called using positional arguments and can span multiple lines.</p>
-<code class="slim-code-span">[with|foreach] model="model" view="path/to/view" | html_fragment</code>
+<code class="slim-code-span">[when|with|foreach] model="model" view="path/to/view" | html_fragment</code>
 <p>with statement - model and view</p>
 <code class="slim-code-span">
-	&#123;% with model="page.users[1]" view="partials/user.html" %&#125;
+	&#123;% with model="page.users[0]" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Carrie Fisher is a 60 year old actor who is active => <br>
-	</p> 
+		Harrison Ford is a 80 year old actor who is active => true<br>
+	</p>
 </code>
 <p>with statement - model and html fragment</p>
 <code class="slim-code-span">
@@ -174,32 +177,43 @@ const view:SlimView = new SlimView(<span>namespace_string</span>);
 <p>foreach statement - model and view</p>
 <code class="slim-code-span">
 	&#123;% foreach model="page.users" view="partials/user.html" %&#125;
-	<p class="outputs">Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => <br>Harry Harrison is a 87 year old author who is active => <br>Robert Asprin is a 61 year old author who is active => <br>Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br>
+	<p class="outputs">
+		  is a  year old  who is active => <br>
+	</p>
+</code>
+<p>foreach statement - model and html fragment</p>
+<code class="slim-code-span">
+<pre>&#123;%
+    foreach model="page.users"
+        &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;br&gt;
+%&#125;</pre>
+	<p class="outputs">
+		  is a(n) <br>
 	</p>
 </code>
 </details>
-	<details class="slim-details"><summary><h3>Filters</h3></summary>
+<details class="slim-details"><summary><h3>Filters</h3></summary>
 <p class="description">Slim.View uses the <a href="/slim.filter/">Slim.Filter</a> JSON filtering engine.</p>
 All filters take the following form.
 <code class="slim-code-span">
 	&#123;% foreach model="page.users" filter="<span>equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Ian Astbury is a 60 year old musician who is active => true<br>Robert Smith is a 63 year old musician who is active => true<br>Dave Gahan is a 60 year old musician who is active => true<br>
+		
 	</p>
 	&#123;% foreach model="page.users" filter="<span>not_equal</span>(profession, "musician")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => <br>Harry Harrison is a 87 year old author who is active => <br>Robert Asprin is a 61 year old author who is active => <br>
+		
 	</p>
 	&#123;% foreach model="page.users" filter="<span>greater_than</span>(first_name, "Ian")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Robert Asprin is a 61 year old author who is active => <br>Robert Smith is a 63 year old musician who is active => true<br>
+		
 	</p>
 	&#123;% foreach model="page.users" filter="<span>less_than_equal</span>(last_name, "Ford")" view="partials/user.html" %&#125;
 	<p class="outputs">
-		Harrison Ford is a 80 year old actor who is active => true<br>Carrie Fisher is a 60 year old actor who is active => <br>Robert Asprin is a 61 year old author who is active => <br>Ian Astbury is a 60 year old musician who is active => true<br>
+		
 	</p>
 </code></details>
-	<details class="slim-details"><summary><h3>Comments</h3></summary>
+<details class="slim-details"><summary><h3>Comments</h3></summary>
 <p class="description">Create HTML comments.</p>
 <p>Comment with variable substitution.</p>
 <code class="slim-code-span">
@@ -222,7 +236,7 @@ All filters take the following form.
 <code class="slim-code-span">
 	&#123;# &#123;% foreach model="page.users" view="partials/user.html" %&#125; #&#125;
 	<p class="outputs">&lt;!-- Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br> --&gt;
-		<!-- {% foreach model="page.users" view="partials/user.html" %} -->
+		<!-- {% foreach model="users" view="partials/user.html" %} -->
 	</p>
 	<div>View page source in your browser to see results</div>
 </code>
@@ -235,6 +249,8 @@ All filters take the following form.
 	<div>View page source in your browser to see results</div>
 </code>
 </details>
+
+    
 			<footer class="copyright">
 				Copyright &copy; 2023 <a href="https://github.com/greergan" target=_new_window>Jeff Greer</a>
 			</footer>
@@ -250,21 +266,4 @@ All filters take the following form.
 		copyText.setSelectionRange(0, 99999); // For mobile devices
 		navigator.clipboard.writeText(copyText.value);
   }
-</script>
-<script>
-  "use strict";
-  let socket = new WebSocket(window.location.origin.startsWith('https')
-    ? window.location.origin.replace("https", "wss")
-    : window.location.origin.replace("http", "wss")
-  );
-  socket.onopen = function(e) { console.log("[open] Connection established"); };
-  socket.onmessage = function(event) { if(event.data == 'refresh') { location.reload();} };
-  socket.onerror = function(error) { console.error(`[error]`);};
-  socket.onclose = function(event) {
-    if (event.wasClean) {
-      console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-    } else {
-      console.log('[close] Connection died', event);
-    }
-  };
 </script>

@@ -1,13 +1,13 @@
 <summary><h3>Statements</h3></summary>
 <p class="description">Render views or html fragments using "with" or "foreach" statements.
 	Statements are called using positional arguments and can span multiple lines.</p>
-<code class="slim-code-span">[with|foreach] model="model" view="path/to/view" | html_fragment</code>
+<code class="slim-code-span">[when|with|foreach] model="model" view="path/to/view" | html_fragment</code>
 <p>with statement - model and view</p>
 <code class="slim-code-span">
-	&#123;% with model="page.users[1]" view="partials/user.html" %&#125;
+	&#123;% with model="page.users[0]" view="partials/user.html" %&#125;
 	<p class="outputs">
-		{% with model="page.users[1]" view="partials/user.html" %}
-	</p> 
+		{% with model="users[0]" view="partials/user.html" %}
+	</p>
 </code>
 <p>with statement - model and html fragment</p>
 <code class="slim-code-span">
@@ -15,12 +15,14 @@
     with model="page.users[2]"
         &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is a(n) &#123;&#123;profession&#125;&#125; &lt;br&gt;
 %&#125;</pre>
-	{% with model="page.users[2]" <p class="outputs">{{first_name}} {{last_name}} is a(n) {{profession}}</p> %}
+	{% with model="users[2]" <p class="outputs">{{first_name}} {{last_name}} is a(n) {{profession}}</p> %}
 </code>
 <p>foreach statement - model and view</p>
 <code class="slim-code-span">
 	&#123;% foreach model="page.users" view="partials/user.html" %&#125;
-	<p class="outputs">{% foreach model="page.users" view="partials/user.html" %}</p>
+	<p class="outputs">
+		{% foreach model="users" view="partials/user.html" %}
+	</p>
 </code>
 <p>foreach statement - model and html fragment</p>
 <code class="slim-code-span">
@@ -29,7 +31,7 @@
         &#123;&#123;first_name&#125;&#125; &#123;&#123;last_name&#125;&#125; is an &#123;&#123;profession&#125;&#125; &lt;br&gt;
 %&#125;</pre>
 	<p class="outputs">
-		{% foreach model="page.users"
+		{% foreach model="users"
 			{{first_name}} {{last_name}} is a(n) {{profession}}<br>
 		%}
 	</p>

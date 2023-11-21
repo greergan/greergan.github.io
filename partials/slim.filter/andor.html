@@ -1,15 +1,15 @@
 <summary><h3>And/Or filters</h3></summary>
 <code class="slim-code-span">
 	<span>and</span><br><br>
-	&#123;% foreach model="page.users" filter="<span>and</span>(<span>equal</span>(active, true), <span>equal</span>(age, 80))" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>and</span>(<span>equal</span>(active, true), <span>equal</span>(age, 80))" view="templates/partials/user.html" %&#125;
 	<p class="outputs">
 		{% foreach model="page.users" filter="and(equal(active, true), equal(age, 80))" view="partials/user.html" %}
 	</p>
 </code>
 <code class="slim-code-span">
 	<span>or</span><br><br>
-	&#123;% foreach model="page.users" filter="<span>or</span>(<span>equal</span>(active, true), <span>equal</span>(age, 60))" view="partials/user.html" %&#125;
+	&#123;% foreach model="page.users" filter="<span>or</span>(<span>equal</span>(active, true), <span>equal</span>(age, 60))" view="templates/partials/user.html" %&#125;
 	<p class="outputs">
-		{% foreach model="page.users" filter="or(equal(active, true), equal(age, 60))" view="partials/user.html" %}
+		{% foreach model="page.users" filter="or(equal(active, true), equal(age, 60))" view="templates/partials/user.html" %}
 	</p>
 </code>

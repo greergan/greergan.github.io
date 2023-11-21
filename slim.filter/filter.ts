@@ -7,12 +7,12 @@ export class SlimFilter {
 	private operator:string|undefined;
 	private property:string|undefined;
 	private value:string|number|boolean|undefined;
-	private model:string|undefined;
+	private model_name:string|undefined;
 	private filters:Array<SlimFilter> = [];
 	private view_models:Array<slim.types.iKeyValueAny> = [];
 	constructor(filterArguments:FilterArguments) {
 		console.trace({message:"Creating new SlimFilter",value:"with"}, filterArguments);
-		this.model = filterArguments.model_string;
+		this.model_name = filterArguments.model_string;
 		this.parseFilterString(filterArguments.filter_string);
 	}
 	private getOperator(operator:string):string {
@@ -65,15 +65,25 @@ export class SlimFilter {
 		console.trace({message:"parsed",value:"string into filters"});
 	}
 	public async run(model:slim.types.iKeyValueAny):Promise<void> {
-		console.debug({message:"beginning filter run for",value:"operator, model"}, this.operator, this.model);
-		const run_model = await slim.utilities.get_node_value(model, this.model) ?? [];
-		if(this.operator) {
-			const comparissons:string = this.toString();
-			console.debug({message:"beginning filter run for",value:"comparissons, model.length"}, comparissons, run_model.length);
-			run_model.forEach((obj:object) => { if(eval(comparissons)) this.view_models.push(obj); });
+		console.trace({message:"beginning filter run for",value:"operator, model_name, property"}, this.operator, this.model_name, this.property);
+		const run_model:slim.types.iKeyValueAny[]|object|undefined = await slim.utilities.get_node_value(model, this.model_name);
+		let run_model_array:object[] = [];
+		if(typeof run_model == 'object') {
+			run_model_array.push(run_model)
+		}
+		else if(Array.isArray(run_model)) {
+			run_model_array = run_model;
 		}
 		else {
-			Array.isArray(run_model) ? this.view_models = run_model : this.view_models.push(run_model);
+			return;
+		}
+		if(this.operator) {
+			const comparissons:string = this.toString();
+			console.debug({message:"checking",value:"comparissons"}, comparissons);
+			run_model_array.forEach((obj:object) => { if(eval(comparissons)) this.view_models.push(obj); });
+		}
+		else {
+			this.view_models = run_model_array;
 		}
 		console.trace({message:"ended filter run with",value:"this.view_models.length"}, this.view_models.length);
 	}

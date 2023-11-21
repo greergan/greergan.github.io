@@ -67,7 +67,7 @@
     <h1 class="intro">Welcome to <div class="slim">Slim.Utilities</div></h1>
     <div class="catch_line">Slim utility functions</div>
     <div class="intro">
-        <p>Simple tooling used throughout Slim tyescript code. Includes JSON manipulation functions, validation functions and I/O functions.</p>
+        <p>Simple tooling used throughout Slim TypeScript code. Includes JSON manipulation functions, validation functions and I/O functions.</p>
         <div class="module_metadata_status">development</div>
         <div class="module_metadata_maturity">functional</div>
         <div class="module_metadata_implemented">partial</div>
@@ -91,21 +91,4 @@
 		copyText.setSelectionRange(0, 99999); // For mobile devices
 		navigator.clipboard.writeText(copyText.value);
   }
-</script>
-<script>
-  "use strict";
-  let socket = new WebSocket(window.location.origin.startsWith('https')
-    ? window.location.origin.replace("https", "wss")
-    : window.location.origin.replace("http", "wss")
-  );
-  socket.onopen = function(e) { console.log("[open] Connection established"); };
-  socket.onmessage = function(event) { if(event.data == 'refresh') { location.reload();} };
-  socket.onerror = function(error) { console.error(`[error]`);};
-  socket.onclose = function(event) {
-    if (event.wasClean) {
-      console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-    } else {
-      console.log('[close] Connection died', event);
-    }
-  };
 </script>

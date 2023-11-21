@@ -65,7 +65,7 @@
 		<div class="project_is_experimental">Code and concepts foud herein are experimental. Eventually it will develop into a usable platform.</div>
 		<div class="content">
     <h1 class="intro">Welcome to <div class="slim">Slim</div></h1>
-    <div class="catch_line">A Typescript platform</div>
+    <div class="catch_line">A TypeScript platform</div>
     <div class="intro">
         <p>Born from a need to learn.</p>
     </div>
@@ -86,21 +86,4 @@
 		copyText.setSelectionRange(0, 99999); // For mobile devices
 		navigator.clipboard.writeText(copyText.value);
   }
-</script>
-<script>
-  "use strict";
-  let socket = new WebSocket(window.location.origin.startsWith('https')
-    ? window.location.origin.replace("https", "wss")
-    : window.location.origin.replace("http", "wss")
-  );
-  socket.onopen = function(e) { console.log("[open] Connection established"); };
-  socket.onmessage = function(event) { if(event.data == 'refresh') { location.reload();} };
-  socket.onerror = function(error) { console.error(`[error]`);};
-  socket.onclose = function(event) {
-    if (event.wasClean) {
-      console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-    } else {
-      console.log('[close] Connection died', event);
-    }
-  };
 </script>

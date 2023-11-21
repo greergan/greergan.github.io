@@ -1,0 +1,9 @@
+<include view="includes/head.html">
+    <include view="partials/page_welcome.html">
+    <include view="partials/catch_line.html">
+    <include view="partials/module_metadata.html">
+    <hr class="section-seperator"/>
+    {% when model="page" filter="equal(title, "Slim.Filter")" view="partials/slim.filter/partials.html" %}
+    {% when model="page" filter="equal(title, "Slim.View")" view="partials/slim.view/partials.html" %}
+    
+<include view="includes/foot.html">

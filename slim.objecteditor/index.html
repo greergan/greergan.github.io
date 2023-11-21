@@ -67,7 +67,7 @@
     <h1 class="intro">Welcome to <div class="slim">Slim.ObjectEditor</div></h1>
     <div class="catch_line">An object/class editor</div>
     <div class="intro">
-        <p>Intended to be included in programs that allow for dynamic typescript interfaces.</p>
+        <p>Intended to be included in programs that allow for dynamic TypeScript interfaces.</p>
         <div class="module_metadata_status">planning</div>
         <div class="module_metadata_maturity">pre-experimental</div>
         <div class="module_metadata_implemented">no</div>
@@ -91,21 +91,4 @@
 		copyText.setSelectionRange(0, 99999); // For mobile devices
 		navigator.clipboard.writeText(copyText.value);
   }
-</script>
-<script>
-  "use strict";
-  let socket = new WebSocket(window.location.origin.startsWith('https')
-    ? window.location.origin.replace("https", "wss")
-    : window.location.origin.replace("http", "wss")
-  );
-  socket.onopen = function(e) { console.log("[open] Connection established"); };
-  socket.onmessage = function(event) { if(event.data == 'refresh') { location.reload();} };
-  socket.onerror = function(error) { console.error(`[error]`);};
-  socket.onclose = function(event) {
-    if (event.wasClean) {
-      console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-    } else {
-      console.log('[close] Connection died', event);
-    }
-  };
 </script>

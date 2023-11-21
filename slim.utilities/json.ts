@@ -154,7 +154,7 @@ export function comingleSync(input_sources:slim.types.iKeyValueAny[], options?:c
 	return merged_objects as slim.types.iKeyValueAny;
 }
 export async function get_node_value(model:slim.types.iKeyValueAny, property:string): Promise<string|number|boolean|slim.types.iKeyValueAny|undefined> {
-	console.debug({message:"beginning with", value:"property"}, property, model);
+	console.trace({message:"beginning with", value:"property"}, property, model);
 	if(model === undefined || Object.keys(model).length == 0) {
 		return undefined;
 	}
@@ -166,6 +166,7 @@ export async function get_node_value(model:slim.types.iKeyValueAny, property:str
 				? shifted_model[model_has_index_match[1]][model_has_index_match[2]] 
 					: undefined : shifted_model && shifted_model[node_name] ? shifted_model[node_name] : undefined;
 	});
+	console.trace(shifted_model);
 	return shifted_model;
 }
 export function get_value<Type, Key extends keyof Type>(obj: Type, key: Key) { return obj[key]; }

@@ -5,7 +5,7 @@
 	&#123;#  &#123;&#123;page.title&#125;&#125; #&#125;
 	<p class="outputs">
 		&lt;!-- Slim.View --&gt;
-		{# {{page.title}} #}
+		{# {{title}} #}
 	</p>
 	<div>View page source in your browser to see results</div>
 </code>
@@ -21,7 +21,7 @@
 <code class="slim-code-span">
 	&#123;# &#123;% foreach model="page.users" view="partials/user.html" %&#125; #&#125;
 	<p class="outputs">&lt;!-- Harrison Ford is a(n) actor<br>Carrie Fisher is a(n) actor<br>>Harry Harrison is a(n) author<br>Robert Asprin is a(n) author<br> --&gt;
-		{# {% foreach model="page.users" view="partials/user.html" %} #}
+		{# {% foreach model="users" view="partials/user.html" %} #}
 	</p>
 	<div>View page source in your browser to see results</div>
 </code>

@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+rm -rf /tmp/ramdisk
+mkdir -p /tmp/ramdisk
+chmod a+rwx /tmp/ramdisk
+sudo mount -t tmpfs -o size=200m ramdisk /tmp/ramdisk
+cd /tmp/ramdisk
+git clone git@github.com:greergan/slim.git
+cd slim
+git checkout dev
+make slim
+code -n /tmp/ramdisk/slim

@@ -185,12 +185,12 @@ export class SlimView {
 		// what is left over after this next block is considered an HTML fragement to be used as the view_string
 		// if there is not a valid view property found
 		let temp_string = statement_string;
-		temp_string = temp_string.replace(/(\s*with|foreach\s)/, '');
+		temp_string = temp_string.replace(/(\s*when|with|foreach\s)/, '');
 		temp_string = temp_string.replace(/(\s*model\s*=\s*"*\s*[\w\d\.]+\[*\d*\]*\s*"*\s*)/, '');
 		temp_string = temp_string.replace(/(filter\s*=\s*"*\s*[\w_]+\(.+\)"*\s*)/, '');
 		temp_string = temp_string.replace(/(view\s*=\s*"*\s*[^\s"][\w\d.\/:]+\s*"*\s*)/, '');
 		console.debug({message:"beginning",value:"statement"}, statement_string);
-		const predicate_match:Array<string> = statement_string.match(/\s*(with|foreach)\s/) ?? [];
+		const predicate_match:Array<string> = statement_string.match(/\s*(when|with|foreach)\s/) ?? [];
 		console.debug({message:"beginning",value:"predicate_match[0]"}, predicate_match[1]);
 		if(predicate_match.length != 2) {
 			throw new Error(`unknown statement => ${statement_string}`);
