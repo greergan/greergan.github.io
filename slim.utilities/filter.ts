@@ -1,5 +1,5 @@
 import * as slim from "./slim_modules.ts";
-import * as filter from "http://192.168.122.59/slim.filter/index.ts";
+import * as filter from "../slim.filter/index.ts";
 export async function filter(model:Array<slim.types.iKeyValueAny>, filter:filter.SlimFilter):Promise<Array<slim.types.iKeyValueAny>> {
     console.debug({message:"beginning with", value:"model"}, model.length);
     console.debug({message:"beginning with", value:"filter.predicate"}, filter.predicate);
