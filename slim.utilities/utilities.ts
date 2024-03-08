@@ -50,10 +50,12 @@ export async function get_file_contents(file:string): Promise<string|undefined> 
     try {
         const text:string|undefined = await (await fetch(file)).text();
         if('SlimConsole' in window && text) console.trace({message:"fetch",value:text ? "succeeded" : "failed"}, file);
+        console.trace({message:"fetch",value:text ? "succeeded" : "failed"}, file);
         return text;
     }
     catch(e) {
         if('SlimConsole' in window) SlimConsole.abort({message:"fetch", value:"failed"}, e);
+        console.trace({message:"fetch", value:"failed"}, e)
     }
     console.trace();
     return '';
