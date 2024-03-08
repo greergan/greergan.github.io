@@ -46,10 +46,17 @@ export async function get_binary_contents(file:string): Promise<any|undefined> {
         return blob;
 }
 export async function get_file_contents(file:string): Promise<string|undefined> {
+    console.debug({message:'starting with',value:file});
+    try {
         const text:string|undefined = await (await fetch(file)).text();
-        if(window.hasOwnProperty('SlimConsole') && text) console.trace({message:"fetch",value:text ? "succeded" : "failed"}, file);
-        console.trace();
+        if('SlimConsole' in window && text) console.trace({message:"fetch",value:text ? "succeeded" : "failed"}, file);
         return text;
+    }
+    catch(e) {
+        if('SlimConsole' in window) SlimConsole.abort({message:"fetch", value:"failed"}, e);
+    }
+    console.trace();
+    return '';
 }
 export async function get_json_contents(file:string): Promise<slim.types.iKeyValueAny|undefined> {
     console.debug({message:"starting with", value:"file"}, file, "time to add error handling from fetch results");
