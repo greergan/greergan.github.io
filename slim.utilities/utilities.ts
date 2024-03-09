@@ -54,8 +54,8 @@ export async function get_file_contents(file:string): Promise<string|undefined> 
         return text;
     }
     catch(e) {
+        console.trace({message:"fetch", value:"failed"}, file, e);
         if('SlimConsole' in window) SlimConsole.abort({message:"fetch", value:"failed"}, e);
-        console.trace({message:"fetch", value:"failed"}, file, e)
     }
     console.trace();
     return '';
