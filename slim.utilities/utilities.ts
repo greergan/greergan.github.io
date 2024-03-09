@@ -46,7 +46,7 @@ export async function get_binary_contents(file:string): Promise<any|undefined> {
         return blob;
 }
 export async function get_file_contents(file:string): Promise<string|undefined> {
-    console.debug({message:'starting with',value:file});
+    console.trace({message:'starting with',value:file});
     try {
         const text:string|undefined = await (await fetch(file)).text();
         if('SlimConsole' in window && text) console.trace({message:"fetch",value:text ? "succeeded" : "failed"}, file);
@@ -55,7 +55,7 @@ export async function get_file_contents(file:string): Promise<string|undefined> 
     }
     catch(e) {
         if('SlimConsole' in window) SlimConsole.abort({message:"fetch", value:"failed"}, e);
-        console.trace({message:"fetch", value:"failed"}, e)
+        console.trace({message:"fetch", value:"failed"}, file, e)
     }
     console.trace();
     return '';
