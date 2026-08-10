@@ -88,13 +88,12 @@ clean:
 	@echo "[clean] dist/ removed"
 
 # -------------------------------------------------------------
-# Install: remove ../blog and replace with dist/ contents
+# Install: sync dist/ into ../blog using rsync
 # -------------------------------------------------------------
 install:
 	@if [ ! -d dist ]; then \
 		echo "[error] dist/ not found — run 'make' first"; \
 		exit 1; \
 	fi
-	rm -rf ../blog
-	cp -r dist ../blog
-	@echo "[install] ../blog replaced with dist/"
+	rsync -a --delete dist/ ../blog/
+	@echo "[install] ../blog synced from dist/"
