@@ -1,0 +1,11 @@
+{
+  "slug":        "my-first-post",
+  "title":       "My First Post",
+  "description": "A short introduction to this blog and what to expect.",
+  "date":        "2026-08-09",
+  "readTime":    "< 1 min read",
+  "tags":        ["meta"],
+  "pinned":      true,
+  "pinnedOrder": 1,
+  "body":        "<p>Welcome. This is the first post on this blog.</p><p>It is a place for notes on systems, code, and things that break at inconvenient times.</p><h2>What to expect</h2><p>Short, direct posts. No fluff.</p><pre><code>echo \"hello, world\"</code></pre><p>More soon.</p>"
+}
